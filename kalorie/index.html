@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator zapotrzebowania kalorycznego</title>
+<meta name="description" content="Oblicz szacowane dzienne zapotrzebowanie kaloryczne (BMR i TDEE) na podstawie wzrostu, wagi, wieku i poziomu aktywności.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#2a1a12; --surface:#382418; --line:#4d3524; --paper:#f5ebe0; --muted:#b3927a; --accent:#ef6c4d; --accent-dim:#b84e35; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:540px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-bottom:8px; }
+  input[type="number"], select{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:13px 14px; font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--paper); outline:none; transition:border-color .15s ease; }
+  select{ font-family:'Inter',sans-serif; font-size:14px; cursor:pointer; }
+  input:focus, select:focus{ border-color:var(--accent); }
+  .gender-row{ display:flex; gap:8px; margin-bottom:18px; }
+  .gender-btn{ flex:1; padding:11px; background:var(--ink); border:1px solid var(--line); border-radius:6px; color:var(--muted); font-family:'Inter',sans-serif; font-size:14px; cursor:pointer; transition:.15s ease; }
+  .gender-btn.active{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .results{ margin-top:8px; }
+  .result-row{ display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px dashed var(--line); }
+  .result-row .label{ font-size:13.5px; color:var(--muted); }
+  .result-row .value{ font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:500; }
+  .result-row.highlight .value{ font-size:24px; font-weight:700; color:var(--accent); }
+  .disclaimer{ margin-top:20px; font-size:12.5px; color:var(--muted); line-height:1.6; text-align:center; }
+  footer{ margin-top:48px; color:#5c4433; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#5c4433; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#d9c4b4; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / zdrowie</div>
+  <h1>Zapotrzebowanie kaloryczne</h1>
+  <p class="sub">Szacunkowe dzienne zapotrzebowanie na kalorie na podstawie Twoich danych.</p>
+
+  <div class="card">
+    <div class="gender-row">
+      <button class="gender-btn active" data-gender="male">Mężczyzna</button>
+      <button class="gender-btn" data-gender="female">Kobieta</button>
+    </div>
+    <div class="row2">
+      <div class="field"><label for="age">WIEK</label><input type="number" id="age" value="30"></div>
+      <div class="field"><label for="weight">WAGA (KG)</label><input type="number" id="weight" value="75"></div>
+    </div>
+    <div class="field"><label for="height">WZROST (CM)</label><input type="number" id="height" value="175"></div>
+    <div class="field">
+      <label for="activity">POZIOM AKTYWNOŚCI</label>
+      <select id="activity">
+        <option value="1.2">Siedzący tryb życia</option>
+        <option value="1.375">Lekka aktywność (1-3x/tydzień)</option>
+        <option value="1.55" selected>Umiarkowana aktywność (3-5x/tydzień)</option>
+        <option value="1.725">Wysoka aktywność (6-7x/tydzień)</option>
+        <option value="1.9">Bardzo wysoka aktywność (praca fizyczna + trening)</option>
+      </select>
+    </div>
+    <div class="results">
+      <div class="result-row"><span class="label">Metabolizm podstawowy (BMR)</span><span class="value" id="bmrResult">—</span></div>
+      <div class="result-row highlight"><span class="label">Szacowane dzienne zapotrzebowanie</span><span class="value" id="tdeeResult">—</span></div>
+    </div>
+    <p class="disclaimer">Szacunek orientacyjny (wzór Mifflin-St Jeor), nie zastępuje porady dietetyka ani lekarza. Nie stanowi planu żywieniowego.</p>
+  </div>
+
+  <section class="content">
+    <h2>Czym jest BMR i TDEE</h2>
+    <p>BMR (podstawowa przemiana materii) to liczba kalorii, jaką organizm zużywa w spoczynku, tylko na podtrzymanie podstawowych funkcji życiowych. TDEE (całkowite dzienne zapotrzebowanie energetyczne) uwzględnia dodatkowo aktywność fizyczną i codzienny ruch — to liczba bliższa realnemu zapotrzebowaniu w ciągu dnia.</p>
+    <h2>Jak korzystać z wyniku</h2>
+    <p>Wynik TDEE to punkt odniesienia, a nie sztywna zasada. Warto traktować go jako szacunkowy start do rozmowy z dietetykiem, zwłaszcza przy planowaniu jakichkolwiek zmian w sposobie odżywiania.</p>
+    <div class="faq-item"><h3>Czy wynik jest dokładny co do kalorii?</h3><p>To szacunek statystyczny — indywidualne zapotrzebowanie zależy też od genetyki, składu ciała i stanu zdrowia, więc rzeczywista wartość może się różnić.</p></div>
+    <div class="faq-item"><h3>Czy dane, które wpisuję, są zapisywane?</h3><p>Nie — obliczenia odbywają się lokalnie w przeglądarce.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  let gender = 'male';
+  const genderButtons = document.querySelectorAll('.gender-btn');
+  genderButtons.forEach(btn => btn.addEventListener('click', () => {
+    genderButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    gender = btn.dataset.gender;
+    calc();
+  }));
+
+  const age = document.getElementById('age');
+  const weight = document.getElementById('weight');
+  const height = document.getElementById('height');
+  const activity = document.getElementById('activity');
+  const bmrResult = document.getElementById('bmrResult');
+  const tdeeResult = document.getElementById('tdeeResult');
+
+  function calc(){
+    const a = parseFloat(age.value), w = parseFloat(weight.value), h = parseFloat(height.value);
+    if(!a || !w || !h){ bmrResult.textContent = '—'; tdeeResult.textContent = '—'; return; }
+    let bmr = gender === 'male'
+      ? (10*w + 6.25*h - 5*a + 5)
+      : (10*w + 6.25*h - 5*a - 161);
+    const tdee = bmr * parseFloat(activity.value);
+    bmrResult.textContent = Math.round(bmr) + ' kcal';
+    tdeeResult.textContent = Math.round(tdee) + ' kcal';
+  }
+  [age, weight, height, activity].forEach(el => el.addEventListener('input', calc));
+  calc();
+</script>
+</body>
+</html>

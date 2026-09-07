@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator Lorem Ipsum — tekst zastępczy online</title>
+<meta name="description" content="Wygeneruj tekst zastępczy Lorem Ipsum — dowolna liczba akapitów, zdań lub słów. Przydatne przy makietowaniu stron i projektów graficznych.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#22262b; --surface:#2b3036; --line:#3d4349; --paper:#eef0f2; --muted:#8b93a0; --accent:#64748b; --accent-dim:#4b5563; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:600px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  .controls-row{ display:flex; gap:10px; align-items:flex-end; margin-bottom:18px; flex-wrap:wrap; }
+  .field{ flex:1; min-width:120px; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-bottom:8px; }
+  select, input[type="number"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:12px 14px; font-family:'IBM Plex Mono',monospace; font-size:14.5px; color:var(--paper); outline:none; }
+  select{ font-family:'Inter',sans-serif; cursor:pointer; }
+  .gen-btn{ background:var(--accent); color:#fff; border:none; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; padding:12px 20px; border-radius:6px; cursor:pointer; white-space:nowrap; }
+  .gen-btn:hover{ background:var(--accent-dim); }
+  #output{ background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:18px; font-size:14.5px; line-height:1.7; color:var(--paper); min-height:160px; white-space:pre-wrap; }
+  .copy-row{ margin-top:14px; text-align:right; }
+  .copy-btn{ background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 16px; border-radius:6px; cursor:pointer; }
+  .copy-btn:hover{ border-color:var(--accent); color:var(--paper); }
+  footer{ margin-top:48px; color:#4a4f56; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4a4f56; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#c3c8ce; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / design</div>
+  <h1>Generator Lorem Ipsum</h1>
+  <p class="sub">Tekst zastępczy do makiet, projektów i testowania layoutu.</p>
+
+  <div class="card">
+    <div class="controls-row">
+      <div class="field">
+        <label for="amount">ILOŚĆ</label>
+        <input type="number" id="amount" value="3" min="1" max="50">
+      </div>
+      <div class="field">
+        <label for="unit">TYP</label>
+        <select id="unit">
+          <option value="paragraphs">Akapity</option>
+          <option value="sentences">Zdania</option>
+          <option value="words">Słowa</option>
+        </select>
+      </div>
+      <button class="gen-btn" id="genBtn">Generuj</button>
+    </div>
+    <div id="output"></div>
+    <div class="copy-row"><button class="copy-btn" id="copyBtn">Kopiuj tekst</button></div>
+  </div>
+
+  <section class="content">
+    <h2>Do czego służy Lorem Ipsum</h2>
+    <p>Lorem Ipsum to standardowy tekst zastępczy używany od dekad w projektowaniu graficznym i webowym — pozwala zobaczyć, jak układ strony wygląda z realną ilością tekstu, zanim gotowa treść jest jeszcze dostępna. Dzięki temu projektant czy deweloper może ocenić proporcje, odstępy i czytelność makiety niezależnie od tego, o czym finalnie będzie tekst.</p>
+    <h2>Dlaczego akurat ten, pozornie bezsensowny tekst</h2>
+    <p>Lorem Ipsum pochodzi z fragmentu łacińskiego tekstu sprzed ponad 2000 lat, celowo pozbawionego oczywistego sensu — dzięki temu odbiorca skupia się na wyglądzie layoutu, a nie próbuje "czytać" treści, co mogłoby rozpraszać podczas oceny samego designu.</p>
+    <div class="faq-item"><h3>Czy mogę wygenerować tekst w innym języku niż łacina?</h3><p>Obecna wersja generuje klasyczny tekst Lorem Ipsum. To standardowy, uniwersalnie rozpoznawalny format w branży designu.</p></div>
+    <div class="faq-item"><h3>Ile tekstu mogę wygenerować naraz?</h3><p>Do 50 jednostek (akapitów, zdań lub słów) w jednym generowaniu — więcej niż wystarczająco do większości makiet.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const WORDS = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure in reprehenderit voluptate velit esse cillum eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum".split(' ');
+
+  function randomWord(){ return WORDS[Math.floor(Math.random()*WORDS.length)]; }
+
+  function makeSentence(){
+    const len = 6 + Math.floor(Math.random()*8);
+    let words = [];
+    for(let i=0;i<len;i++) words.push(randomWord());
+    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+    return words.join(' ') + '.';
+  }
+
+  function makeParagraph(){
+    const len = 3 + Math.floor(Math.random()*4);
+    let sentences = [];
+    for(let i=0;i<len;i++) sentences.push(makeSentence());
+    return sentences.join(' ');
+  }
+
+  function generate(){
+    const amount = Math.max(1, Math.min(50, parseInt(document.getElementById('amount').value,10) || 1));
+    const unit = document.getElementById('unit').value;
+    let result = '';
+    if(unit === 'paragraphs'){
+      const paras = [];
+      for(let i=0;i<amount;i++) paras.push(makeParagraph());
+      result = paras.join('\n\n');
+    } else if(unit === 'sentences'){
+      const sentences = [];
+      for(let i=0;i<amount;i++) sentences.push(makeSentence());
+      result = sentences.join(' ');
+    } else {
+      const words = [];
+      for(let i=0;i<amount;i++) words.push(randomWord());
+      result = words.join(' ') + '.';
+      result = result.charAt(0).toUpperCase() + result.slice(1);
+    }
+    document.getElementById('output').textContent = result;
+  }
+
+  document.getElementById('genBtn').addEventListener('click', generate);
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(document.getElementById('output').textContent);
+      const btn = document.getElementById('copyBtn');
+      const orig = btn.textContent;
+      btn.textContent = 'Skopiowano ✓';
+      setTimeout(() => { btn.textContent = orig; }, 1200);
+    }catch(e){}
+  });
+
+  generate();
+</script>
+</body>
+</html>

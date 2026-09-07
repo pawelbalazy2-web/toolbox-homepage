@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprawdź siłę hasła online</title>
+<meta name="description" content="Sprawdź, jak silne jest Twoje hasło. Analiza długości, różnorodności znaków i odporności na łamanie — wszystko lokalnie w przeglądarce.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1c1530; --surface:#251c40; --line:#392c5c; --paper:#ece7f7; --muted:#9a8fc2; --accent:#8b5cf6; --accent-dim:#6c3fd4; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:540px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  input[type="text"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:16px; font-family:'IBM Plex Mono',monospace; font-size:16px; color:var(--paper); outline:none; transition:border-color .15s ease; }
+  input:focus{ border-color:var(--accent); }
+  .strength-bars{ display:flex; gap:5px; margin:18px 0 10px; }
+  .strength-bars span{ height:6px; flex:1; background:var(--line); border-radius:3px; transition:background .2s ease; }
+  .strength-label{ font-family:'Sora',sans-serif; font-weight:700; font-size:16px; text-align:center; margin-bottom:20px; }
+  .checklist{ display:flex; flex-direction:column; gap:8px; }
+  .check-item{ display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--muted); }
+  .check-item.ok{ color:var(--paper); }
+  .check-icon{ width:16px; height:16px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .check-item.ok .check-icon{ background:var(--accent); border-color:var(--accent); }
+  footer{ margin-top:48px; color:#4a3d70; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4a3d70; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#c7bde3; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / bezpieczeństwo</div>
+  <h1>Sprawdź siłę hasła</h1>
+  <p class="sub">Wpisz hasło, żeby zobaczyć jak odporne jest na złamanie. Nic nie opuszcza Twojej przeglądarki.</p>
+
+  <div class="card">
+    <input type="text" id="pwInput" placeholder="Wpisz hasło do sprawdzenia...">
+    <div class="strength-bars"><span id="b1"></span><span id="b2"></span><span id="b3"></span><span id="b4"></span><span id="b5"></span></div>
+    <div class="strength-label" id="strengthLabel">Wpisz hasło powyżej</div>
+    <div class="checklist">
+      <div class="check-item" id="c-length"><span class="check-icon"></span>Co najmniej 12 znaków</div>
+      <div class="check-item" id="c-upper"><span class="check-icon"></span>Wielkie litery (A-Z)</div>
+      <div class="check-item" id="c-lower"><span class="check-icon"></span>Małe litery (a-z)</div>
+      <div class="check-item" id="c-number"><span class="check-icon"></span>Cyfry (0-9)</div>
+      <div class="check-item" id="c-symbol"><span class="check-icon"></span>Symbole (!@#$...)</div>
+    </div>
+  </div>
+
+  <section class="content">
+    <h2>Co sprawia, że hasło jest silne</h2>
+    <p>Siła hasła zależy głównie od dwóch czynników: długości i różnorodności użytych znaków. Każdy dodatkowy znak wykładniczo zwiększa liczbę możliwych kombinacji, które musiałby sprawdzić atakujący. Hasło 16-znakowe z mieszanką wielkich, małych liter, cyfr i symboli jest praktycznie nie do złamania metodą brute-force przy obecnej mocy obliczeniowej.</p>
+    <h2>Dlaczego to narzędzie jest bezpieczne w użyciu</h2>
+    <p>Wpisane hasło analizowane jest w całości lokalnie, w Twojej przeglądarce — nigdy nie jest wysyłane na żaden serwer ani zapisywane. Możesz to zweryfikować, sprawdzając kod źródłowy strony.</p>
+    <div class="faq-item"><h3>Czy sprawdzacie moje hasło z bazami wycieków?</h3><p>Nie — to narzędzie ocenia jedynie strukturę hasła (długość, różnorodność znaków), nie porównuje go z żadną zewnętrzną bazą danych.</p></div>
+    <div class="faq-item"><h3>Co jeśli moje hasło jest silne, ale krótkie?</h3><p>Długość ma większe znaczenie niż różnorodność znaków — nawet bardzo złożone, ale krótkie hasło jest łatwiejsze do złamania niż długie, prostsze hasło.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const pwInput = document.getElementById('pwInput');
+  const bars = ['b1','b2','b3','b4','b5'].map(id => document.getElementById(id));
+  const strengthLabel = document.getElementById('strengthLabel');
+  const checks = {
+    length: document.getElementById('c-length'),
+    upper: document.getElementById('c-upper'),
+    lower: document.getElementById('c-lower'),
+    number: document.getElementById('c-number'),
+    symbol: document.getElementById('c-symbol')
+  };
+
+  function evaluate(){
+    const pw = pwInput.value;
+    const hasLength = pw.length >= 12;
+    const hasUpper = /[A-Z]/.test(pw);
+    const hasLower = /[a-z]/.test(pw);
+    const hasNumber = /[0-9]/.test(pw);
+    const hasSymbol = /[^A-Za-z0-9]/.test(pw);
+
+    checks.length.classList.toggle('ok', hasLength);
+    checks.upper.classList.toggle('ok', hasUpper);
+    checks.lower.classList.toggle('ok', hasLower);
+    checks.number.classList.toggle('ok', hasNumber);
+    checks.symbol.classList.toggle('ok', hasSymbol);
+
+    const score = [hasLength, hasUpper, hasLower, hasNumber, hasSymbol].filter(Boolean).length;
+    const colors = ['#e5534b','#e5534b','#e0a458','#e0a458','#8b5cf6'];
+    const labels = ['Wpisz hasło powyżej','Bardzo słabe','Słabe','Średnie','Dobre','Bardzo silne'];
+
+    bars.forEach((bar, i) => { bar.style.background = i < score ? colors[Math.min(score-1,4)] : 'var(--line)'; });
+    strengthLabel.textContent = pw.length === 0 ? labels[0] : labels[score];
+  }
+  pwInput.addEventListener('input', evaluate);
+  evaluate();
+</script>
+</body>
+</html>

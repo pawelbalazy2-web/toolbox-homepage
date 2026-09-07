@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator raty kredytu online</title>
+<meta name="description" content="Oblicz miesięczną ratę kredytu na podstawie kwoty, oprocentowania i okresu spłaty. Darmowy kalkulator, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#101a33; --surface:#172242; --line:#243258; --paper:#e9edf7; --muted:#7b88b3; --accent:#3b5fe0; --accent-dim:#2c48b8; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:540px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-bottom:8px; }
+  input[type="number"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:13px 14px; font-family:'IBM Plex Mono',monospace; font-size:16px; color:var(--paper); outline:none; transition:border-color .15s ease; }
+  input:focus{ border-color:var(--accent); }
+  .results{ margin-top:8px; }
+  .result-row{ display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px dashed var(--line); }
+  .result-row .label{ font-size:13.5px; color:var(--muted); }
+  .result-row .value{ font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:500; }
+  .result-row.highlight .value{ font-size:26px; font-weight:700; color:var(--accent); }
+  .disclaimer{ margin-top:20px; font-size:12.5px; color:var(--muted); line-height:1.6; text-align:center; }
+  footer{ margin-top:48px; color:#3d4a70; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#3d4a70; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#b9c2de; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / finanse</div>
+  <h1>Kalkulator raty kredytu</h1>
+  <p class="sub">Oblicz miesięczną ratę na podstawie kwoty, oprocentowania i okresu spłaty.</p>
+
+  <div class="card">
+    <div class="field"><label for="amount">KWOTA KREDYTU (ZŁ)</label><input type="number" id="amount" value="300000"></div>
+    <div class="field"><label for="rate">OPROCENTOWANIE ROCZNE (%)</label><input type="number" id="rate" value="7.5" step="0.1"></div>
+    <div class="field"><label for="years">OKRES SPŁATY (LATA)</label><input type="number" id="years" value="25"></div>
+    <div class="results">
+      <div class="result-row highlight"><span class="label">Rata miesięczna</span><span class="value" id="monthlyResult">—</span></div>
+      <div class="result-row"><span class="label">Suma odsetek</span><span class="value" id="interestResult">—</span></div>
+      <div class="result-row"><span class="label">Suma do spłaty</span><span class="value" id="totalResult">—</span></div>
+    </div>
+    <p class="disclaimer">Kalkulator zakłada raty równe (annuitetowe) i stałe oprocentowanie. Rzeczywista oferta banku może uwzględniać dodatkowe opłaty i prowizje.</p>
+  </div>
+
+  <section class="content">
+    <h2>Jak liczona jest rata równa (annuitetowa)</h2>
+    <p>Rata równa oznacza, że co miesiąc płacisz dokładnie tę samą kwotę przez cały okres kredytowania, choć proporcje między częścią kapitałową a odsetkową zmieniają się w czasie — na początku spłacasz głównie odsetki, a z czasem coraz większą część kapitału. To najpopularniejszy typ raty oferowany przez banki w Polsce.</p>
+    <h2>Co wpływa na wysokość raty</h2>
+    <p>Trzy czynniki mają kluczowe znaczenie: kwota kredytu (im wyższa, tym wyższa rata), oprocentowanie (nawet niewielka różnica w skali roku znacząco wpływa na sumę odsetek przy długim okresie spłaty) oraz okres spłaty (dłuższy okres oznacza niższą ratę miesięczną, ale wyższą sumę odsetek w całym okresie).</p>
+    <div class="faq-item"><h3>Czy to jest oficjalna symulacja kredytowa banku?</h3><p>Nie — to niezależne, orientacyjne narzędzie matematyczne. Rzeczywista oferta kredytowa zależy od zdolności kredytowej, marży banku i dodatkowych opłat, które ten kalkulator nie uwzględnia.</p></div>
+    <div class="faq-item"><h3>Czy dane, które wpisuję, są zapisywane?</h3><p>Nie — wszystkie obliczenia odbywają się lokalnie w przeglądarce.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const amount = document.getElementById('amount');
+  const rate = document.getElementById('rate');
+  const years = document.getElementById('years');
+  const monthlyResult = document.getElementById('monthlyResult');
+  const interestResult = document.getElementById('interestResult');
+  const totalResult = document.getElementById('totalResult');
+
+  function formatPLN(v){ return v.toLocaleString('pl-PL', {maximumFractionDigits:0}) + ' zł'; }
+
+  function calc(){
+    const P = parseFloat(amount.value);
+    const annualRate = parseFloat(rate.value);
+    const n = parseFloat(years.value) * 12;
+    if(!P || !annualRate || !n){ monthlyResult.textContent='—'; interestResult.textContent='—'; totalResult.textContent='—'; return; }
+    const r = (annualRate/100) / 12;
+    const monthly = P * (r * Math.pow(1+r, n)) / (Math.pow(1+r, n) - 1);
+    const total = monthly * n;
+    const interest = total - P;
+
+    monthlyResult.textContent = formatPLN(monthly);
+    interestResult.textContent = formatPLN(interest);
+    totalResult.textContent = formatPLN(total);
+  }
+  [amount, rate, years].forEach(el => el.addEventListener('input', calc));
+  calc();
+</script>
+</body>
+</html>

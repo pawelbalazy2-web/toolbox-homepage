@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formatter JSON — formatuj i waliduj online</title>
+<meta name="description" content="Darmowy formatter i walidator JSON online. Sformatuj, upiękl i sprawdź poprawność swojego kodu JSON — bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#241f0e; --surface:#332b14; --line:#4a3e1a; --paper:#f5f0e0; --muted:#b0a375; --accent:#eab308; --accent-dim:#b58807; --red:#e5534b; --green:#4caf6d; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:640px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  textarea{ width:100%; min-height:200px; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:16px; font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.6; color:var(--paper); outline:none; resize:vertical; }
+  textarea:focus{ border-color:var(--accent); }
+  .btn-row{ display:flex; gap:8px; margin:14px 0; }
+  .btn-row button{ font-family:'Sora',sans-serif; font-weight:700; font-size:13.5px; padding:11px 18px; border-radius:6px; border:none; cursor:pointer; }
+  #formatBtn{ background:var(--accent); color:var(--ink); }
+  #formatBtn:hover{ background:#f5c832; }
+  .secondary-btn{ background:var(--ink); color:var(--muted); border:1px solid var(--line) !important; }
+  .secondary-btn:hover{ color:var(--paper); border-color:var(--accent) !important; }
+  .status{ font-family:'IBM Plex Mono',monospace; font-size:13px; padding:10px 14px; border-radius:6px; margin-top:6px; display:none; }
+  .status.ok{ display:block; background:rgba(76,175,109,0.12); color:var(--green); }
+  .status.error{ display:block; background:rgba(229,83,75,0.12); color:var(--red); }
+  footer{ margin-top:48px; color:#5c4f28; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#5c4f28; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#d6cba5; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / dev</div>
+  <h1>Formatter JSON</h1>
+  <p class="sub">Wklej JSON, sformatuj i sprawdź czy jest poprawny składniowo.</p>
+
+  <div class="card">
+    <textarea id="jsonInput" placeholder='{"przyklad": "wklej tutaj swój JSON", "liczba": 42}'></textarea>
+    <div class="btn-row">
+      <button id="formatBtn">Formatuj</button>
+      <button class="secondary-btn" id="minifyBtn">Minifikuj</button>
+      <button class="secondary-btn" id="copyBtn">Kopiuj</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <section class="content">
+    <h2>Do czego przyda się formatter JSON</h2>
+    <p>Odpowiedzi z API czy pliki konfiguracyjne często przychodzą jako jedna, nieczytelna linia tekstu. Formatowanie (tzw. "pretty print") dodaje wcięcia i podział na linie, dzięki czemu struktura danych staje się czytelna na pierwszy rzut oka — łatwiej znaleźć błąd czy zrozumieć zagnieżdżenie obiektów.</p>
+    <h2>Walidacja składni</h2>
+    <p>Formatter jednocześnie sprawdza, czy wklejony tekst jest poprawnym JSON-em. Jeśli jest błąd składniowy (np. brakujący przecinek czy niezamknięty nawias), narzędzie pokaże komunikat błędu zamiast sformatowanego wyniku.</p>
+    <div class="faq-item"><h3>Czy mogę też zmniejszyć (zminifikować) JSON?</h3><p>Tak — przycisk "Minifikuj" usuwa wszystkie zbędne białe znaki, tworząc najkrótszą możliwą wersję, przydatną np. przy wysyłaniu danych przez API.</p></div>
+    <div class="faq-item"><h3>Czy wklejone dane są gdzieś zapisywane?</h3><p>Nie — całe przetwarzanie odbywa się lokalnie w przeglądarce, dane nigdy nie opuszczają Twojego urządzenia.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const jsonInput = document.getElementById('jsonInput');
+  const status = document.getElementById('status');
+
+  function showStatus(ok, message){
+    status.className = 'status ' + (ok ? 'ok' : 'error');
+    status.textContent = message;
+  }
+
+  document.getElementById('formatBtn').addEventListener('click', () => {
+    try{
+      const parsed = JSON.parse(jsonInput.value);
+      jsonInput.value = JSON.stringify(parsed, null, 2);
+      showStatus(true, '✓ Poprawny JSON, sformatowano.');
+    }catch(e){
+      showStatus(false, '✗ Błąd składni: ' + e.message);
+    }
+  });
+
+  document.getElementById('minifyBtn').addEventListener('click', () => {
+    try{
+      const parsed = JSON.parse(jsonInput.value);
+      jsonInput.value = JSON.stringify(parsed);
+      showStatus(true, '✓ Zminifikowano.');
+    }catch(e){
+      showStatus(false, '✗ Błąd składni: ' + e.message);
+    }
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    try{ await navigator.clipboard.writeText(jsonInput.value); }catch(e){}
+  });
+</script>
+</body>
+</html>

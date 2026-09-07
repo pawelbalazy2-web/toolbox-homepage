@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator BMI — sprawdź wskaźnik masy ciała</title>
+<meta name="description" content="Darmowy kalkulator BMI online. Oblicz wskaźnik masy ciała na podstawie wzrostu i wagi — bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#122225; --surface:#173035; --line:#274248; --paper:#e9f3f2; --muted:#7fa3a0; --accent:#2ba8a0; --accent-dim:#1f7d77; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:520px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-bottom:8px; }
+  input[type="number"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:14px 16px; font-family:'IBM Plex Mono',monospace; font-size:17px; color:var(--paper); outline:none; transition:border-color .15s ease; }
+  input:focus{ border-color:var(--accent); }
+  .result-box{ margin-top:8px; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:26px; text-align:center; }
+  .result-value{ font-family:'Sora',sans-serif; font-weight:800; font-size:38px; color:var(--accent); }
+  .result-cat{ font-family:'Inter',sans-serif; font-size:14px; color:var(--muted); margin-top:8px; }
+  .disclaimer{ margin-top:20px; font-size:12.5px; color:var(--muted); line-height:1.6; text-align:center; }
+  footer{ margin-top:48px; color:#3d5c5a; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#3d5c5a; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#bcd4d1; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / zdrowie</div>
+  <h1>Kalkulator BMI</h1>
+  <p class="sub">Sprawdź wskaźnik masy ciała na podstawie wzrostu i wagi.</p>
+
+  <div class="card">
+    <div class="field"><label for="weight">WAGA (KG)</label><input type="number" id="weight" value="70"></div>
+    <div class="field"><label for="height">WZROST (CM)</label><input type="number" id="height" value="175"></div>
+    <div class="result-box">
+      <div class="result-value" id="bmiResult">—</div>
+      <div class="result-cat" id="bmiCategory"></div>
+    </div>
+    <p class="disclaimer">To orientacyjne narzędzie, nie zastępuje konsultacji lekarskiej. BMI nie uwzględnia masy mięśniowej, wieku ani budowy ciała.</p>
+  </div>
+
+  <section class="content">
+    <h2>Jak interpretować wynik BMI</h2>
+    <p>Wskaźnik BMI (Body Mass Index) to szybki, orientacyjny sposób oszacowania, czy waga jest proporcjonalna do wzrostu. Standardowe zakresy to: poniżej 18,5 — niedowaga, 18,5–24,9 — waga prawidłowa, 25–29,9 — nadwaga, powyżej 30 — otyłość. To jednak uproszczony wskaźnik populacyjny — nie uwzględnia indywidualnej budowy ciała, masy mięśniowej ani innych czynników zdrowotnych.</p>
+    <h2>Ograniczenia wskaźnika BMI</h2>
+    <p>BMI bywa mylące np. u sportowców z dużą masą mięśniową (może wskazywać nadwagę mimo niskiego poziomu tkanki tłuszczowej) oraz u osób starszych czy o nietypowej budowie ciała. Traktuj wynik jako punkt wyjścia do rozmowy z lekarzem, nie jako ostateczną diagnozę.</p>
+    <div class="faq-item"><h3>Czy BMI jest dokładnym miernikiem zdrowia?</h3><p>Nie w pełni — to uproszczony wskaźnik statystyczny. Pełniejszy obraz daje pomiar składu ciała (np. procent tkanki tłuszczowej) i konsultacja ze specjalistą.</p></div>
+    <div class="faq-item"><h3>Czy dane, które wpisuję, są zapisywane?</h3><p>Nie — obliczenia odbywają się lokalnie w przeglądarce, nic nie jest wysyłane na serwer.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const weight = document.getElementById('weight');
+  const height = document.getElementById('height');
+  const bmiResult = document.getElementById('bmiResult');
+  const bmiCategory = document.getElementById('bmiCategory');
+
+  function calc(){
+    const w = parseFloat(weight.value);
+    const h = parseFloat(height.value) / 100;
+    if(!w || !h){ bmiResult.textContent = '—'; bmiCategory.textContent = ''; return; }
+    const bmi = w / (h*h);
+    bmiResult.textContent = bmi.toFixed(1);
+    let cat;
+    if(bmi < 18.5) cat = 'Niedowaga';
+    else if(bmi < 25) cat = 'Waga prawidłowa';
+    else if(bmi < 30) cat = 'Nadwaga';
+    else cat = 'Otyłość';
+    bmiCategory.textContent = cat;
+  }
+  weight.addEventListener('input', calc);
+  height.addEventListener('input', calc);
+  calc();
+</script>
+</body>
+</html>

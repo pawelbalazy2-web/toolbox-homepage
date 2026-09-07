@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konwerter rozmiarów ubrań — PL, EU, US, UK</title>
+<meta name="description" content="Przelicz rozmiar ubrań między systemami polskim, europejskim, amerykańskim i brytyjskim. Darmowy konwerter, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#2b1420; --surface:#3a1b2a; --line:#54263c; --paper:#f7e9ef; --muted:#c090aa; --accent:#db2777; --accent-dim:#ad1c5e; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:560px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  .cat-row{ display:flex; gap:8px; margin-bottom:20px; }
+  .cat-btn{ flex:1; padding:11px; background:var(--ink); border:1px solid var(--line); border-radius:6px; color:var(--muted); font-family:'Inter',sans-serif; font-size:14px; cursor:pointer; }
+  .cat-btn.active{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  table{ width:100%; border-collapse:collapse; }
+  th, td{ text-align:center; padding:12px 8px; font-family:'IBM Plex Mono',monospace; font-size:14.5px; border-bottom:1px solid var(--line); }
+  th{ color:var(--accent); font-size:12px; font-weight:600; }
+  tr.highlighted td{ background:rgba(219,39,119,0.1); font-weight:600; }
+  footer{ margin-top:48px; color:#5c3346; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#5c3346; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#e0c3d3; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / moda</div>
+  <h1>Konwerter rozmiarów ubrań</h1>
+  <p class="sub">Przelicz rozmiar między systemem polskim, europejskim, amerykańskim i brytyjskim.</p>
+
+  <div class="card">
+    <div class="cat-row">
+      <button class="cat-btn active" data-cat="women">Damskie</button>
+      <button class="cat-btn" data-cat="men">Męskie</button>
+    </div>
+    <table id="sizeTable">
+      <thead><tr><th>PL</th><th>EU</th><th>US</th><th>UK</th></tr></thead>
+      <tbody id="sizeBody"></tbody>
+    </table>
+  </div>
+
+  <section class="content">
+    <h2>Dlaczego rozmiary różnią się między krajami</h2>
+    <p>Nie istnieje jeden globalny standard rozmiarów odzieży — każdy region historycznie wypracował własny system numeracji, oparty na nieco innych pomiarach referencyjnych. Dlatego rozmiar "M" czy "38" może oznaczać różne wymiary w zależności od marki i kraju pochodzenia, co bywa mylące przy zakupach w zagranicznych sklepach internetowych.</p>
+    <h2>Jak korzystać z tabeli</h2>
+    <p>Tabela pokazuje przybliżone odpowiedniki rozmiarów między systemami — przydatne przy zakupach w sklepach amerykańskich czy brytyjskich, gdzie rozmiary podawane są w lokalnym systemie. Warto jednak pamiętać, że różne marki mogą mieć swoją własną tabelę rozmiarów, więc w miarę możliwości sprawdzaj też konkretne wymiary (obwód klatki, talii) podane przez sprzedawcę.</p>
+    <div class="faq-item"><h3>Czy te przeliczenia są uniwersalne dla każdej marki?</h3><p>To orientacyjne, przybliżone przeliczenia — rzeczywisty rozmiar może się nieznacznie różnić między markami. W miarę możliwości sprawdzaj też tabelę rozmiarów konkretnego producenta.</p></div>
+    <div class="faq-item"><h3>Czy dotyczy to też obuwia?</h3><p>Nie — ta tabela dotyczy rozmiarów odzieży. Rozmiary obuwia rządzą się inną, osobną skalą przeliczeniową.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const DATA = {
+    women: [
+      {pl:34, eu:34, us:2, uk:6},
+      {pl:36, eu:36, us:4, uk:8},
+      {pl:38, eu:38, us:6, uk:10},
+      {pl:40, eu:40, us:8, uk:12},
+      {pl:42, eu:42, us:10, uk:14},
+      {pl:44, eu:44, us:12, uk:16},
+      {pl:46, eu:46, us:14, uk:18}
+    ],
+    men: [
+      {pl:44, eu:44, us:34, uk:34},
+      {pl:46, eu:46, us:36, uk:36},
+      {pl:48, eu:48, us:38, uk:38},
+      {pl:50, eu:50, us:40, uk:40},
+      {pl:52, eu:52, us:42, uk:42},
+      {pl:54, eu:54, us:44, uk:44},
+      {pl:56, eu:56, us:46, uk:46}
+    ]
+  };
+
+  function render(cat){
+    const tbody = document.getElementById('sizeBody');
+    tbody.innerHTML = '';
+    DATA[cat].forEach(row => {
+      const tr = document.createElement('tr');
+      if(row.eu === 40 || row.eu === 48) tr.classList.add('highlighted');
+      tr.innerHTML = `<td>${row.pl}</td><td>${row.eu}</td><td>${row.us}</td><td>${row.uk}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.cat);
+    });
+  });
+
+  render('women');
+</script>
+</body>
+</html>

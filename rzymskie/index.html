@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konwerter liczb rzymskich online</title>
+<meta name="description" content="Przelicz liczby arabskie na rzymskie i odwrotnie. Darmowy konwerter online, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#2a2114; --surface:#382c1a; --line:#4d3d24; --paper:#f2ebd9; --muted:#ad9868; --accent:#c99a2e; --accent-dim:#a17c1f; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); line-height:1.15; text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; line-height:1.6; margin:0 0 40px; }
+  .card{ width:100%; max-width:520px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  .conv-row{ display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+  .field{ flex:1; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-bottom:8px; }
+  input[type="text"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:14px 16px; font-family:'IBM Plex Mono',monospace; font-size:20px; color:var(--paper); outline:none; transition:border-color .15s ease; text-align:center; }
+  input:focus{ border-color:var(--accent); }
+  .swap-icon{ color:var(--accent); font-size:22px; margin-top:22px; }
+  .error-msg{ text-align:center; color:#e5534b; font-size:13px; margin-top:10px; font-family:'IBM Plex Mono',monospace; min-height:16px; }
+  footer{ margin-top:48px; color:#5c4c2e; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#5c4c2e; }
+  .content{ width:100%; max-width:600px; margin-top:64px; padding-top:48px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:40px 0 14px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#d9c9a3; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .content table{ width:100%; border-collapse:collapse; margin:16px 0 24px; font-size:14px; }
+  .content th, .content td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); }
+  .content th{ font-family:'IBM Plex Mono',monospace; color:var(--accent); font-weight:500; font-size:12.5px; }
+  .content td{ font-family:'IBM Plex Mono',monospace; color:#d9c9a3; }
+  .faq-item{ margin-bottom:22px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:15px; margin:0 0 8px; }
+  .faq-item p{ margin:0; font-size:14.5px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / konwersja</div>
+  <h1>Konwerter liczb rzymskich</h1>
+  <p class="sub">Przelicz liczby arabskie na rzymskie i odwrotnie.</p>
+
+  <div class="card">
+    <div class="conv-row">
+      <div class="field"><label for="arabic">LICZBA ARABSKA</label><input type="text" id="arabic" value="2026" inputmode="numeric"></div>
+      <div class="swap-icon">⇄</div>
+      <div class="field"><label for="roman">LICZBA RZYMSKA</label><input type="text" id="roman" value="MMXXVI"></div>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+  <section class="content">
+    <h2>Jak działają liczby rzymskie</h2>
+    <p>System rzymski opiera się na siedmiu symbolach: I (1), V (5), X (10), L (50), C (100), D (500), M (1000). Liczby tworzy się przez dodawanie (np. VI = 6) lub odejmowanie, gdy mniejszy symbol stoi przed większym (np. IV = 4, czyli 5 minus 1). Ten konwerter obsługuje zakres od 1 do 3999 — to standardowy limit klasycznego zapisu rzymskiego bez dodatkowych oznaczeń.</p>
+    <h2>Tabela podstawowych wartości</h2>
+    <table>
+      <tr><th>Rzymska</th><th>Arabska</th></tr>
+      <tr><td>I</td><td>1</td></tr>
+      <tr><td>V</td><td>5</td></tr>
+      <tr><td>X</td><td>10</td></tr>
+      <tr><td>L</td><td>50</td></tr>
+      <tr><td>C</td><td>100</td></tr>
+      <tr><td>D</td><td>500</td></tr>
+      <tr><td>M</td><td>1000</td></tr>
+    </table>
+    <div class="faq-item"><h3>Dlaczego 4 to IV, a nie IIII?</h3><p>Klasyczna notacja odejmowania (mniejszy symbol przed większym) jest standardem od czasów rzymskich do zapisu liczb takich jak 4 (IV) czy 9 (IX), choć historycznie spotykało się też zapisy addytywne jak IIII — ten konwerter używa standardowej, powszechnie przyjętej notacji.</p></div>
+    <div class="faq-item"><h3>Jaki jest maksymalny zakres liczb?</h3><p>Klasyczny system rzymski bez dodatkowych oznaczeń (jak kreska nad symbolem oznaczająca mnożenie przez 1000) obsługuje liczby od 1 do 3999.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const arabic = document.getElementById('arabic');
+  const roman = document.getElementById('roman');
+  const errorMsg = document.getElementById('errorMsg');
+
+  const ROMAN_MAP = [
+    [1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],
+    [50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']
+  ];
+
+  function toRoman(num){
+    if(num < 1 || num > 3999) return null;
+    let result = '';
+    for(const [value, symbol] of ROMAN_MAP){
+      while(num >= value){ result += symbol; num -= value; }
+    }
+    return result;
+  }
+
+  function fromRoman(str){
+    const map = {I:1,V:5,X:10,L:50,C:100,D:500,M:1000};
+    str = str.toUpperCase();
+    if(!/^[IVXLCDM]+$/.test(str)) return null;
+    let result = 0;
+    for(let i=0;i<str.length;i++){
+      const curr = map[str[i]];
+      const next = map[str[i+1]];
+      if(next && curr < next){ result -= curr; } else { result += curr; }
+    }
+    return result;
+  }
+
+  arabic.addEventListener('input', () => {
+    errorMsg.textContent = '';
+    const num = parseInt(arabic.value, 10);
+    if(isNaN(num)){ roman.value = ''; return; }
+    const r = toRoman(num);
+    if(r === null){ errorMsg.textContent = 'Zakres obsługiwany: 1–3999'; return; }
+    roman.value = r;
+  });
+
+  roman.addEventListener('input', () => {
+    errorMsg.textContent = '';
+    const val = fromRoman(roman.value);
+    if(val === null){ if(roman.value.length > 0) errorMsg.textContent = 'Nieprawidłowy zapis rzymski'; return; }
+    arabic.value = val;
+  });
+</script>
+</body>
+</html>
