@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>toolbox-pl — proste narzędzia online, za darmo</title>
+<meta name="description" content="Zbiór darmowych narzędzi online: generator haseł, konwerter jednostek, licznik znaków, kalkulator dat, generator QR, konwerter kolorów i więcej. Bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --ink: #14171c;
+    --surface: #1c2028;
+    --line: #2b303a;
+    --paper: #eef0f3;
+    --muted: #8890a0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding: 72px 20px 40px;
+  }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  h1{
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: clamp(34px, 5.5vw, 54px);
+    line-height: 1.1;
+    text-align: center;
+    max-width: 680px;
+    margin: 0 0 14px;
+    color: var(--paper);
+  }
+  .sub{
+    color: var(--muted);
+    text-align:center;
+    max-width: 480px;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 56px;
+  }
+
+  .grid{
+    width: 100%;
+    max-width: 920px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .tool-card{
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent, #888);
+    border-radius: 6px;
+    padding: 22px;
+    text-decoration: none;
+    color: var(--paper);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .tool-card:hover{
+    transform: translateY(-2px);
+    border-color: var(--accent, #888);
+  }
+  .tool-eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent, #888);
+    margin-bottom: 10px;
+  }
+  .tool-name{
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 8px;
+    color: var(--paper);
+  }
+  .tool-desc{
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  footer{
+    margin-top: 64px;
+    color: #4a4f5a;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    text-align:center;
+  }
+  footer a{ color: #4a4f5a; }
+</style>
+</head>
+<body>
+
+  <div class="eyebrow">toolbox-pl / zbiór narzędzi</div>
+  <h1>Proste narzędzia, zero rejestracji</h1>
+  <p class="sub">Dziesięć darmowych narzędzi webowych. Każde działa w całości w Twojej przeglądarce — bez kont, bez zbierania danych, bez zbędnych kroków.</p>
+
+  <div class="grid">
+
+    <a class="tool-card" style="--accent:#c9a15a" href="https://haslo.toolbox-pl.pl">
+      <div class="tool-eyebrow">BEZPIECZEŃSTWO</div>
+      <div class="tool-name">Generator haseł</div>
+      <div class="tool-desc">Twórz silne, losowe hasła z kryptograficznym generatorem liczb losowych.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#ff9f1c" href="https://konwerter.toolbox-pl.pl">
+      <div class="tool-eyebrow">KONWERSJA</div>
+      <div class="tool-name">Konwerter jednostek</div>
+      <div class="tool-desc">Długość, waga, temperatura, objętość — wszystkie popularne przeliczenia.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#c1443c" href="https://licznik.toolbox-pl.pl">
+      <div class="tool-eyebrow">TEKST</div>
+      <div class="tool-name">Licznik znaków i słów</div>
+      <div class="tool-desc">Znaki, słowa, zdania, akapity i szacowany czas czytania w czasie rzeczywistym.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#e8b64c" href="https://daty.toolbox-pl.pl">
+      <div class="tool-eyebrow">KALENDARZ</div>
+      <div class="tool-name">Kalkulator dat</div>
+      <div class="tool-desc">Różnica między datami, dodawanie i odejmowanie dni, dokładny wiek.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#e63946" href="https://qr.toolbox-pl.pl">
+      <div class="tool-eyebrow">DRUK</div>
+      <div class="tool-name">Generator kodów QR</div>
+      <div class="tool-desc">Wygeneruj i pobierz kod QR z dowolnego linku lub tekstu.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#6366f1" href="https://kolory.toolbox-pl.pl">
+      <div class="tool-eyebrow">DESIGN</div>
+      <div class="tool-name">Konwerter kolorów</div>
+      <div class="tool-desc">HEX, RGB i HSL w jednym miejscu, z generowaniem odcieni.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#ff7a59" href="https://procenty.toolbox-pl.pl">
+      <div class="tool-eyebrow">MATEMATYKA</div>
+      <div class="tool-name">Kalkulator procentowy</div>
+      <div class="tool-desc">Ile to procent, jaki to procent, i o ile coś wzrosło lub spadło.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#ffb400" href="https://stoper.toolbox-pl.pl">
+      <div class="tool-eyebrow">CZAS</div>
+      <div class="tool-name">Stoper i minutnik</div>
+      <div class="tool-desc">Mierz czas z międzyczasami albo ustaw odliczanie z alarmem.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#c6f135" href="https://losowanie.toolbox-pl.pl">
+      <div class="tool-eyebrow">LOSOWANIE</div>
+      <div class="tool-name">Losowanie online</div>
+      <div class="tool-desc">Wylosuj liczbę z zakresu albo zwycięzcę z własnej listy.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#16a34a" href="https://napiwek.toolbox-pl.pl">
+      <div class="tool-eyebrow">CODZIENNOŚĆ</div>
+      <div class="tool-name">Kalkulator napiwku</div>
+      <div class="tool-desc">Oblicz napiwek i podziel rachunek między znajomych.</div>
+    </a>
+
+  </div>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="regulamin.html">regulamin</a> &nbsp;·&nbsp; <a href="mailto:pawelbalazy2@gmail.com">kontakt</a></footer>
+
+</body>
+</html>
