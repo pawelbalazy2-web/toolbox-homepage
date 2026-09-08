@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator procentu składanego online</title>
+<meta name="description" content="Oblicz jak rosną Twoje oszczędności dzięki procentowi składanemu. Darmowy kalkulator, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#101a33; --surface:#172242; --line:#243258; --paper:#e9edf7; --muted:#7b88b3; --accent:#3b5fe0; --accent-dim:#2c48b8; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:520px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-bottom:8px; }
+  input[type="number"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:13px 14px; font-family:'IBM Plex Mono',monospace; font-size:16px; color:var(--paper); outline:none; }
+  input:focus{ border-color:var(--accent); }
+  .results{ margin-top:8px; }
+  .result-row{ display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px dashed var(--line); }
+  .result-row .label{ font-size:13.5px; color:var(--muted); }
+  .result-row .value{ font-family:'IBM Plex Mono',monospace; font-size:15px; }
+  .result-row.highlight .value{ font-size:26px; font-weight:700; color:var(--accent); }
+  .disclaimer{ margin-top:18px; font-size:12px; color:var(--muted); text-align:center; }
+  footer{ margin-top:48px; color:#3d4a70; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#3d4a70; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / finanse</div>
+  <h1>Procent składany</h1>
+  <p class="sub">Sprawdź, jak rosną oszczędności przy regularnym oprocentowaniu.</p>
+
+  <div class="card">
+    <div class="field"><label>KWOTA POCZĄTKOWA (ZŁ)</label><input type="number" id="principal" value="10000"></div>
+    <div class="field"><label>MIESIĘCZNA WPŁATA (ZŁ)</label><input type="number" id="monthly" value="500"></div>
+    <div class="field"><label>OPROCENTOWANIE ROCZNE (%)</label><input type="number" id="rate" value="5" step="0.1"></div>
+    <div class="field"><label>OKRES (LATA)</label><input type="number" id="years" value="10"></div>
+    <div class="results">
+      <div class="result-row"><span class="label">Suma wpłat</span><span class="value" id="deposited">—</span></div>
+      <div class="result-row"><span class="label">Wypracowane odsetki</span><span class="value" id="interest">—</span></div>
+      <div class="result-row highlight"><span class="label">Wartość końcowa</span><span class="value" id="total">—</span></div>
+    </div>
+    <p class="disclaimer">Kalkulator zakłada stałe, roczne oprocentowanie kapitalizowane miesięcznie. Rzeczywiste produkty finansowe mogą różnić się warunkami.</p>
+  </div>
+
+  <section class="content">
+    <h2>Siła procentu składanego</h2>
+    <p>Procent składany oznacza, że odsetki naliczane są nie tylko od kapitału początkowego, ale też od odsetek wypracowanych wcześniej — dzięki temu oszczędności rosną coraz szybciej z czasem, a nie liniowo. Regularne, nawet niewielkie wpłaty potrafią w dłuższej perspektywie zbudować znaczący kapitał właśnie dzięki temu mechanizmowi.</p>
+    <div class="faq-item"><h3>Dlaczego wynik jest wyższy przy dłuższym okresie?</h3><p>Im dłużej kapitał pracuje, tym więcej cykli kapitalizacji odsetek — a każdy kolejny cykl liczony jest od coraz większej podstawy.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  function formatPLN(v){ return v.toLocaleString('pl-PL',{maximumFractionDigits:0}) + ' zł'; }
+  function calc(){
+    const principal = parseFloat(document.getElementById('principal').value) || 0;
+    const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+    const annualRate = parseFloat(document.getElementById('rate').value) || 0;
+    const years = parseFloat(document.getElementById('years').value) || 0;
+    const months = years * 12;
+    const monthlyRate = (annualRate/100) / 12;
+
+    let balance = principal;
+    for(let i=0;i<months;i++){
+      balance = balance * (1 + monthlyRate) + monthly;
+    }
+    const deposited = principal + monthly * months;
+    const interest = balance - deposited;
+
+    document.getElementById('deposited').textContent = formatPLN(deposited);
+    document.getElementById('interest').textContent = formatPLN(interest);
+    document.getElementById('total').textContent = formatPLN(balance);
+  }
+  ['principal','monthly','rate','years'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+  calc();
+</script>
+</body>
+</html>
