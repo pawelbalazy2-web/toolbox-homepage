@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sennik online — znaczenie snów i symboli</title>
+<meta name="description" content="Sennik online — sprawdź, co oznacza Twój sen. Interpretacje ponad 70 najczęściej śnionych symboli, od zębów po latanie.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --ink: #161329;
+    --surface: #201c38;
+    --surface-raised: #282349;
+    --line: #362f57;
+    --paper: #ece8f7;
+    --muted: #9089b8;
+    --gold: #d4a574;
+    --gold-dim: #a97f52;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1.5px 1.5px at 15% 20%, rgba(212,165,116,0.35) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 80% 10%, rgba(212,165,116,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 60% 35%, rgba(212,165,116,0.25) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 30% 70%, rgba(212,165,116,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 90% 60%, rgba(212,165,116,0.2) 50%, transparent 50%),
+      var(--ink);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding: 64px 20px 40px;
+  }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+  }
+  h1{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(34px, 5.5vw, 52px);
+    line-height: 1.15;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 0 12px;
+  }
+  .sub{
+    color: var(--muted);
+    text-align:center;
+    max-width: 460px;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 36px;
+    font-style: italic;
+  }
+  .card{
+    width: 100%;
+    max-width: 640px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  input[type="text"]{
+    width:100%;
+    background: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 15px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--paper);
+    outline: none;
+    transition: border-color .15s ease;
+  }
+  input:focus{ border-color: var(--gold); }
+  input::placeholder{ color: #5c5482; }
+
+  .detail-box{
+    margin-top: 18px;
+    background: var(--ink);
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    padding: 22px;
+    display:none;
+  }
+  .detail-box.visible{ display:block; }
+  .detail-box h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: var(--gold);
+    margin: 0 0 10px;
+  }
+  .detail-box p{
+    font-size: 15px;
+    line-height: 1.7;
+    color: #d3cdea;
+    margin: 0;
+  }
+
+  .letter-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 6px;
+    margin-top: 20px;
+    justify-content:center;
+  }
+  .letter-btn{
+    width: 30px; height: 30px;
+    background: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .letter-btn:hover, .letter-btn.active{ border-color: var(--gold); color: var(--gold); }
+
+  .symbol-list{
+    margin-top: 16px;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+  }
+  .symbol-chip{
+    background: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--paper);
+    cursor: pointer;
+    transition: border-color .15s ease;
+  }
+  .symbol-chip:hover{ border-color: var(--gold); }
+
+  footer{
+    margin-top: 48px;
+    color: #4a4270;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    text-align:center;
+  }
+  footer a{ color: #4a4270; }
+
+  .content{
+    width:100%;
+    max-width: 620px;
+    margin-top: 64px;
+    padding-top: 44px;
+    border-top: 1px solid var(--line);
+  }
+  .content h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 26px;
+    margin: 36px 0 14px;
+  }
+  .content h2:first-child{ margin-top: 0; }
+  .content p{
+    color: #c3bce0;
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .disclaimer{
+    margin-top: 30px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align:center;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+  <div class="eyebrow">sennik / interpretacja snów</div>
+  <h1>Co oznacza Twój sen?</h1>
+  <p class="sub">Wpisz symbol, o którym śniłeś, albo przeglądaj listę poniżej.</p>
+
+  <div class="card">
+    <input type="text" id="searchInput" placeholder="np. zęby, wąż, latanie...">
+    <div class="detail-box" id="detailBox">
+      <h2 id="detailTitle"></h2>
+      <p id="detailText"></p>
+    </div>
+    <div class="letter-nav" id="letterNav"></div>
+    <div class="symbol-list" id="symbolList"></div>
+  </div>
+
+  <section class="content">
+    <h2>Skąd biorą się interpretacje snów</h2>
+    <p>Interpretacja symboli sennych to tradycja sięgająca tysięcy lat — od starożytnych Egipcjan i Greków, przez psychoanalizę Zygmunta Freuda i Carla Junga, po współczesną, popularną kulturę senników. Freud postrzegał sny jako ukryte spełnienie pragnień, Jung widział w nich symbole archetypowe wspólne dla całej ludzkości. Ten sennik czerpie z obu tradycji oraz popularnych, powszechnie znanych interpretacji ludowych.</p>
+    <h2>Jak korzystać z sennika</h2>
+    <p>Wpisz w polu wyszukiwania słowo najlepiej opisujące główny element Twojego snu — np. jeśli śniłeś o pościgu przez las, spróbuj wyszukać zarówno "ucieczka", jak i "las", żeby zobaczyć pełniejszy obraz. Symbole senne rzadko mają jedno, uniwersalne znaczenie — kontekst całego snu i Twoje osobiste skojarzenia są równie ważne.</p>
+    <p class="disclaimer">Interpretacje mają charakter rozrywkowy i kulturowo-symboliczny, nie naukowy. Nie stanowią diagnozy psychologicznej ani przewidywania przyszłości.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const DREAMS = [
+    {s:"Bieganie", t:"Sen o bieganiu często symbolizuje dążenie do celu lub ucieczkę przed czymś, co Cię przytłacza. Jeśli biegniesz z łatwością, może to oznaczać poczucie kontroli nad swoim życiem; bieganie w miejscu lub z trudem sugeruje frustrację związaną z brakiem postępów."},
+    {s:"Burza", t:"Burza w śnie zwykle odzwierciedla silne, tłumione emocje — gniew, niepokój lub nadchodzący konflikt. Po burzy często następuje w symbolice oczyszczenie, więc sen może zapowiadać rozładowanie napięcia po trudnym okresie."},
+    {s:"Chleb", t:"Chleb jako symbol podstawowych potrzeb i bezpieczeństwa materialnego. Świeży, ciepły chleb może wskazywać na dostatek i satysfakcję, a czerstwy lub spleśniały — na obawy o przyszłość lub niedosyt w życiu codziennym."},
+    {s:"Choroba", t:"Sny o chorobie rzadko dotyczą dosłownie zdrowia fizycznego — częściej symbolizują poczucie słabości, wyczerpania emocjonalnego lub sytuację, która wymaga Twojej uwagi, zanim się pogorszy."},
+    {s:"Ciąża", t:"Ciąża we śnie, niezależnie od płci śniącego, często symbolizuje narodziny nowego pomysłu, projektu lub etapu w życiu, który dopiero się rozwija. Może też odzwierciedlać oczekiwanie i niepewność związaną ze zmianą."},
+    {s:"Ciemność", t:"Ciemność symbolizuje niepewność, strach przed nieznanym lub obszary życia, których jeszcze nie rozumiesz. Sen, w którym błądzisz w ciemności, może wskazywać na poczucie zagubienia w podejmowaniu ważnej decyzji."},
+    {s:"Deszcz", t:"Deszcz często wiąże się z oczyszczeniem emocjonalnym i uwolnieniem stłumionych uczuć — łagodny deszcz sugeruje spokojną odnowę, a ulewa może oznaczać, że emocje domagają się natychmiastowej uwagi."},
+    {s:"Diament", t:"Diament symbolizuje trwałą wartość, jasność myślenia i to, co w Tobie niezniszczalne. Znalezienie diamentu we śnie bywa interpretowane jako odkrycie własnej wartości lub potencjału, którego wcześniej nie doceniałeś."},
+    {s:"Dom", t:"Dom to jeden z najczęstszych symboli sennych, reprezentujący Twoje wewnętrzne 'ja' i poczucie bezpieczeństwa. Poszczególne pomieszczenia mogą symbolizować różne aspekty osobowości — piwnica często wiąże się z podświadomością, a strych z pamięcią i przeszłością."},
+    {s:"Drzewo", t:"Drzewo symbolizuje wzrost, stabilność i połączenie między korzeniami (przeszłością) a koroną (aspiracjami). Rozkwitające drzewo sugeruje rozwój osobisty, a uschnięte lub powalone — stagnację albo utratę wsparcia."},
+    {s:"Drzwi", t:"Drzwi reprezentują przejście, nową możliwość lub decyzję, przed którą stoisz. Zamknięte drzwi mogą symbolizować przeszkodę lub coś, do czego nie masz jeszcze dostępu, a otwarte — gotowość na zmianę."},
+    {s:"Duch", t:"Duchy we śnie często reprezentują niedokończone sprawy z przeszłości, żal lub wspomnienia, które wciąż na Ciebie wpływają. Spotkanie z duchem bliskiej osoby bywa też po prostu formą przetwarzania żałoby."},
+    {s:"Dziecko", t:"Dziecko symbolizuje niewinność, nowy początek lub tę część Ciebie, która wciąż się rozwija i uczy. Sen o opiece nad dzieckiem może odzwierciedlać troskę o nowy projekt lub odpowiedzialność, którą właśnie podjąłeś."},
+    {s:"Egzamin", t:"Sen o egzaminie, do którego nie jesteś przygotowany, to jeden z najpowszechniejszych snów stresowych — zwykle nie dotyczy dosłownie szkoły, ale poczucia, że jesteś oceniany lub sprawdzany w jakiejś sferze życia."},
+    {s:"Góra", t:"Góra symbolizuje ambitny cel, wyzwanie lub przeszkodę, którą musisz pokonać. Wspinaczka na szczyt często oznacza dążenie do sukcesu, a widok ze szczytu — poczucie osiągnięcia i szerszej perspektywy na swoje życie."},
+    {s:"Gwiazdy", t:"Gwiazdy tradycyjnie symbolizują nadzieję, marzenia i kierunek w życiu. Jasne, wyraźne gwiazdy sugerują klarowność celów, a przyćmione lub gasnące — niepewność co do przyszłości."},
+    {s:"Jabłko", t:"Jabłko w symbolice sennej często wiąże się z pokusą, wiedzą lub zdrowiem — nawiązując do biblijnej symboliki. Dojrzałe, soczyste jabłko może oznaczać satysfakcję, a nadgniłe — rozczarowanie czymś, co wydawało się obiecujące."},
+    {s:"Jaskinia", t:"Jaskinia symbolizuje podświadomość, ukryte lęki lub potrzebę wycofania się i przemyślenia spraw w samotności. Wejście głęboko w jaskinię może oznaczać gotowość do zmierzenia się z czymś, co dotąd unikałeś."},
+    {s:"Klucz", t:"Klucz symbolizuje rozwiązanie problemu, dostęp do nowej wiedzy lub kontrolę nad sytuacją. Zgubiony klucz może odzwierciedlać poczucie utraty możliwości, a znaleziony — nadchodzące rozwiązanie trudności."},
+    {s:"Koń", t:"Koń symbolizuje siłę, wolność i niezależność, a także instynkty i emocje, które czasem trudno okiełznać. Galopujący koń może oznaczać pragnienie wolności, a koń pod kontrolą — opanowanie własnych impulsów."},
+    {s:"Korona", t:"Korona symbolizuje władzę, uznanie lub odpowiedzialność. Noszenie korony we śnie może wskazywać na poczucie własnej wartości lub nadchodzące osiągnięcie, ale też na presję związaną z nową rolą."},
+    {s:"Kot", t:"Kot symbolizuje niezależność, intuicję i tajemnicę. Przyjazny kot sugeruje harmonię z własną intuicją, a agresywny lub uciekający kot może oznaczać konflikt z częścią siebie, która działa niezależnie od Twojej woli."},
+    {s:"Krew", t:"Krew we śnie często symbolizuje witalność, silne emocje lub poświęcenie. Krwawienie może wskazywać na utratę energii lub zasobów w jakimś obszarze życia, wymagającym Twojej uwagi."},
+    {s:"Księżyc", t:"Księżyc tradycyjnie wiąże się z podświadomością, emocjami i cyklicznością życia. Pełnia księżyca może symbolizować kulminację emocjonalną, a nów — nowy początek i potrzebę wewnętrznej refleksji."},
+    {s:"Kwiaty", t:"Kwiaty symbolizują piękno, wzrost i ulotność chwili. Kwitnące kwiaty często oznaczają rozkwit w jakiejś dziedzinie życia, a więdnące — świadomość, że coś dobiega końca."},
+    {s:"Labirynt", t:"Labirynt symbolizuje poczucie zagubienia lub skomplikowaną sytuację, z której szukasz wyjścia. Znalezienie drogi przez labirynt może wskazywać na bliskie rozwiązanie problemu, który wcześniej wydawał się nie do rozwikłania."},
+    {s:"Las", t:"Las symbolizuje podświadomość, nieznane terytorium lub okres poszukiwań. Gęsty, ciemny las może oznaczać niepewność, a polana pośrodku lasu — moment jasności w trudnym okresie."},
+    {s:"Latanie", t:"Latanie to jeden z najczęściej opisywanych snów, zwykle kojarzony z poczuciem wolności, kontroli nad własnym życiem lub chęcią wzniesienia się ponad codzienne problemy. Trudności w utrzymaniu lotu mogą sugerować przeszkody, które ograniczają Twój potencjał."},
+    {s:"Lew", t:"Lew symbolizuje siłę, odwagę i przywództwo. Spotkanie z lwem we śnie może wskazywać na potrzebę większej pewności siebie, a bycie ściganym przez lwa — na konfrontację z własną władczą, dominującą stroną."},
+    {s:"Lustro", t:"Lustro symbolizuje autorefleksję i to, jak postrzegasz samego siebie. Niewyraźne lub zniekształcone odbicie w lustrze może odzwierciedlać niepewność co do własnej tożsamości lub obraz siebie, który nie do końca odpowiada rzeczywistości."},
+    {s:"Matka", t:"Sen o matce, niezależnie od tego, jak wygląda w rzeczywistości Wasza relacja, często symbolizuje potrzebę opieki, bezpieczeństwa lub bezwarunkowej akceptacji. Może też odzwierciedlać Twój stosunek do własnej roli opiekuńczej."},
+    {s:"Miecz", t:"Miecz symbolizuje siłę, obronę własnych granic lub konflikt, który wymaga zdecydowanego działania. Trzymanie miecza może oznaczać gotowość do walki o swoje racje, a złamany miecz — poczucie bezradności."},
+    {s:"Morze", t:"Morze symbolizuje głębię emocji i podświadomość. Spokojne, przejrzyste morze sugeruje wewnętrzny spokój, a wzburzone fale — silne, trudne do opanowania uczucia, które domagają się wyrażenia."},
+    {s:"Most", t:"Most symbolizuje przejście między dwoma etapami życia lub połączenie dwóch różnych sytuacji. Przechodzenie przez most może oznaczać, że jesteś w trakcie ważnej zmiany, a zniszczony most — obawę, że powrót do poprzedniego stanu nie jest już możliwy."},
+    {s:"Motyl", t:"Motyl symbolizuje transformację, delikatność i krótkotrwałe piękno. Sen o motylu często pojawia się w okresach osobistej przemiany, sugerując, że stara wersja Ciebie ustępuje miejsca nowej."},
+    {s:"Mysz", t:"Mysz symbolizuje drobne zmartwienia, które mogą wydawać się nieistotne, ale kumulują się i zaczynają przeszkadzać. Może też oznaczać nieśmiałość lub poczucie, że jesteś niezauważany w jakiejś sytuacji."},
+    {s:"Niedźwiedź", t:"Niedźwiedź symbolizuje siłę, ale też potrzebę izolacji i regeneracji — podobnie jak zwierzę zapadające w sen zimowy. Agresywny niedźwiedź może wskazywać na stłumiony gniew, który domaga się ujścia."},
+    {s:"Nóż", t:"Nóż symbolizuje potrzebę odcięcia się od czegoś — toksycznej relacji, starego nawyku lub sytuacji, która Cię ogranicza. Może też wskazywać na poczucie zagrożenia lub konflikt, który wymaga zdecydowanego rozwiązania."},
+    {s:"Ogień", t:"Ogień symbolizuje transformację, namiętność lub zniszczenie starego, by zrobić miejsce na nowe. Kontrolowany ogień (np. w kominku) sugeruje ciepło i bliskość, a pożar wymykający się spod kontroli — obawę przed utratą panowania nad sytuacją."},
+    {s:"Ojciec", t:"Sen o ojcu często wiąże się z autorytetem, ochroną lub potrzebą uznania. Może odzwierciedlać Twoją relację z władzą, zasadami lub sposobem, w jaki sam pełnisz rolę opiekuna czy lidera."},
+    {s:"Pająk", t:"Pająk symbolizuje kreatywność i cierpliwość (poprzez skojarzenie z tkaniem sieci), ale dla wielu osób budzi też lęk, symbolizując uczucie bycia 'złapanym' w sytuację, z której trudno się wydostać."},
+    {s:"Piasek", t:"Piasek symbolizuje ulotność czasu i niestabilność — coś, co przesypuje się między palcami, mimo prób utrzymania kontroli. Może wskazywać na poczucie, że czas ucieka, zanim zdążysz zrealizować swoje plany."},
+    {s:"Pieniądze", t:"Pieniądze we śnie rzadko dotyczą dosłownie finansów — częściej symbolizują poczucie własnej wartości, energię życiową lub zasoby, jakimi dysponujesz. Znalezienie pieniędzy może oznaczać odkrycie nowych możliwości, a ich utrata — obawę przed niewystarczalnością."},
+    {s:"Pies", t:"Pies symbolizuje lojalność, przyjaźń i ochronę. Przyjazny pies sugeruje wsparcie ze strony bliskich, a agresywny pies może odzwierciedlać obawę przed zdradą lub konfliktem z kimś, komu ufałeś."},
+    {s:"Podróż", t:"Sen o podróży symbolizuje osobisty rozwój i drogę, jaką przechodzisz w życiu. Podróż bez wyraźnego celu może wskazywać na poczucie zagubienia, a dotarcie do celu — satysfakcję z osiągniętego etapu."},
+    {s:"Pogrzeb", t:"Pogrzeb we śnie symbolizuje zakończenie pewnego etapu, a nie dosłownie śmierć — może oznaczać pożegnanie ze starym nawykiem, relacją lub wersją siebie, którą pozostawiasz za sobą."},
+    {s:"Policja", t:"Policja symbolizuje autorytet, zasady lub wewnętrzne poczucie winy związane z łamaniem norm — zarówno własnych, jak i społecznych. Ucieczka przed policją może wskazywać na unikanie odpowiedzialności za coś."},
+    {s:"Powódź", t:"Powódź symbolizuje emocje, które Cię przytłaczają i wymykają się spod kontroli. Sen o zalewającej wodzie często pojawia się w okresach silnego stresu, kiedy trudno nadążyć za wszystkimi obowiązkami."},
+    {s:"Praca", t:"Sen o pracy, zwłaszcza gdy śnisz o miejscu, w którym już nie pracujesz, może odzwierciedlać niedokończone sprawy emocjonalne z tamtego okresu lub wzorce, które nadal na Ciebie wpływają w obecnym życiu zawodowym."},
+    {s:"Ptak", t:"Ptak symbolizuje wolność, perspektywę i duchowość. Ptak w locie sugeruje poczucie wolności, a ptak w klatce — sytuację, w której czujesz się ograniczony i pozbawiony możliwości działania."},
+    {s:"Pustynia", t:"Pustynia symbolizuje samotność, wyczerpanie emocjonalne lub okres w życiu pozbawiony wsparcia i inspiracji. Znalezienie oazy na pustyni może oznaczać nadchodzącą ulgę po trudnym czasie."},
+    {s:"Ryba", t:"Ryba symbolizuje podświadomość i intuicję, podobnie jak inne symbole wodne. Złowienie ryby może oznaczać odkrycie ukrytej myśli lub uczucia, którego wcześniej nie byłeś świadomy."},
+    {s:"Samochód", t:"Samochód symbolizuje kontrolę nad kierunkiem własnego życia. Prowadzenie samochodu sugeruje poczucie sprawczości, a bycie pasażerem lub utrata kontroli nad pojazdem — poczucie, że ktoś inny decyduje o Twoim życiu."},
+    {s:"Samolot", t:"Samolot symbolizuje ambicje i dążenie do celów na dużą skalę. Start samolotu może oznaczać rozpoczęcie ważnego przedsięwzięcia, a turbulencje lub awaria — obawy związane z ryzykiem, jakie podejmujesz."},
+    {s:"Schody", t:"Schody symbolizują postęp i rozwój — wchodzenie po schodach sugeruje dążenie do wyższego celu, a schodzenie w dół może oznaczać powrót do przeszłości lub eksplorację podświadomości."},
+    {s:"Spadanie", t:"Sen o spadaniu to jeden z najpowszechniejszych snów, zwykle związany z utratą kontroli, niepewnością lub lękiem przed porażką w jakiejś sferze życia. Często pojawia się w okresach stresu lub dużych zmian życiowych."},
+    {s:"Statek", t:"Statek symbolizuje podróż przez emocje i wyzwania życiowe. Spokojny rejs sugeruje stabilność, a tonący statek może oznaczać poczucie, że sytuacja wymyka się spod kontroli."},
+    {s:"Szkoła", t:"Sen o szkole, nawet dawno po jej ukończeniu, często symbolizuje naukę, ocenę własnych umiejętności lub presję związaną z sytuacją, w której czujesz się testowany."},
+    {s:"Ślub", t:"Ślub symbolizuje zobowiązanie, połączenie dwóch aspektów życia lub nowy, ważny etap. Niekoniecznie dotyczy dosłownie związku — może oznaczać zaangażowanie w projekt, decyzję lub nową drogę życiową."},
+    {s:"Śmierć", t:"Śmierć we śnie niemal nigdy nie zapowiada dosłownej śmierci — to jeden z najczęściej błędnie interpretowanych symboli. Zwykle oznacza koniec pewnego etapu, transformację lub potrzebę zamknięcia rozdziału, by zrobić miejsce na coś nowego."},
+    {s:"Śnieg", t:"Śnieg symbolizuje czystość, spokój, ale też emocjonalny chłód lub izolację. Padający śnieg może oznaczać potrzebę wyciszenia, a zaspy śniegu — poczucie, że jesteś odcięty od innych lub uwięziony w miejscu."},
+    {s:"Tęcza", t:"Tęcza symbolizuje nadzieję i pozytywną zmianę po trudnym okresie — tradycyjnie pojawia się po burzy, więc sen o tęczy może zapowiadać poprawę sytuacji, która wcześniej wydawała się trudna."},
+    {s:"Trzęsienie ziemi", t:"Trzęsienie ziemi symbolizuje fundamentalną, niespodziewaną zmianę, która wstrząsa poczuciem bezpieczeństwa. Może odzwierciedlać sytuację, w której podstawy Twojego życia (praca, relacja, zdrowie) zostały nagle zachwiane."},
+    {s:"Tunel", t:"Tunel symbolizuje przejście przez trudny okres w kierunku lepszej sytuacji — zwłaszcza jeśli na końcu widać światło. Długi, ciemny tunel bez wyraźnego końca może odzwierciedlać poczucie, że trudności nie mają widocznego rozwiązania."},
+    {s:"Ucieczka", t:"Sen o ucieczce przed czymś lub kimś symbolizuje unikanie problemu lub emocji, z którymi jeszcze nie jesteś gotowy się zmierzyć. To, przed czym uciekasz we śnie, często warto przeanalizować jako metaforę realnej sytuacji."},
+    {s:"Wąż", t:"Wąż to jeden z najbardziej wieloznacznych symboli sennych — może oznaczać zagrożenie i zdradę, ale w wielu tradycjach symbolizuje też transformację, uzdrowienie i ukrytą wiedzę (jak w mitologii i symbolice medycznej)."},
+    {s:"Winda", t:"Winda symbolizuje szybkie wznoszenie się lub upadek w jakiejś sferze życia — np. karierze czy statusie społecznym. Zepsuta winda lub utrata kontroli nad nią może wskazywać na poczucie, że tempo zmian jest zbyt szybkie, by nad nim zapanować."},
+    {s:"Wojna", t:"Wojna we śnie symbolizuje wewnętrzny konflikt lub silne napięcie w relacjach z innymi. Nie musi dotyczyć dosłownego konfliktu zbrojnego — częściej odzwierciedla poczucie, że musisz walczyć o coś ważnego w codziennym życiu."},
+    {s:"Woda", t:"Woda to jeden z najbardziej uniwersalnych symboli emocji i podświadomości. Czysta, spokojna woda sugeruje emocjonalną równowagę, a mętna lub wzburzona — nieuporządkowane, trudne do zrozumienia uczucia."},
+    {s:"Wróg", t:"Sen o wrogu, nawet nieznanym, często symbolizuje część siebie, z którą jesteś w konflikcie — cechę, której się wstydzisz, lub decyzję, przed którą się bronisz. Rzadko dotyczy dosłownie konkretnej osoby."},
+    {s:"Wyspa", t:"Wyspa symbolizuje izolację, ale też niezależność i przestrzeń do refleksji z dala od codziennych obowiązków. Może odzwierciedlać potrzebę odosobnienia lub poczucie osamotnienia w trudnej sytuacji."},
+    {s:"Zamek", t:"Zamek symbolizuje ambicje, status lub wewnętrzne poczucie własnej wartości. Zrujnowany zamek może oznaczać rozczarowanie związane z niespełnionymi oczekiwaniami wobec siebie lub swojego życia."},
+    {s:"Zęby", t:"Wypadające zęby to jeden z najpowszechniejszych snów na świecie — zwykle wiąże się z lękiem przed utratą kontroli, starzeniem się, albo obawą o to, jak jesteśmy postrzegani przez innych. Rzadko ma dosłowne znaczenie dentystyczne."},
+    {s:"Złoto", t:"Złoto symbolizuje trwałą wartość, sukces i uznanie. Znalezienie złota we śnie może oznaczać odkrycie własnego potencjału, a jego utrata — obawę przed utratą czegoś cennego, co wypracowałeś."}
+  ];
+
+  DREAMS.sort((a,b) => a.s.localeCompare(b.s, 'pl'));
+
+  const searchInput = document.getElementById('searchInput');
+  const detailBox = document.getElementById('detailBox');
+  const detailTitle = document.getElementById('detailTitle');
+  const detailText = document.getElementById('detailText');
+  const letterNav = document.getElementById('letterNav');
+  const symbolList = document.getElementById('symbolList');
+
+  function showDetail(entry){
+    detailTitle.textContent = entry.s;
+    detailText.textContent = entry.t;
+    detailBox.classList.add('visible');
+  }
+
+  function renderList(filter){
+    const filtered = filter
+      ? DREAMS.filter(d => d.s.toLowerCase().includes(filter.toLowerCase()))
+      : DREAMS;
+    symbolList.innerHTML = filtered.slice(0, 40).map(d =>
+      `<span class="symbol-chip" data-symbol="${d.s}">${d.s}</span>`
+    ).join('');
+    document.querySelectorAll('.symbol-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const entry = DREAMS.find(d => d.s === chip.dataset.symbol);
+        if(entry) showDetail(entry);
+      });
+    });
+  }
+
+  function renderLetterNav(){
+    const letters = [...new Set(DREAMS.map(d => d.s[0]))].sort((a,b) => a.localeCompare(b,'pl'));
+    letterNav.innerHTML = letters.map(l => `<button class="letter-btn" data-letter="${l}">${l}</button>`).join('');
+    document.querySelectorAll('.letter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const letter = btn.dataset.letter;
+        const filtered = DREAMS.filter(d => d.s[0] === letter);
+        symbolList.innerHTML = filtered.map(d => `<span class="symbol-chip" data-symbol="${d.s}">${d.s}</span>`).join('');
+        document.querySelectorAll('.symbol-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const entry = DREAMS.find(d => d.s === chip.dataset.symbol);
+            if(entry) showDetail(entry);
+          });
+        });
+      });
+    });
+  }
+
+  searchInput.addEventListener('input', () => {
+    const val = searchInput.value.trim();
+    renderList(val);
+    const exactMatch = DREAMS.find(d => d.s.toLowerCase() === val.toLowerCase());
+    if(exactMatch) showDetail(exactMatch);
+  });
+
+  renderList('');
+  renderLetterNav();
+</script>
+
+</body>
+</html>
