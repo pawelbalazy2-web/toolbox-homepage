@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprawdź czy to palindrom online</title>
+<meta name="description" content="Sprawdź, czy wpisany tekst jest palindromem — brzmi tak samo czytany od przodu i od tyłu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#0e2a30; --surface:#153740; --line:#204b56; --paper:#e6f4f6; --muted:#7fa8b0; --accent:#06b6d4; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:480px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; text-align:center; }
+  input[type="text"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:16px; font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--paper); outline:none; text-align:center; margin-bottom:20px; }
+  input:focus{ border-color:var(--accent); }
+  .result{ font-family:'Sora',sans-serif; font-weight:800; font-size:22px; min-height:30px; }
+  .result.yes{ color:var(--accent); }
+  .result.no{ color:#e5534b; }
+  footer{ margin-top:48px; color:#3f5f66; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#3f5f66; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / tekst</div>
+  <h1>Czy to palindrom?</h1>
+  <p class="sub">Sprawdź, czy tekst brzmi tak samo czytany od przodu i od tyłu.</p>
+
+  <div class="card">
+    <input type="text" id="textInput" placeholder="np. Kobyła ma mały bok" value="Kobyła ma mały bok">
+    <div class="result" id="result"></div>
+  </div>
+
+  <section class="content">
+    <h2>Czym jest palindrom</h2>
+    <p>Palindrom to słowo, fraza lub liczba, która brzmi identycznie czytana od lewej do prawej i od prawej do lewej — jak "kajak" czy "Kobyła ma mały bok". Narzędzie ignoruje spacje, wielkość liter i znaki interpunkcyjne, więc sprawdza samą strukturę dźwiękową tekstu, tak jak zrobiłby to człowiek czytający zdanie na głos.</p>
+    <div class="faq-item"><h3>Czy polskie znaki diakrytyczne są uwzględniane?</h3><p>Tak, narzędzie normalizuje litery takie jak ą, ć, ę, ł do ich podstawowych odpowiedników przed porównaniem.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const input = document.getElementById('textInput');
+  const result = document.getElementById('result');
+
+  function normalize(str){
+    return str.toLowerCase()
+      .replace(/[ąàá]/g,'a').replace(/[ćč]/g,'c').replace(/[ęèé]/g,'e')
+      .replace(/[łl]/g,'l').replace(/[ńñ]/g,'n').replace(/[óò]/g,'o')
+      .replace(/[śš]/g,'s').replace(/[źżž]/g,'z')
+      .replace(/[^a-z0-9]/g, '');
+  }
+
+  function check(){
+    const norm = normalize(input.value);
+    if(norm.length === 0){ result.textContent = ''; return; }
+    const reversed = norm.split('').reverse().join('');
+    if(norm === reversed){
+      result.textContent = '✓ Tak, to palindrom!';
+      result.className = 'result yes';
+    } else {
+      result.textContent = '✗ Nie, to nie palindrom';
+      result.className = 'result no';
+    }
+  }
+  input.addEventListener('input', check);
+  check();
+</script>
+</body>
+</html>
