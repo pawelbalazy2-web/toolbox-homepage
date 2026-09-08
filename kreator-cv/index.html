@@ -167,6 +167,47 @@
     color: #1a1a1a;
     min-height: 600px;
   }
+  .photo-upload{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .photo-preview{
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    object-fit: cover;
+    flex-shrink:0;
+  }
+  .photo-btn{
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 9px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .photo-btn:hover{ border-color: var(--accent); }
+  .photo-remove{
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .cv-header-row{ display:flex; justify-content:space-between; align-items:flex-start; gap: 20px; }
+  .cv-photo{
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
   .cv-name{
     font-family: 'Sora', sans-serif;
     font-weight: 800;
@@ -214,7 +255,7 @@
   }
 
   @media print{
-    .top-bar, .form-panel{ display:none !important; }
+    .top-bar, .form-panel, .content, footer{ display:none !important; }
     .layout{ display:block; padding:0; max-width:100%; }
     .preview-wrap{ border:none; box-shadow:none; padding:0; max-height:none; overflow:visible; }
     #cvPreview{ padding: 0; }
@@ -245,6 +286,16 @@
 
   <div class="layout">
     <div class="form-panel">
+
+      <div class="form-section">
+        <h2>ZDJĘCIE (OPCJONALNIE)</h2>
+        <div class="photo-upload">
+          <img id="photoPreview" class="photo-preview" style="display:none;">
+          <input type="file" id="photoInput" accept="image/*" style="display:none;">
+          <button type="button" class="photo-btn" id="photoBtn">Wybierz zdjęcie</button>
+          <button type="button" class="photo-remove" id="photoRemoveBtn" style="display:none;">Usuń</button>
+        </div>
+      </div>
 
       <div class="form-section">
         <h2>DANE OSOBOWE</h2>
@@ -301,6 +352,33 @@
   <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
 
 <script>
+  let photoDataUrl = '';
+
+  document.getElementById('photoBtn').addEventListener('click', () => document.getElementById('photoInput').click());
+
+  document.getElementById('photoInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      photoDataUrl = ev.target.result;
+      const preview = document.getElementById('photoPreview');
+      preview.src = photoDataUrl;
+      preview.style.display = 'block';
+      document.getElementById('photoRemoveBtn').style.display = 'inline';
+      updatePreview();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('photoRemoveBtn').addEventListener('click', () => {
+    photoDataUrl = '';
+    document.getElementById('photoPreview').style.display = 'none';
+    document.getElementById('photoRemoveBtn').style.display = 'none';
+    document.getElementById('photoInput').value = '';
+    updatePreview();
+  });
+
   let expCount = 0, eduCount = 0;
 
   function addExperienceEntry(data = {}){
@@ -373,8 +451,13 @@
     const skillsHtml = skills.map(s => `<span class="cv-skill-tag">${s}</span>`).join('');
 
     document.getElementById('cvPreview').innerHTML = `
-      <div class="cv-name">${fullName}</div>
-      <div class="cv-title">${jobTitle}</div>
+      <div class="cv-header-row">
+        <div style="flex:1;">
+          <div class="cv-name">${fullName}</div>
+          <div class="cv-title">${jobTitle}</div>
+        </div>
+        ${photoDataUrl ? `<img class="cv-photo" src="${photoDataUrl}">` : ''}
+      </div>
       <div class="cv-contact">${contactParts.map(p => `<span>${p}</span>`).join('')}</div>
       ${summary ? `<div class="cv-section-title">Podsumowanie</div><div class="cv-summary">${summary}</div>` : ''}
       ${expHtml ? `<div class="cv-section-title">Doświadczenie zawodowe</div>${expHtml}` : ''}
