@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kreator CV online — stwórz i pobierz CV za darmo</title>
+<meta name="description" content="Darmowy kreator CV online. Wypełnij formularz, zobacz podgląd na żywo i pobierz gotowe CV jako PDF — bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --bg: #f2f4f8;
+    --surface: #ffffff;
+    --ink: #1a1f2e;
+    --line: #dde1ea;
+    --muted: #6b7280;
+    --accent: #2952d8;
+    --accent-dim: #1e3fb0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+  .top-bar{
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 20px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap: 12px;
+  }
+  .top-bar h1{
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin: 0;
+  }
+  .top-bar .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    display:block;
+    margin-bottom: 2px;
+  }
+  .download-btn{
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .download-btn:hover{ background: var(--accent-dim); }
+
+  .layout{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  @media (max-width: 960px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+
+  .form-panel{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .form-section{
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .form-section:last-child{ border-bottom: none; }
+  .form-section h2{
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    margin: 0 0 14px;
+    color: var(--accent);
+  }
+  .field-row{ display:flex; gap: 10px; margin-bottom: 10px; }
+  .field{ flex:1; margin-bottom: 10px; }
+  .field label{
+    display:block;
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], textarea{
+    width:100%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink);
+    outline: none;
+  }
+  input:focus, textarea:focus{ border-color: var(--accent); }
+  textarea{ resize: vertical; min-height: 60px; }
+
+  .entry-block{
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .remove-btn{
+    position: absolute;
+    top: 10px; right: 10px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .remove-btn:hover{ color: #e5534b; }
+  .add-btn{
+    width:100%;
+    background: transparent;
+    border: 1.5px dashed var(--line);
+    border-radius: 6px;
+    padding: 10px;
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .add-btn:hover{ border-color: var(--accent); }
+
+  /* PODGLĄD CV */
+  .preview-wrap{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  #cvPreview{
+    background: #fff;
+    padding: 40px;
+    font-family: 'Inter', sans-serif;
+    color: #1a1a1a;
+    min-height: 600px;
+  }
+  .cv-name{
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    margin: 0 0 4px;
+  }
+  .cv-title{
+    font-size: 15px;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+  .cv-contact{
+    font-size: 12.5px;
+    color: #555;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .cv-section-title{
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin: 22px 0 10px;
+  }
+  .cv-summary{ font-size: 13.5px; line-height: 1.6; color: #333; }
+  .cv-entry{ margin-bottom: 14px; }
+  .cv-entry-header{ display:flex; justify-content:space-between; font-size: 13.5px; font-weight: 600; }
+  .cv-entry-sub{ font-size: 12.5px; color: #666; margin: 2px 0 4px; }
+  .cv-entry-desc{ font-size: 12.5px; color: #444; line-height: 1.5; }
+  .cv-skills{ display:flex; flex-wrap:wrap; gap: 6px; }
+  .cv-skill-tag{
+    background: #eef1fb;
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  @media print{
+    .top-bar, .form-panel{ display:none !important; }
+    .layout{ display:block; padding:0; max-width:100%; }
+    .preview-wrap{ border:none; box-shadow:none; padding:0; max-height:none; overflow:visible; }
+    #cvPreview{ padding: 0; }
+    body{ background: #fff; }
+  }
+
+  .content{
+    max-width: 900px;
+    margin: 48px auto 0;
+    padding: 0 24px 48px;
+  }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#4b5160; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+  footer{ text-align:center; padding: 24px; color:#9aa0ac; font-size:12px; font-family:'IBM Plex Mono',monospace; }
+  footer a{ color:#9aa0ac; }
+</style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div>
+      <span class="eyebrow">narzędzie / kariera</span>
+      <h1>Kreator CV</h1>
+    </div>
+    <button class="download-btn" id="downloadBtn">Pobierz jako PDF</button>
+  </div>
+
+  <div class="layout">
+    <div class="form-panel">
+
+      <div class="form-section">
+        <h2>DANE OSOBOWE</h2>
+        <div class="field-row">
+          <div class="field"><label>IMIĘ I NAZWISKO</label><input type="text" id="fullName" value="Jan Kowalski"></div>
+        </div>
+        <div class="field"><label>STANOWISKO / TYTUŁ ZAWODOWY</label><input type="text" id="jobTitle" value="Specjalista ds. Marketingu"></div>
+        <div class="field-row">
+          <div class="field"><label>E-MAIL</label><input type="email" id="email" value="jan.kowalski@przyklad.pl"></div>
+          <div class="field"><label>TELEFON</label><input type="tel" id="phone" value="+48 123 456 789"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>MIASTO</label><input type="text" id="city" value="Warszawa"></div>
+          <div class="field"><label>LINKEDIN (OPCJONALNIE)</label><input type="text" id="linkedin" value=""></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>PODSUMOWANIE ZAWODOWE</h2>
+        <textarea id="summary">Doświadczony specjalista z 5-letnim stażem w marketingu cyfrowym. Skupiony na wynikach, z udokumentowanym doświadczeniem w prowadzeniu kampanii zwiększających sprzedaż o ponad 30%.</textarea>
+      </div>
+
+      <div class="form-section">
+        <h2>DOŚWIADCZENIE ZAWODOWE</h2>
+        <div id="experienceList"></div>
+        <button class="add-btn" id="addExperience">+ Dodaj doświadczenie</button>
+      </div>
+
+      <div class="form-section">
+        <h2>WYKSZTAŁCENIE</h2>
+        <div id="educationList"></div>
+        <button class="add-btn" id="addEducation">+ Dodaj wykształcenie</button>
+      </div>
+
+      <div class="form-section">
+        <h2>UMIEJĘTNOŚCI</h2>
+        <div class="field"><label>ODDZIEL PRZECINKAMI</label><input type="text" id="skillsInput" value="Google Analytics, SEO, Zarządzanie projektami, Excel, Adobe Photoshop"></div>
+      </div>
+
+    </div>
+
+    <div class="preview-wrap">
+      <div id="cvPreview"></div>
+    </div>
+  </div>
+
+  <section class="content">
+    <h2>Jak korzystać z kreatora</h2>
+    <p>Wypełniaj pola formularza po lewej stronie — podgląd CV po prawej aktualizuje się na bieżąco. Dodawaj kolejne wpisy doświadczenia i wykształcenia przyciskiem "+", a gdy CV jest gotowe, kliknij "Pobierz jako PDF" — otworzy się okno drukowania przeglądarki, w którym wybierz "Zapisz jako PDF" zamiast drukarki.</p>
+    <h2>Czy moje dane są gdzieś zapisywane</h2>
+    <p>Nie — cały kreator działa lokalnie w Twojej przeglądarce. Żadne wpisane dane nie są wysyłane na serwer ani zapisywane poza Twoim urządzeniem. Po zamknięciu karty formularz zostanie wyczyszczony.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  let expCount = 0, eduCount = 0;
+
+  function addExperienceEntry(data = {}){
+    expCount++;
+    const id = 'exp' + expCount;
+    const div = document.createElement('div');
+    div.className = 'entry-block';
+    div.id = id;
+    div.innerHTML = `
+      <button class="remove-btn" onclick="document.getElementById('${id}').remove(); updatePreview();">✕</button>
+      <div class="field"><label>STANOWISKO</label><input type="text" class="exp-title" value="${data.title || 'Specjalista ds. Sprzedaży'}"></div>
+      <div class="field"><label>FIRMA</label><input type="text" class="exp-company" value="${data.company || 'ABC Sp. z o.o.'}"></div>
+      <div class="field"><label>OKRES (np. 2021 - obecnie)</label><input type="text" class="exp-period" value="${data.period || '2021 - obecnie'}"></div>
+      <div class="field"><label>OPIS OBOWIĄZKÓW</label><textarea class="exp-desc">${data.desc || 'Prowadzenie kampanii sprzedażowych, obsługa klientów kluczowych, raportowanie wyników zespołu.'}</textarea></div>
+    `;
+    document.getElementById('experienceList').appendChild(div);
+    div.querySelectorAll('input, textarea').forEach(el => el.addEventListener('input', updatePreview));
+  }
+
+  function addEducationEntry(data = {}){
+    eduCount++;
+    const id = 'edu' + eduCount;
+    const div = document.createElement('div');
+    div.className = 'entry-block';
+    div.id = id;
+    div.innerHTML = `
+      <button class="remove-btn" onclick="document.getElementById('${id}').remove(); updatePreview();">✕</button>
+      <div class="field"><label>KIERUNEK / STOPIEŃ</label><input type="text" class="edu-degree" value="${data.degree || 'Marketing i Zarządzanie'}"></div>
+      <div class="field"><label>UCZELNIA</label><input type="text" class="edu-school" value="${data.school || 'Uniwersytet Warszawski'}"></div>
+      <div class="field"><label>OKRES</label><input type="text" class="edu-period" value="${data.period || '2016 - 2020'}"></div>
+    `;
+    document.getElementById('educationList').appendChild(div);
+    div.querySelectorAll('input').forEach(el => el.addEventListener('input', updatePreview));
+  }
+
+  function updatePreview(){
+    const fullName = document.getElementById('fullName').value;
+    const jobTitle = document.getElementById('jobTitle').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const city = document.getElementById('city').value;
+    const linkedin = document.getElementById('linkedin').value;
+    const summary = document.getElementById('summary').value;
+    const skills = document.getElementById('skillsInput').value.split(',').map(s => s.trim()).filter(s => s);
+
+    const contactParts = [email, phone, city, linkedin].filter(x => x);
+
+    const expHtml = Array.from(document.querySelectorAll('#experienceList .entry-block')).map(block => {
+      const title = block.querySelector('.exp-title').value;
+      const company = block.querySelector('.exp-company').value;
+      const period = block.querySelector('.exp-period').value;
+      const desc = block.querySelector('.exp-desc').value;
+      return `<div class="cv-entry">
+        <div class="cv-entry-header"><span>${title}</span><span>${period}</span></div>
+        <div class="cv-entry-sub">${company}</div>
+        <div class="cv-entry-desc">${desc}</div>
+      </div>`;
+    }).join('');
+
+    const eduHtml = Array.from(document.querySelectorAll('#educationList .entry-block')).map(block => {
+      const degree = block.querySelector('.edu-degree').value;
+      const school = block.querySelector('.edu-school').value;
+      const period = block.querySelector('.edu-period').value;
+      return `<div class="cv-entry">
+        <div class="cv-entry-header"><span>${degree}</span><span>${period}</span></div>
+        <div class="cv-entry-sub">${school}</div>
+      </div>`;
+    }).join('');
+
+    const skillsHtml = skills.map(s => `<span class="cv-skill-tag">${s}</span>`).join('');
+
+    document.getElementById('cvPreview').innerHTML = `
+      <div class="cv-name">${fullName}</div>
+      <div class="cv-title">${jobTitle}</div>
+      <div class="cv-contact">${contactParts.map(p => `<span>${p}</span>`).join('')}</div>
+      ${summary ? `<div class="cv-section-title">Podsumowanie</div><div class="cv-summary">${summary}</div>` : ''}
+      ${expHtml ? `<div class="cv-section-title">Doświadczenie zawodowe</div>${expHtml}` : ''}
+      ${eduHtml ? `<div class="cv-section-title">Wykształcenie</div>${eduHtml}` : ''}
+      ${skillsHtml ? `<div class="cv-section-title">Umiejętności</div><div class="cv-skills">${skillsHtml}</div>` : ''}
+    `;
+  }
+
+  document.getElementById('addExperience').addEventListener('click', () => { addExperienceEntry(); updatePreview(); });
+  document.getElementById('addEducation').addEventListener('click', () => { addEducationEntry(); updatePreview(); });
+  document.getElementById('downloadBtn').addEventListener('click', () => window.print());
+
+  ['fullName','jobTitle','email','phone','city','linkedin','summary','skillsInput'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updatePreview);
+  });
+
+  addExperienceEntry({});
+  addEducationEntry({});
+  updatePreview();
+</script>
+
+</body>
+</html>
