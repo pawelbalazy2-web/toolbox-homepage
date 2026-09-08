@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator gradientów CSS online</title>
+<meta name="description" content="Twórz gradienty CSS wizualnie i skopiuj gotowy kod. Darmowe narzędzie dla programistów i projektantów.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --bg:#eef0f4; --surface:#ffffff; --ink:#1d1f24; --line:#dde0e6; --muted:#6b7280; --accent:#6366f1; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:560px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+  .preview{ width:100%; height:180px; border-radius:8px; margin-bottom:18px; }
+  .controls-row{ display:flex; gap:10px; margin-bottom:12px; align-items:center; }
+  input[type="color"]{ width:56px; height:40px; border:1px solid var(--line); border-radius:6px; cursor:pointer; }
+  select{ background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:10px 12px; font-family:'Inter',sans-serif; font-size:13.5px; cursor:pointer; }
+  input[type="range"]{ flex:1; }
+  code{ display:block; background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:14px; font-family:'IBM Plex Mono',monospace; font-size:13px; word-break:break-all; margin-top:14px; }
+  .copy-btn{ margin-top:12px; width:100%; background:var(--accent); color:#fff; border:none; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; padding:12px; border-radius:6px; cursor:pointer; }
+  footer{ margin-top:48px; color:#9a9fac; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#9a9fac; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / design</div>
+  <h1>Generator gradientów CSS</h1>
+  <p class="sub">Ustaw kolory i kąt, skopiuj gotowy kod CSS.</p>
+
+  <div class="card">
+    <div class="preview" id="preview"></div>
+    <div class="controls-row">
+      <input type="color" id="color1" value="#6366f1">
+      <input type="color" id="color2" value="#ec4899">
+      <select id="type">
+        <option value="linear">Liniowy</option>
+        <option value="radial">Radialny</option>
+      </select>
+    </div>
+    <div class="controls-row" id="angleRow">
+      <label style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);">KĄT</label>
+      <input type="range" id="angle" min="0" max="360" value="90">
+      <span id="angleVal" style="font-family:'IBM Plex Mono',monospace;font-size:13px;">90°</span>
+    </div>
+    <code id="cssCode"></code>
+    <button class="copy-btn" id="copyBtn">Kopiuj kod CSS</button>
+  </div>
+
+  <section class="content">
+    <h2>Liniowy czy radialny</h2>
+    <p>Gradient liniowy przechodzi między kolorami wzdłuż prostej linii pod wybranym kątem — świetny do teł, nagłówków czy przycisków. Gradient radialny rozchodzi się promieniście od środka, dając efekt "poświaty" — często używany w tłach kart czy elementach dekoracyjnych.</p>
+    <div class="faq-item"><h3>Czy mogę użyć więcej niż dwóch kolorów?</h3><p>To narzędzie generuje gradient dwukolorowy. Więcej kolorów można dodać ręcznie w kodzie CSS, wpisując dodatkowe wartości po przecinku w funkcji gradientu.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const color1 = document.getElementById('color1');
+  const color2 = document.getElementById('color2');
+  const type = document.getElementById('type');
+  const angle = document.getElementById('angle');
+  const angleVal = document.getElementById('angleVal');
+  const preview = document.getElementById('preview');
+  const cssCode = document.getElementById('cssCode');
+  const angleRow = document.getElementById('angleRow');
+
+  function update(){
+    angleVal.textContent = angle.value + '°';
+    angleRow.style.display = type.value === 'linear' ? 'flex' : 'none';
+    const gradient = type.value === 'linear'
+      ? `linear-gradient(${angle.value}deg, ${color1.value}, ${color2.value})`
+      : `radial-gradient(circle, ${color1.value}, ${color2.value})`;
+    preview.style.background = gradient;
+    cssCode.textContent = `background: ${gradient};`;
+  }
+
+  [color1, color2, type, angle].forEach(el => el.addEventListener('input', update));
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    try{ await navigator.clipboard.writeText(cssCode.textContent); }catch(e){}
+  });
+
+  update();
+</script>
+</body>
+</html>
