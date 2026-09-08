@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kompresor obrazów online — zmniejsz rozmiar zdjęcia</title>
+<meta name="description" content="Skompresuj lub zmień rozmiar zdjęcia online, bez wysyłania na serwer. Wszystko dzieje się lokalnie w Twojej przeglądarce.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --bg:#eef0f4; --surface:#ffffff; --ink:#1d1f24; --line:#dde0e6; --muted:#6b7280; --accent:#6366f1; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:560px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:28px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+  .drop-zone{ border:2px dashed var(--line); border-radius:8px; padding:36px 20px; text-align:center; cursor:pointer; color:var(--muted); font-size:14px; }
+  .drop-zone:hover{ border-color:var(--accent); }
+  #preview{ max-width:100%; border-radius:8px; margin:16px 0; display:none; }
+  .field{ margin:14px 0; }
+  .field label{ display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-bottom:6px; }
+  input[type="range"]{ width:100%; }
+  .stats{ display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); margin:14px 0; }
+  .download-btn{ width:100%; background:var(--accent); color:#fff; border:none; font-family:'Sora',sans-serif; font-weight:700; font-size:14.5px; padding:13px; border-radius:8px; cursor:pointer; display:none; }
+  footer{ margin-top:48px; color:#9a9fac; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#9a9fac; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / obrazy</div>
+  <h1>Kompresor obrazów</h1>
+  <p class="sub">Zmniejsz rozmiar zdjęcia — wszystko dzieje się lokalnie, bez wysyłania na serwer.</p>
+
+  <div class="card">
+    <div class="drop-zone" id="dropZone">Kliknij, aby wybrać zdjęcie (JPG, PNG, WebP)</div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none;">
+    <img id="preview">
+    <div class="field"><label>JAKOŚĆ <span id="qualityVal">80%</span></label><input type="range" id="quality" min="10" max="100" value="80"></div>
+    <div class="field"><label>MAKSYMALNA SZEROKOŚĆ <span id="widthVal">1200px</span></label><input type="range" id="maxWidth" min="200" max="3000" value="1200" step="100"></div>
+    <div class="stats" id="stats"></div>
+    <button class="download-btn" id="downloadBtn">Pobierz skompresowany obraz</button>
+  </div>
+
+  <section class="content">
+    <h2>Dlaczego warto kompresować obrazy</h2>
+    <p>Duże pliki zdjęć spowalniają ładowanie stron internetowych i zajmują niepotrzebnie dużo miejsca w wiadomościach czy na dysku. Kompresja zmniejsza rozmiar pliku, redukując nieznacznie jakość obrazu (w sposób zwykle niezauważalny dla oka) albo skalując wymiary — obie metody można łączyć w tym narzędziu.</p>
+    <div class="faq-item"><h3>Czy moje zdjęcie jest wysyłane na serwer?</h3><p>Nie — kompresja odbywa się w całości lokalnie w Twojej przeglądarce, wykorzystując wbudowany mechanizm canvas. Zdjęcie nigdy nie opuszcza Twojego urządzenia.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const preview = document.getElementById('preview');
+  const quality = document.getElementById('quality');
+  const maxWidth = document.getElementById('maxWidth');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const stats = document.getElementById('stats');
+
+  let originalFile, resultBlob, resultUrl;
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => { if(fileInput.files[0]) loadFile(fileInput.files[0]); });
+
+  function loadFile(file){
+    originalFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      preview.onload = compress;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function compress(){
+    const canvas = document.createElement('canvas');
+    let w = preview.naturalWidth, h = preview.naturalHeight;
+    const mw = parseInt(maxWidth.value, 10);
+    if(w > mw){ h = h * (mw/w); w = mw; }
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(preview, 0, 0, w, h);
+    canvas.toBlob(blob => {
+      resultBlob = blob;
+      if(resultUrl) URL.revokeObjectURL(resultUrl);
+      resultUrl = URL.createObjectURL(blob);
+      stats.innerHTML = `<span>Oryginał: ${(originalFile.size/1024).toFixed(0)} KB</span><span>Po kompresji: ${(blob.size/1024).toFixed(0)} KB</span>`;
+      downloadBtn.style.display = 'block';
+    }, 'image/jpeg', quality.value/100);
+  }
+
+  quality.addEventListener('input', () => { document.getElementById('qualityVal').textContent = quality.value+'%'; if(preview.src) compress(); });
+  maxWidth.addEventListener('input', () => { document.getElementById('widthVal').textContent = maxWidth.value+'px'; if(preview.src) compress(); });
+
+  downloadBtn.addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = resultUrl;
+    a.download = 'skompresowany.jpg';
+    a.click();
+  });
+</script>
+</body>
+</html>
