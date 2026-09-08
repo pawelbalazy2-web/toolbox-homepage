@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator pseudonimu gracza online</title>
+<meta name="description" content="Wygeneruj losowy, chwytliwy pseudonim gracza do gier online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:480px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:32px; text-align:center; }
+  .name-display{ font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:26px; color:var(--teal); min-height:64px; display:flex; align-items:center; justify-content:center; }
+  .gen-btn{ background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:14px 32px; border-radius:26px; cursor:pointer; }
+  footer{ margin-top:48px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / generator</div>
+  <h1>Generator pseudonimu gracza</h1>
+  <p class="sub">Losowy nick do gier online.</p>
+
+  <div class="card">
+    <div class="name-display" id="nameDisplay">Kliknij, aby wylosować</div>
+    <button class="gen-btn" id="genBtn">Losuj nick</button>
+  </div>
+
+  <section class="content">
+    <h2>Kiedy przyda się generator</h2>
+    <p>Świetny sposób na szybkie znalezienie pseudonimu do nowej gry online, kiedy nie chcesz tracić czasu na wymyślanie czegoś od zera. Kombinacja przedrostka, przyrostka i losowej liczby daje unikalny, chwytliwy efekt bez ryzyka, że nazwa jest już zajęta.</p>
+    <div class="faq-item"><h3>Ile możliwych kombinacji generuje narzędzie?</h3><p>12 przedrostków × 12 przyrostków × 1000 liczb daje 144 000 unikalnych kombinacji.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const PREFIX = ['Shadow','Dark','Iron','Silent','Cyber','Toxic','Frost','Ghost','Neon','Savage','Alpha','Cosmic'];
+  const SUFFIX = ['Wolf','Ninja','Hunter','Reaper','Fox','Blade','Storm','Viper','Phantom','Knight','Dragon','Falcon'];
+
+  function generate(){
+    const p = PREFIX[Math.floor(Math.random()*PREFIX.length)];
+    const s = SUFFIX[Math.floor(Math.random()*SUFFIX.length)];
+    const num = Math.floor(Math.random()*999);
+    document.getElementById('nameDisplay').textContent = p + s + num;
+  }
+  document.getElementById('genBtn').addEventListener('click', generate);
+</script>
+</body>
+</html>
