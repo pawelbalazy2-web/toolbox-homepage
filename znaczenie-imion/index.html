@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Znaczenie imion — sprawdź pochodzenie imienia online</title>
+<meta name="description" content="Sprawdź znaczenie i pochodzenie ponad 60 popularnych polskich imion. Darmowa wyszukiwarka, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#161329; --surface:#201c38; --line:#362f57; --paper:#ece8f7; --muted:#9089b8; --gold:#d4a574; --gold-dim:#a97f52; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold); margin-bottom:14px; }
+  h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(32px,5.2vw,48px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; font-style:italic; }
+  .card{ width:100%; max-width:600px; background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:24px; }
+  input[type="text"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:15px 18px; font-family:'Inter',sans-serif; font-size:16px; color:var(--paper); outline:none; }
+  input:focus{ border-color:var(--gold); }
+  .detail-box{ margin-top:18px; background:var(--ink); border:1px solid var(--gold-dim); border-radius:6px; padding:22px; display:none; }
+  .detail-box.visible{ display:block; }
+  .detail-box h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:26px; color:var(--gold); margin:0 0 6px; }
+  .detail-origin{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-bottom:10px; }
+  .detail-box p{ font-size:15px; line-height:1.7; color:#d3cdea; margin:0; }
+  .symbol-list{ margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+  .symbol-chip{ background:var(--ink); border:1px solid var(--line); border-radius:20px; padding:8px 16px; font-size:14px; color:var(--paper); cursor:pointer; }
+  .symbol-chip:hover{ border-color:var(--gold); }
+  footer{ margin-top:48px; color:#4a4270; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4a4270; }
+  .content{ width:100%; max-width:620px; margin-top:56px; padding-top:44px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; margin:32px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#c3bce0; font-size:15px; line-height:1.75; margin:0 0 14px; }
+</style>
+</head>
+<body>
+
+  <div class="eyebrow">imiona / znaczenie</div>
+  <h1>Co oznacza Twoje imię?</h1>
+  <p class="sub">Wpisz imię, aby sprawdzić jego znaczenie i pochodzenie.</p>
+
+  <div class="card">
+    <input type="text" id="searchInput" placeholder="np. Anna, Piotr, Zofia...">
+    <div class="detail-box" id="detailBox">
+      <h2 id="detailName"></h2>
+      <div class="detail-origin" id="detailOrigin"></div>
+      <p id="detailText"></p>
+    </div>
+    <div class="symbol-list" id="nameList"></div>
+  </div>
+
+  <section class="content">
+    <h2>Skąd pochodzą polskie imiona</h2>
+    <p>Polskie imiona mają bardzo różnorodne korzenie — część wywodzi się ze starosłowiańskich złożeń (jak Bogdan czy Bogumiła, gdzie "bog-" oznacza boga lub dobro), inne przyjęto z tradycji chrześcijańskiej i greckiej lub hebrajskiej Biblii (jak Jan czy Anna), a jeszcze inne mają korzenie łacińskie, germańskie lub celtyckie.</p>
+    <h2>Dlaczego znaczenie imienia bywa ważne</h2>
+    <p>Wielu rodziców wybierając imię dla dziecka zwraca uwagę na jego znaczenie, licząc, że będzie ono odzwierciedlać wartości, które chcą przekazać. To piękna tradycja sięgająca tysięcy lat — choć oczywiście charakter człowieka kształtuje znacznie więcej niż samo imię.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const NAMES = [
+    {n:"Aleksander", o:"greckie", t:"Z greckiego 'obrońca mężów' — imię noszone przez wielu władców i wodzów w historii, symbolizujące siłę i przywództwo."},
+    {n:"Aleksandra", o:"greckie", t:"Żeńska forma Aleksandra, oznacza 'obrończynię'. Kojarzone z silnym charakterem i niezależnością."},
+    {n:"Anna", o:"hebrajskie", t:"Z hebrajskiego 'łaska' lub 'wdzięk'. Jedno z najpopularniejszych imion żeńskich na świecie, noszone m.in. przez matkę Marii w tradycji chrześcijańskiej."},
+    {n:"Antoni", o:"łacińskie", t:"Pochodzi od rzymskiego rodu Antoniuszów, znaczenie niepewne, czasem łączone z 'bezcenny' lub 'kwitnący'."},
+    {n:"Barbara", o:"greckie", t:"Z greckiego 'obca' lub 'cudzoziemka'. Imię świętej Barbary, patronki górników i osób pracujących w niebezpiecznych zawodach."},
+    {n:"Bartosz", o:"aramejskie", t:"Skrócona forma Bartłomieja, oznaczającego 'syn Tolmaja'. Popularne, energiczne imię męskie."},
+    {n:"Błażej", o:"łacińskie", t:"Od łacińskiego 'plamiący się' lub 'seplieniący'. Imię świętego Błażeja, patrona chorób gardła."},
+    {n:"Bogdan", o:"słowiańskie", t:"Ze starosłowiańskiego 'dany przez Boga' — jedno z klasycznych imion słowiańskich, symbolizujące dar i błogosławieństwo."},
+    {n:"Bożena", o:"słowiańskie", t:"Żeńska forma związana z 'boże', oznacza w przybliżeniu 'boska' lub 'poświęcona bogu'."},
+    {n:"Cecylia", o:"łacińskie", t:"Z łacińskiego rodu Cecyliuszów, znaczenie łączone z 'niewidoma' — patronka muzyki, święta Cecylia."},
+    {n:"Damian", o:"greckie", t:"Z greckiego 'okiełznać' lub 'poskromić'. Popularne, uniwersalne imię męskie w wielu kulturach."},
+    {n:"Dominika", o:"łacińskie", t:"Żeńska forma od łacińskiego 'należący do Pana'. Kojarzone z duchowością i tradycją zakonu dominikanów."},
+    {n:"Dorota", o:"greckie", t:"Z greckiego 'dar Boga' — odwrócona forma imienia Teodora, o tym samym znaczeniu."},
+    {n:"Emilia", o:"łacińskie", t:"Od rzymskiego rodu Emiliuszów, łączone ze znaczeniem 'rywalizująca' lub 'pilna'. Bardzo popularne współcześnie imię żeńskie."},
+    {n:"Ewa", o:"hebrajskie", t:"Z hebrajskiego 'dająca życie' — pierwsza kobieta w tradycji biblijnej, symbol macierzyństwa i początku."},
+    {n:"Filip", o:"greckie", t:"Z greckiego 'miłośnik koni'. Imię noszone przez wielu europejskich władców na przestrzeni wieków."},
+    {n:"Franciszek", o:"włoskie", t:"Oznacza 'Francuz' lub 'wolny człowiek'. Imię świętego Franciszka z Asyżu, patrona zwierząt i ekologii."},
+    {n:"Grażyna", o:"litewsko-słowiańskie", t:"Wprowadzone do literatury przez Adama Mickiewicza (poemat 'Grażyna'), wywodzi się prawdopodobnie od litewskiego słowa oznaczającego 'piękna' lub 'ładna'."},
+    {n:"Grzegorz", o:"greckie", t:"Z greckiego 'czuwający' lub 'ten, który nie śpi'. Imię kilku papieży i świętych."},
+    {n:"Hanna", o:"hebrajskie", t:"Wariant imienia Anna, oznacza 'łaska'. Popularne zarówno jako imię samodzielne, jak i zdrobnienie."},
+    {n:"Helena", o:"greckie", t:"Z greckiego 'jasna' lub 'promienna' — imię mitycznej Heleny Trojańskiej, symbol piękna."},
+    {n:"Henryk", o:"germańskie", t:"Z germańskiego 'władca domu' lub 'pan posiadłości'. Imię wielu europejskich monarchów."},
+    {n:"Ignacy", o:"łacińskie", t:"Od łacińskiego 'ogień' lub 'płonący'. Imię świętego Ignacego Loyoli, założyciela zakonu jezuitów."},
+    {n:"Irena", o:"greckie", t:"Z greckiego 'pokój' — imię związane z boginią pokoju Eirene w mitologii greckiej."},
+    {n:"Iwona", o:"germańskie", t:"Od germańskiego 'cis' (drzewo) — dawniej symbol łuku wojennego, wytwarzanego z drewna cisowego."},
+    {n:"Jacek", o:"słowiańskie/greckie", t:"Polska forma imienia Hiacynt, związanego z kwiatem hiacyntu w mitologii greckiej, symbolem odrodzenia."},
+    {n:"Jakub", o:"hebrajskie", t:"Z hebrajskiego 'niech Bóg strzeże' lub 'trzymający za piętę'. Jedno z najpopularniejszych imion męskich w Polsce od lat."},
+    {n:"Jan", o:"hebrajskie", t:"Z hebrajskiego 'Bóg jest łaskawy'. Jedno z najbardziej rozpowszechnionych imion w historii chrześcijaństwa."},
+    {n:"Joanna", o:"hebrajskie", t:"Żeńska forma Jana, oznacza 'Bóg jest łaskawy'. Bardzo popularne w Polsce imię żeńskie."},
+    {n:"Julia", o:"łacińskie", t:"Od rzymskiego rodu Juliuszów, związanego z Julią, córką Cezara. Współcześnie jedno z najpopularniejszych imion nadawanych dziewczynkom."},
+    {n:"Kacper", o:"perskie", t:"Prawdopodobnie z perskiego 'skarbnik'. Imię jednego z Trzech Króli w tradycji chrześcijańskiej."},
+    {n:"Karolina", o:"germańskie", t:"Żeńska forma Karola, oznaczającego 'wolny człowiek' lub 'silny'. Eleganckie, klasyczne imię żeńskie."},
+    {n:"Katarzyna", o:"greckie", t:"Z greckiego 'czysta'. Imię świętej Katarzyny Aleksandryjskiej, patronki filozofów i studentów."},
+    {n:"Krzysztof", o:"greckie", t:"Z greckiego 'niosący Chrystusa'. Imię świętego Krzysztofa, patrona podróżnych i kierowców."},
+    {n:"Kamil", o:"łacińskie", t:"Od łacińskiego 'szlachetnie urodzony' lub 'pomocnik przy ofierze'. Popularne w wielu krajach europejskich."},
+    {n:"Lena", o:"skandynawskie/greckie", t:"Skrócona forma Heleny lub Magdaleny, oznacza w przybliżeniu 'jasna' lub 'promienna'. Bardzo popularne współcześnie."},
+    {n:"Leon", o:"łacińskie", t:"Z łacińskiego 'lew' — symbol siły, odwagi i królewskości."},
+    {n:"Ludwik", o:"germańskie", t:"Z germańskiego 'sławny wojownik'. Imię wielu francuskich królów."},
+    {n:"Magdalena", o:"hebrajskie", t:"Oznacza 'pochodząca z Magdali' (miasto nad Jeziorem Galilejskim). Imię Marii Magdaleny z tradycji biblijnej."},
+    {n:"Maja", o:"rzymskie/skandynawskie", t:"Związane z rzymską boginią wiosny Mają, patronującą odradzającej się przyrodzie. Bardzo popularne współcześnie w Polsce."},
+    {n:"Marcin", o:"łacińskie", t:"Od Marsa, rzymskiego boga wojny — oznacza 'wojowniczy' lub 'należący do Marsa'."},
+    {n:"Maria", o:"hebrajskie", t:"Znaczenie dyskutowane przez językoznawców — łączone m.in. z 'ukochana' lub 'gorycz'. Imię Matki Bożej, jedno z najczęściej nadawanych na świecie."},
+    {n:"Marek", o:"łacińskie", t:"Podobnie jak Marcin, wywodzi się od Marsa — 'należący do Marsa' lub 'wojowniczy'."},
+    {n:"Marta", o:"aramejskie", t:"Z aramejskiego 'pani' lub 'gospodyni'. Imię biblijnej Marty, siostry Łazarza."},
+    {n:"Mateusz", o:"hebrajskie", t:"Z hebrajskiego 'dar Boga'. Imię jednego z czterech Ewangelistów."},
+    {n:"Michał", o:"hebrajskie", t:"Z hebrajskiego 'któż jak Bóg'. Imię archanioła Michała, jedno z najpopularniejszych imion męskich w Polsce."},
+    {n:"Mikołaj", o:"greckie", t:"Z greckiego 'zwycięstwo ludu'. Imię świętego Mikołaja z Miry, patrona dzieci."},
+    {n:"Monika", o:"łacińskie/berberyjskie", t:"Znaczenie sporne, łączone z 'doradzająca' lub imieniem pochodzenia berberyjskiego. Imię świętej Moniki, matki świętego Augustyna."},
+    {n:"Natalia", o:"łacińskie", t:"Z łacińskiego 'dzień narodzin' (natale), pierwotnie związane z narodzinami Chrystusa."},
+    {n:"Oliwia", o:"łacińskie", t:"Od łacińskiego 'oliwka' — symbol pokoju i odnowy. Bardzo popularne współcześnie imię żeńskie."},
+    {n:"Oskar", o:"germańskie/celtyckie", t:"Z germańskiego 'boża włócznia' lub celtyckiego 'przyjaciel jeleni'. Popularne w Skandynawii i coraz częściej w Polsce."},
+    {n:"Patrycja", o:"łacińskie", t:"Żeńska forma od łacińskiego 'szlachetnie urodzona', związana z rzymskim stanem patrycjuszy."},
+    {n:"Paweł", o:"łacińskie", t:"Z łacińskiego 'mały' lub 'skromny'. Imię świętego Pawła Apostoła."},
+    {n:"Piotr", o:"greckie", t:"Z greckiego 'skała' lub 'kamień'. Imię świętego Piotra, pierwszego papieża w tradycji katolickiej."},
+    {n:"Rafał", o:"hebrajskie", t:"Z hebrajskiego 'Bóg uzdrowił'. Imię archanioła Rafała, patrona podróżnych i medyków."},
+    {n:"Robert", o:"germańskie", t:"Z germańskiego 'jasna sława' lub 'słynący z blasku'. Popularne w wielu krajach europejskich."},
+    {n:"Sara", o:"hebrajskie", t:"Z hebrajskiego 'księżniczka' lub 'pani'. Imię żony Abrahama w tradycji biblijnej."},
+    {n:"Stanisław", o:"słowiańskie", t:"Ze starosłowiańskiego 'ten, który stanie się sławny'. Jedno z klasycznych, historycznych imion polskich."},
+    {n:"Szymon", o:"hebrajskie", t:"Z hebrajskiego 'usłyszany (przez Boga)'. Imię jednego z apostołów."},
+    {n:"Tomasz", o:"aramejskie", t:"Z aramejskiego 'bliźniak'. Imię świętego Tomasza Apostoła, znanego z określenia 'niewierny Tomasz'."},
+    {n:"Wiktoria", o:"łacińskie", t:"Z łacińskiego 'zwycięstwo'. Imię symbolizujące triumf i sukces, popularne w wielu krajach."},
+    {n:"Wojciech", o:"słowiańskie", t:"Ze starosłowiańskiego 'ten, który cieszy się z wojny' lub 'pocieszyciel wojowników'. Imię świętego Wojciecha, patrona Polski."},
+    {n:"Zofia", o:"greckie", t:"Z greckiego 'mądrość'. Imię niezmiennie popularne w Polsce od pokoleń."},
+    {n:"Zuzanna", o:"hebrajskie", t:"Z hebrajskiego 'lilia' lub 'róża' — symbol piękna i czystości."}
+  ];
+
+  NAMES.sort((a,b) => a.n.localeCompare(b.n, 'pl'));
+
+  const searchInput = document.getElementById('searchInput');
+  const detailBox = document.getElementById('detailBox');
+  const nameList = document.getElementById('nameList');
+
+  function showDetail(entry){
+    document.getElementById('detailName').textContent = entry.n;
+    document.getElementById('detailOrigin').textContent = 'pochodzenie: ' + entry.o;
+    document.getElementById('detailText').textContent = entry.t;
+    detailBox.classList.add('visible');
+  }
+
+  function renderList(filter){
+    const filtered = filter
+      ? NAMES.filter(d => d.n.toLowerCase().includes(filter.toLowerCase()))
+      : NAMES;
+    nameList.innerHTML = filtered.slice(0, 40).map(d => `<span class="symbol-chip" data-name="${d.n}">${d.n}</span>`).join('');
+    document.querySelectorAll('.symbol-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const entry = NAMES.find(d => d.n === chip.dataset.name);
+        if(entry) showDetail(entry);
+      });
+    });
+  }
+
+  searchInput.addEventListener('input', () => {
+    const val = searchInput.value.trim();
+    renderList(val);
+    const exactMatch = NAMES.find(d => d.n.toLowerCase() === val.toLowerCase());
+    if(exactMatch) showDetail(exactMatch);
+  });
+
+  renderList('');
+</script>
+
+</body>
+</html>

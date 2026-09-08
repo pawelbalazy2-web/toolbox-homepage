@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarot online — wróżba z kart za darmo</title>
+<meta name="description" content="Darmowa wróżba z kart tarota online. Wylosuj kartę dnia lub trzykartowy układ przeszłość-teraźniejszość-przyszłość.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#161329; --surface:#201c38; --line:#362f57; --paper:#ece8f7; --muted:#9089b8; --gold:#d4a574; --gold-dim:#a97f52; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold); margin-bottom:14px; }
+  h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(34px,5.5vw,50px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; font-style:italic; }
+  .mode-tabs{ display:flex; gap:8px; margin-bottom:24px; }
+  .mode-btn{ background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:10px 20px; color:var(--muted); font-family:'Inter',sans-serif; font-size:13.5px; cursor:pointer; }
+  .mode-btn.active{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+  .draw-btn{ background:var(--gold); color:var(--ink); border:none; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:17px; padding:14px 32px; border-radius:26px; cursor:pointer; margin-bottom:30px; }
+  .draw-btn:hover{ background:#e0b989; }
+  .cards-area{ display:flex; gap:20px; flex-wrap:wrap; justify-content:center; max-width:700px; }
+  .card-item{ width:150px; }
+  .card-visual{ width:150px; height:220px; background:var(--surface); border:2px solid var(--gold-dim); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:14px; margin-bottom:10px; }
+  .card-name{ font-family:'Cormorant Garamond',serif; font-weight:700; font-size:18px; color:var(--gold); }
+  .card-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:14px; text-align:center; }
+  .card-meaning{ font-size:12.5px; color:#d3cdea; line-height:1.6; text-align:center; padding:0 4px; }
+  footer{ margin-top:56px; color:#4a4270; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4a4270; }
+  .content{ width:100%; max-width:600px; margin-top:56px; padding-top:44px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:24px; margin:32px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#c3bce0; font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .disclaimer{ margin-top:20px; font-size:12px; color:var(--muted); text-align:center; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">wróżba / tarot</div>
+  <h1>Tarot online</h1>
+  <p class="sub">Skup się na pytaniu i wylosuj kartę.</p>
+
+  <div class="mode-tabs">
+    <button class="mode-btn active" data-mode="1">Karta dnia</button>
+    <button class="mode-btn" data-mode="3">Przeszłość · Teraźniejszość · Przyszłość</button>
+  </div>
+
+  <button class="draw-btn" id="drawBtn">Losuj karty</button>
+
+  <div class="cards-area" id="cardsArea"></div>
+
+  <section class="content">
+    <h2>Czym jest tarot</h2>
+    <p>Tarot to talia 78 kart używana od wieków jako narzędzie do refleksji i introspekcji. To narzędzie korzysta z 22 Arkanów Większych — najbardziej rozpoznawalnej części talii, reprezentujących główne archetypy i etapy ludzkiego doświadczenia, od Głupca (nowe początki) po Świat (spełnienie).</p>
+    <h2>Jak interpretować układ trzykartowy</h2>
+    <p>Układ Przeszłość-Teraźniejszość-Przyszłość to jeden z najpopularniejszych sposobów czytania kart — pierwsza karta pokazuje wpływy z przeszłości, druga obecną sytuację, a trzecia możliwy kierunek rozwoju wydarzeń.</p>
+    <p class="disclaimer">Tarot ma charakter rozrywkowy i symboliczny — nie przewiduje przyszłości ani nie zastępuje profesjonalnego doradztwa.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const CARDS = [
+    {n:"Głupiec", m:"Nowy początek, spontaniczność i gotowość na nieznane. Czas, by zaufać własnej intuicji, nawet jeśli droga nie jest jeszcze jasna."},
+    {n:"Mag", m:"Masz wszystkie narzędzia potrzebne do działania. To karta inicjatywy, umiejętności i przekuwania pomysłów w rzeczywistość."},
+    {n:"Kapłanka", m:"Intuicja i wewnętrzna wiedza. Czas na refleksję zamiast działania — odpowiedzi, których szukasz, są bliżej niż myślisz."},
+    {n:"Cesarzowa", m:"Obfitość, twórczość i troska. Karta związana z rozwojem — projektu, relacji lub samego siebie."},
+    {n:"Cesarz", m:"Struktura, autorytet i stabilność. Czas na uporządkowanie spraw i podjęcie odpowiedzialności za swoje decyzje."},
+    {n:"Hierofant", m:"Tradycja, nauka i poszukiwanie sensu w sprawdzonych ścieżkach. Może wskazywać na mentora lub ważną naukę."},
+    {n:"Kochankowie", m:"Wybór, połączenie i wartości, którymi się kierujesz. Nie zawsze dotyczy dosłownie miłości — może symbolizować ważną decyzję."},
+    {n:"Rydwan", m:"Determinacja, kontrola i zwycięstwo dzięki sile woli. Czas, by iść naprzód mimo przeciwności."},
+    {n:"Siła", m:"Wewnętrzna siła, cierpliwość i łagodne, ale skuteczne radzenie sobie z trudnościami."},
+    {n:"Pustelnik", m:"Introspekcja i poszukiwanie odpowiedzi w samotności. Czas na wycofanie się i przemyślenie sytuacji."},
+    {n:"Koło Fortuny", m:"Zmiana, cykle i to, co poza Twoją kontrolą. Przypomnienie, że po trudnym okresie zawsze przychodzi odmiana."},
+    {n:"Sprawiedliwość", m:"Równowaga, prawda i konsekwencje własnych wyborów. Czas na uczciwą ocenę sytuacji."},
+    {n:"Wisielec", m:"Zawieszenie, nowa perspektywa i akceptacja tego, na co nie masz wpływu. Czasem trzeba się zatrzymać, żeby zobaczyć więcej."},
+    {n:"Śmierć", t:"śmierć", m:"Symboliczny koniec i transformacja, nie dosłowna śmierć. Coś się kończy, by zrobić miejsce na nowy etap."},
+    {n:"Umiarkowanie", m:"Harmonia, cierpliwość i łączenie przeciwieństw. Czas na znalezienie złotego środka w trudnej sytuacji."},
+    {n:"Diabeł", m:"Ograniczenia, uzależnienia lub wzorce, z których trudno się wyrwać. Zaproszenie do spojrzenia na to, co Cię wiąże."},
+    {n:"Wieża", m:"Nagła, wstrząsająca zmiana, która obnaża to, co niestabilne. Choć trudna, często otwiera drogę do czegoś prawdziwszego."},
+    {n:"Gwiazda", m:"Nadzieja, uzdrowienie i wiara w lepszą przyszłość po trudnym okresie."},
+    {n:"Księżyc", m:"Niepewność, iluzje i podświadome lęki. Czas, by nie ufać ślepo pierwszym wrażeniom."},
+    {n:"Słońce", m:"Radość, sukces i jasność sytuacji. Jedna z najbardziej pozytywnych kart w talii."},
+    {n:"Sąd", m:"Przebudzenie, rozliczenie i szansa na odnowę. Czas na spojrzenie wstecz i wyciągnięcie wniosków."},
+    {n:"Świat", m:"Spełnienie, zakończenie ważnego etapu i poczucie całości. Osiągnięcie celu, do którego długo dążyłeś."}
+  ];
+
+  const LABELS_1 = ['Karta dnia'];
+  const LABELS_3 = ['Przeszłość', 'Teraźniejszość', 'Przyszłość'];
+
+  let mode = 1;
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      mode = parseInt(btn.dataset.mode, 10);
+      document.getElementById('cardsArea').innerHTML = '';
+    });
+  });
+
+  function drawCards(){
+    const shuffled = [...CARDS];
+    for(let i=shuffled.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]]; }
+    const drawn = shuffled.slice(0, mode);
+    const labels = mode === 1 ? LABELS_1 : LABELS_3;
+
+    const area = document.getElementById('cardsArea');
+    area.innerHTML = drawn.map((card, i) => `
+      <div class="card-item">
+        <div class="card-visual"><div class="card-name">${card.n}</div></div>
+        <div class="card-label">${labels[i]}</div>
+        <div class="card-meaning">${card.m}</div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('drawBtn').addEventListener('click', drawCards);
+</script>
+</body>
+</html>

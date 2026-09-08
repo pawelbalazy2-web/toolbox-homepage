@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zgodność znaków zodiaku online</title>
+<meta name="description" content="Sprawdź zgodność dwóch znaków zodiaku. Wybierz swój znak i znak partnera, aby poznać opis kompatybilności.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1b1030; --surface:#251740; --line:#392a5c; --paper:#ede8fa; --muted:#9c8fc4; --accent:#8ec5fc; --accent-dim:#5f9bd6; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:560px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .selectors{ display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  select{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px; color:var(--paper); cursor:pointer; outline:none; }
+  .heart{ font-size:20px; }
+  .result-card{ width:100%; max-width:520px; background:var(--surface); border:1px solid var(--accent-dim); border-radius:12px; padding:26px; display:none; text-align:center; }
+  .result-card.visible{ display:block; }
+  .result-percent{ font-family:'Cormorant Garamond',serif; font-weight:700; font-size:42px; color:var(--accent); }
+  .result-text{ font-size:14.5px; line-height:1.7; color:#d8d2ef; margin-top:12px; text-align:left; }
+  footer{ margin-top:48px; color:#453c6e; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#453c6e; }
+  .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:22px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#c3bce0; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">horoskop / zgodność</div>
+  <h1>Zgodność znaków zodiaku</h1>
+  <p class="sub">Wybierz dwa znaki, aby sprawdzić ich kompatybilność.</p>
+
+  <div class="selectors">
+    <select id="sign1"></select>
+    <span class="heart">💫</span>
+    <select id="sign2"></select>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-percent" id="resultPercent"></div>
+    <div class="result-text" id="resultText"></div>
+  </div>
+
+  <section class="content">
+    <h2>Jak liczona jest zgodność</h2>
+    <p>Astrologia dzieli znaki zodiaku na cztery żywioły: ogień (Baran, Lew, Strzelec), ziemię (Byk, Panna, Koziorożec), powietrze (Bliźnięta, Waga, Wodnik) i wodę (Rak, Skorpion, Ryby). Tradycyjnie znaki tego samego żywiołu oraz żywiołów uzupełniających się (ogień-powietrze, ziemia-woda) uznawane są za bardziej zgodne.</p>
+    <p>Wynik procentowy to zabawowy dodatek — ta sama para znaków zawsze da ten sam wynik.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const SIGNS = [
+    {id:'baran', name:'Baran ♈', element:'ogień'},
+    {id:'byk', name:'Byk ♉', element:'ziemia'},
+    {id:'bliznieta', name:'Bliźnięta ♊', element:'powietrze'},
+    {id:'rak', name:'Rak ♋', element:'woda'},
+    {id:'lew', name:'Lew ♌', element:'ogień'},
+    {id:'panna', name:'Panna ♍', element:'ziemia'},
+    {id:'waga', name:'Waga ♎', element:'powietrze'},
+    {id:'skorpion', name:'Skorpion ♏', element:'woda'},
+    {id:'strzelec', name:'Strzelec ♐', element:'ogień'},
+    {id:'koziorozec', name:'Koziorożec ♑', element:'ziemia'},
+    {id:'wodnik', name:'Wodnik ♒', element:'powietrze'},
+    {id:'ryby', name:'Ryby ♓', element:'woda'}
+  ];
+
+  const ELEMENT_TEXTS = {
+    'ogień-ogień': "Dwa żywioły ognia razem tworzą relację pełną pasji i energii — ale też potencjalnej rywalizacji o dominację. Gdy nauczycie się dzielić przestrzenią, to duet pełen wzajemnej inspiracji.",
+    'ziemia-ziemia': "Solidność spotyka solidność — ta para ceni stabilność, lojalność i wspólne budowanie czegoś trwałego. Może brakować spontaniczności, ale fundament jest mocny.",
+    'powietrze-powietrze': "Dwa umysły pełne pomysłów — świetna komunikacja i intelektualna więź. Warto pamiętać o zakorzenieniu emocji w konkretnych działaniach, nie tylko rozmowach.",
+    'woda-woda': "Głęboka więź emocjonalna i intuicyjne zrozumienie się bez słów. Uważajcie na wspólne zatapianie się w nastrojach — czasem potrzeba kogoś, kto wyciągnie na powierzchnię.",
+    'ogień-ziemia': "Ogień wnosi energię, ziemia stabilność — to połączenie może działać, jeśli oboje docenicie różnice zamiast próbować się zmieniać.",
+    'ogień-powietrze': "Klasycznie zgodna kombinacja — powietrze rozpala ogień, a ogień ogrzewa powietrze. Dynamiczna, ekscytująca relacja pełna wspólnych pomysłów i działania.",
+    'ogień-woda': "Żywioły przeciwne — ogień i woda mogą się wzajemnie gasić lub parować w konflikcie, ale też uzupełniać, jeśli oboje nauczą się szanować odmienne tempo i potrzeby.",
+    'ziemia-powietrze': "Ziemia szuka konkretu, powietrze — możliwości. To połączenie wymaga cierpliwości, ale może dać ciekawą równowagę między praktycznością a wizją.",
+    'ziemia-woda': "Naturalnie zgodna kombinacja — ziemia daje wodzie stabilne brzegi, a woda uczy ziemię elastyczności i głębi emocjonalnej.",
+    'powietrze-woda': "Powietrze racjonalizuje, woda czuje — to połączenie uczy równowagi między głową a sercem, choć czasem prowadzi do nieporozumień w komunikacji emocji."
+  };
+
+  function stringToSeed(str){
+    let hash = 0;
+    for(let i=0;i<str.length;i++){ hash = (hash << 5) - hash + str.charCodeAt(i); hash |= 0; }
+    return Math.abs(hash);
+  }
+  function seededRandom(seed){ let x = Math.sin(seed) * 10000; return x - Math.floor(x); }
+
+  const sign1Select = document.getElementById('sign1');
+  const sign2Select = document.getElementById('sign2');
+
+  SIGNS.forEach(s => {
+    sign1Select.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+    sign2Select.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+  });
+  sign2Select.selectedIndex = 3;
+
+  function updateResult(){
+    const s1 = SIGNS.find(s => s.id === sign1Select.value);
+    const s2 = SIGNS.find(s => s.id === sign2Select.value);
+    const key = [s1.element, s2.element].sort().join('-');
+    const text = ELEMENT_TEXTS[key] || ELEMENT_TEXTS[[s2.element,s1.element].sort().join('-')];
+
+    const seed = stringToSeed([s1.id, s2.id].sort().join('+'));
+    const percent = Math.floor(seededRandom(seed) * 41) + 55;
+
+    document.getElementById('resultPercent').textContent = percent + '%';
+    document.getElementById('resultText').textContent = text;
+    document.getElementById('resultCard').classList.add('visible');
+  }
+
+  sign1Select.addEventListener('change', updateResult);
+  sign2Select.addEventListener('change', updateResult);
+  updateResult();
+</script>
+</body>
+</html>

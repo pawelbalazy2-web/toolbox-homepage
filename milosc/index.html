@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator miłości online — sprawdź zgodność imion</title>
+<meta name="description" content="Wpisz dwa imiona i sprawdź procent zgodności miłosnej. Dla rozrywki, za darmo, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#2b0f1e; --surface:#3a1729; --line:#552038; --paper:#fbeaf1; --muted:#c98ba6; --pink:#ff4d7d; --pink-dim:#c9285a; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:560px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:480px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:28px; }
+  .field-row{ display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+  .field{ flex:1; }
+  .field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:6px; }
+  input[type="text"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:8px; padding:13px 14px; font-family:'Inter',sans-serif; font-size:15px; color:var(--paper); outline:none; }
+  input:focus{ border-color:var(--pink); }
+  .heart-icon{ font-size:22px; margin-top:16px; }
+  .calc-btn{ width:100%; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:14px; border-radius:24px; cursor:pointer; }
+  .calc-btn:hover{ background:var(--pink-dim); }
+  .result-box{ margin-top:22px; text-align:center; display:none; }
+  .result-box.visible{ display:block; }
+  .result-percent{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:48px; color:var(--pink); }
+  .result-bar{ height:10px; background:var(--ink); border-radius:6px; overflow:hidden; margin:12px 0; }
+  .result-bar-fill{ height:100%; background:linear-gradient(90deg,var(--pink),#ff8fb3); transition:width 0.6s ease; }
+  .result-msg{ font-size:14.5px; color:var(--muted); margin-top:10px; line-height:1.6; }
+  footer{ margin-top:48px; color:#6e2f4a; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#6e2f4a; }
+  .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#e0bccd; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+  .disclaimer{ margin-top:16px; font-size:12px; color:var(--muted); text-align:center; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">rozrywka / miłość</div>
+  <h1>Kalkulator miłości</h1>
+  <p class="sub">Wpisz dwa imiona i sprawdź procent zgodności.</p>
+
+  <div class="card">
+    <div class="field-row">
+      <div class="field"><label>TWOJE IMIĘ</label><input type="text" id="name1" value="Ania"></div>
+      <div class="heart-icon">💕</div>
+      <div class="field"><label>IMIĘ DRUGIEJ OSOBY</label><input type="text" id="name2" value="Kuba"></div>
+    </div>
+    <button class="calc-btn" id="calcBtn">Sprawdź zgodność</button>
+    <div class="result-box" id="resultBox">
+      <div class="result-percent" id="resultPercent">—</div>
+      <div class="result-bar"><div class="result-bar-fill" id="resultBar"></div></div>
+      <div class="result-msg" id="resultMsg"></div>
+    </div>
+  </div>
+
+  <section class="content">
+    <h2>Jak liczony jest wynik</h2>
+    <p>Procent zgodności obliczany jest na podstawie liter składających się na oba imiona — to zabawowy algorytm, a nie naukowa metoda. Ten sam układ imion zawsze da ten sam wynik, więc możesz sprawdzić różne kombinacje i porównać rezultaty.</p>
+    <p class="disclaimer">To narzędzie służy wyłącznie rozrywce i nie ma żadnej wartości predykcyjnej co do prawdziwych relacji.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  function stringToSeed(str){
+    let hash = 0;
+    for(let i=0;i<str.length;i++){ hash = (hash << 5) - hash + str.charCodeAt(i); hash |= 0; }
+    return Math.abs(hash);
+  }
+  function seededRandom(seed){ let x = Math.sin(seed) * 10000; return x - Math.floor(x); }
+
+  const MESSAGES = [
+    [0,30,"Może lepiej jako przyjaciele — ale kto wie, przeciwieństwa czasem się przyciągają."],
+    [30,50,"Jest tu potencjał, ale wymaga pracy i dobrej komunikacji z obu stron."],
+    [50,70,"Nieźle! Widać tu chemię, choć każdy związek wymaga zaangażowania."],
+    [70,90,"Świetne dopasowanie! Gwiazdy imion wróżą udaną relację."],
+    [90,101,"To może być to! Rzadko spotykany, wysoki poziom zgodności."]
+  ];
+
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    const n1 = document.getElementById('name1').value.trim().toLowerCase();
+    const n2 = document.getElementById('name2').value.trim().toLowerCase();
+    if(!n1 || !n2) return;
+
+    const combined = [n1, n2].sort().join('+');
+    const seed = stringToSeed(combined);
+    const percent = Math.floor(seededRandom(seed) * 66) + 34; // zakres 34-99 dla lepszego "feelingu"
+
+    document.getElementById('resultPercent').textContent = percent + '%';
+    document.getElementById('resultBar').style.width = percent + '%';
+    const msg = MESSAGES.find(([min,max]) => percent >= min && percent < max);
+    document.getElementById('resultMsg').textContent = msg[2];
+    document.getElementById('resultBox').classList.add('visible');
+  });
+</script>
+</body>
+</html>

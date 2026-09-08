@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numerologia online — oblicz swoją liczbę życia</title>
+<meta name="description" content="Oblicz swoją liczbę życia na podstawie daty urodzenia i poznaj jej numerologiczne znaczenie. Za darmo, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#161329; --surface:#201c38; --line:#362f57; --paper:#ece8f7; --muted:#9089b8; --gold:#d4a574; --gold-dim:#a97f52; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold); margin-bottom:14px; }
+  h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(34px,5.5vw,50px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; font-style:italic; }
+  .card{ width:100%; max-width:420px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:28px; text-align:center; }
+  input[type="date"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:8px; padding:14px; font-family:'IBM Plex Mono',monospace; font-size:16px; color:var(--paper); outline:none; color-scheme:dark; margin-bottom:20px; }
+  input:focus{ border-color:var(--gold); }
+  .result-number{ font-family:'Cormorant Garamond',serif; font-weight:700; font-size:64px; color:var(--gold); line-height:1; }
+  .result-title{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:20px; margin:8px 0 14px; }
+  .result-text{ font-size:14px; line-height:1.7; color:#d3cdea; text-align:left; }
+  footer{ margin-top:48px; color:#4a4270; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4a4270; }
+  .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:22px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#c3bce0; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+  .disclaimer{ margin-top:16px; font-size:12px; color:var(--muted); text-align:center; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">wróżba / numerologia</div>
+  <h1>Liczba życia</h1>
+  <p class="sub">Podaj datę urodzenia, żeby poznać swoją liczbę numerologiczną.</p>
+
+  <div class="card">
+    <input type="date" id="birthDate">
+    <div id="resultArea"></div>
+  </div>
+
+  <section class="content">
+    <h2>Czym jest liczba życia</h2>
+    <p>Liczba życia to jedna z podstawowych koncepcji numerologii — oblicza się ją sumując wszystkie cyfry daty urodzenia, aż zostanie pojedyncza cyfra (z wyjątkiem tzw. liczb mistrzowskich 11, 22 i 33, które w tradycji numerologicznej pozostają niezredukowane). Uznaje się, że liczba ta odzwierciedla główne cechy charakteru i życiową ścieżkę danej osoby.</p>
+    <p class="disclaimer">Numerologia ma charakter symboliczny i rozrywkowy — nie jest potwierdzoną naukowo metodą przewidywania cech charakteru ani przyszłości.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const MEANINGS = {
+    1: {title:"Lider", text:"Jesteś urodzonym liderem — niezależnym, ambitnym i zdeterminowanym w dążeniu do celów. Cenisz samodzielność i najlepiej czujesz się, gdy sam wyznaczasz kierunek. Twoim wyzwaniem bywa nauka współpracy i cierpliwości wobec tempa innych."},
+    2: {title:"Dyplomata", text:"Masz naturalny talent do budowania relacji i łagodzenia konfliktów. Jesteś wrażliwy na potrzeby innych i cenisz harmonię ponad rywalizację. Warto pamiętać o dbaniu też o własne potrzeby, nie tylko cudze."},
+    3: {title:"Twórca", text:"Ekspresja, kreatywność i optymizm to Twoje mocne strony. Masz dar komunikacji i łatwo przyciągasz innych swoją energią. Czasem trudno Ci się skupić na jednej rzeczy na dłużej — warto pielęgnować dyscyplinę."},
+    4: {title:"Budowniczy", text:"Cenisz stabilność, porządek i solidną pracę. Jesteś osobą, na której inni mogą polegać. Twoim wyzwaniem bywa elastyczność wobec zmian, które wykraczają poza Twój plan."},
+    5: {title:"Wolny duch", text:"Wolność, przygoda i różnorodność doświadczeń napędzają Cię najbardziej. Łatwo się nudzisz rutyną i szukasz nowych wrażeń. Warto uważać na rozpraszanie energii na zbyt wiele kierunków naraz."},
+    6: {title:"Opiekun", text:"Odpowiedzialność, troska o innych i poczucie sprawiedliwości definiują Twój charakter. Naturalnie przyjmujesz rolę opiekuna w rodzinie i wśród przyjaciół. Pamiętaj, by nie zapominać o własnych granicach."},
+    7: {title:"Poszukiwacz", text:"Analityczny umysł, głębia i potrzeba zrozumienia sensu rzeczy to Twoje cechy. Cenisz czas w samotności na refleksję bardziej niż towarzyskie zgiełki. Czasem warto bardziej otworzyć się na innych."},
+    8: {title:"Realizator", text:"Ambicja, determinacja i talent do zarządzania zasobami — materialnymi i ludzkimi. Naturalnie dążysz do sukcesu i uznania. Warto pamiętać, że wartość nie mierzy się tylko osiągnięciami."},
+    9: {title:"Humanista", text:"Empatia, szeroka perspektywa i troska o dobro ogółu to Twoje wyróżniki. Łatwo przychodzi Ci współczucie wobec innych. Wyzwaniem bywa dbanie o siebie tak samo, jak dbasz o resztę świata."},
+    11: {title:"Liczba mistrzowska — Intuicyjny wizjoner", text:"Jako liczba mistrzowska, 11 niesie wzmocnioną intuicję i duchową wrażliwość. Masz potencjał, by inspirować innych swoją wizją, choć ta sama wrażliwość bywa czasem przytłaczająca."},
+    22: {title:"Liczba mistrzowska — Mistrzowski budowniczy", text:"Liczba 22 łączy praktyczność czwórki z wizjonerską energią liczb mistrzowskich — masz potencjał realizować wielkie, trwałe projekty, które wpływają na innych w szerokiej skali."},
+    33: {title:"Liczba mistrzowska — Nauczyciel", text:"Rzadka liczba mistrzowska 33 symbolizuje głęboką troskę o innych połączoną z chęcią nauczania i uzdrawiania — to energia bezinteresownej służby na wielką skalę."}
+  };
+
+  function reduceToDigit(num){
+    while(num > 9 && num !== 11 && num !== 22 && num !== 33){
+      num = String(num).split('').reduce((sum, d) => sum + parseInt(d, 10), 0);
+    }
+    return num;
+  }
+
+  document.getElementById('birthDate').addEventListener('input', (e) => {
+    const val = e.target.value;
+    if(!val) return;
+    const digits = val.replace(/-/g, '').split('').map(Number);
+    const sum = digits.reduce((a,b) => a+b, 0);
+    const lifeNumber = reduceToDigit(sum);
+    const meaning = MEANINGS[lifeNumber];
+
+    document.getElementById('resultArea').innerHTML = `
+      <div class="result-number">${lifeNumber}</div>
+      <div class="result-title">${meaning.title}</div>
+      <div class="result-text">${meaning.text}</div>
+    `;
+  });
+</script>
+</body>
+</html>
