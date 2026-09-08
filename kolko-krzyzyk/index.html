@@ -25,6 +25,12 @@
   footer a{ color:#4d4478; }
   .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); text-align:center; }
   .content p{ color:#c9c3e3; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+.content h2{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:19px; color:var(--paper); margin:28px 0 12px; text-align:left; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ text-align:left; }
+  .faq-item{ margin-bottom:16px; text-align:left; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; color:var(--paper); }
+  .faq-item p{ margin:0; font-size:13.5px; color:#c9c3e3; }
 </style>
 </head>
 <body>
@@ -36,7 +42,11 @@
   <button class="reset-btn" id="resetBtn">Nowa gra</button>
 
   <section class="content">
-    <p>Klasyczna gra znana chyba każdemu — na zmianę stawiacie X i O, wygrywa ten, kto pierwszy ułoży trzy swoje znaki w linii (poziomo, pionowo lub po skosie). Gra działa lokalnie w przeglądarce, dla dwóch osób grających na tym samym urządzeniu.</p>
+    <h2>Zasady gry</h2>
+    <p>Gracze na zmianę stawiają swój symbol (X lub O) w wolnym polu siatki 3×3. Wygrywa ten, kto pierwszy ułoży trzy swoje symbole w linii prostej — poziomo, pionowo lub po przekątnej. Jeśli wszystkie pola zostaną zapełnione bez zwycięzcy, gra kończy się remisem.</p>
+    <p>To jedna z najstarszych znanych gier strategicznych — przy optymalnej grze obu stron zawsze kończy się remisem, ale w praktyce (zwłaszcza grając z kimś mniej doświadczonym) łatwo o pomyłkę prowadzącą do przegranej.</p>
+    <div class="faq-item"><h3>Czy da się zawsze wygrać?</h3><p>Nie — jeśli obaj gracze grają optymalnie, gra zawsze kończy się remisem. Wygrana wymaga błędu przeciwnika.</p></div>
+    <div class="faq-item"><h3>Czy mogę grać przeciwko komputerowi?</h3><p>Ta wersja jest przeznaczona dla dwóch graczy na jednym urządzeniu. Na tej samej stronie znajdziesz też grę w kamień-papier-nożyce z komputerem jako przeciwnikiem.</p></div>
   </section>
 
   <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>

@@ -24,6 +24,12 @@
   .stats b{ display:block; font-size:22px; color:var(--paper); }
   footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
   footer a{ color:#4d4478; }
+.content h2{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:19px; color:var(--paper); margin:28px 0 12px; text-align:left; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ text-align:left; }
+  .faq-item{ margin-bottom:16px; text-align:left; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; color:var(--paper); }
+  .faq-item p{ margin:0; font-size:13.5px; color:#c9c3e3; }
 </style>
 </head>
 <body>
@@ -39,6 +45,12 @@
     <div>RESZKA<b id="tailsCount">0</b></div>
     <div>RAZEM<b id="totalCount">0</b></div>
   </div>
+
+  <section class="content" style="max-width:400px;margin-top:36px;">
+    <h2>Losowość rzutu</h2>
+    <p>Wirtualny rzut monetą wykorzystuje generator liczb losowych przeglądarki, dający w przybliżeniu 50/50 szans na orła i reszkę — dokładnie tak, jak przy prawdziwej, uczciwej monecie. Przy krótkich seriach naturalne jest, że wyniki nie rozkładają się idealnie po połowie — to normalna cecha losowości, a nie błąd.</p>
+    <div class="faq-item"><h3>Dlaczego w krótkiej serii wynik nie jest 50/50?</h3><p>To zjawisko statystyczne — przy małej liczbie prób odchylenia od idealnego rozkładu są normalne. Im więcej rzutów, tym wynik zbliża się do 50/50.</p></div>
+  </section>
 
   <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
 

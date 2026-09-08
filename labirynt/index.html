@@ -22,6 +22,12 @@
   .hint{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-top:14px; }
   footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
   footer a{ color:#4d4478; }
+.content h2{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:19px; color:var(--paper); margin:28px 0 12px; text-align:left; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ text-align:left; }
+  .faq-item{ margin-bottom:16px; text-align:left; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; color:var(--paper); }
+  .faq-item p{ margin:0; font-size:13.5px; color:#c9c3e3; }
 </style>
 </head>
 <body>
@@ -32,6 +38,12 @@
   <div class="win-msg" id="winMsg"></div>
   <div class="btn-row"><button id="newMazeBtn">Nowy labirynt</button></div>
   <div class="hint">Sterowanie: strzałki lub WASD</div>
+
+  <section class="content" style="max-width:420px;margin-top:36px;">
+    <h2>Jak generowany jest labirynt</h2>
+    <p>Każdy labirynt tworzony jest algorytmicznie od nowa — gwarantuje to, że zawsze istnieje dokładnie jedna droga między startem a metą, bez zamkniętych pętli. Dzięki temu każda rozgrywka jest inna, a łamigłówka zawsze ma rozwiązanie.</p>
+    <div class="faq-item"><h3>Czy da się zawsze dotrzeć do celu?</h3><p>Tak — algorytm generujący labirynt zapewnia, że ścieżka do wyjścia zawsze istnieje.</p></div>
+  </section>
 
   <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
 

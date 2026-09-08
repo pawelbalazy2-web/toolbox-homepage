@@ -27,6 +27,12 @@
   .reset-btn{ margin-top:14px; background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 18px; border-radius:8px; cursor:pointer; }
   footer{ margin-top:40px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
   footer a{ color:#4d4478; }
+.content h2{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:19px; color:var(--paper); margin:28px 0 12px; text-align:left; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ text-align:left; }
+  .faq-item{ margin-bottom:16px; text-align:left; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; color:var(--paper); }
+  .faq-item p{ margin:0; font-size:13.5px; color:#c9c3e3; }
 </style>
 </head>
 <body>
@@ -41,6 +47,13 @@
   </div>
   <div class="turn-info" id="turnInfo">Ruch: Gracz 1 (różowy)</div>
   <button class="reset-btn" id="resetBtn">Nowa gra</button>
+
+  <section class="content" style="max-width:520px;margin-top:36px;">
+    <h2>Zasady gry</h2>
+    <p>Gracze na zmianę rzucają kostką i przesuwają swój pionek o wylosowaną liczbę pól. Trafienie na pole u podstawy drabiny przenosi Cię od razu w górę planszy, a trafienie na pole z głową węża zsuwa Cię w dół. Wygrywa ten, kto pierwszy dotrze dokładnie na pole 100.</p>
+    <p>To gra oparta wyłącznie na losowości kostki — nie ma tu elementu strategii, co czyni ją świetną zabawą dla graczy w każdym wieku, także tych najmłodszych.</p>
+    <div class="faq-item"><h3>Co się stanie, jeśli rzut przekroczy pole 100?</h3><p>Pionek zostaje na swoim miejscu — ruch wykonywany jest tylko wtedy, gdy suma trafia dokładnie w pole 100 lub mniej.</p></div>
+  </section>
 
   <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
 

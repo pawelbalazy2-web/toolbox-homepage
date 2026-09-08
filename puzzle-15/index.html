@@ -24,6 +24,12 @@
   .reset-btn{ margin-top:12px; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; padding:11px 24px; border-radius:22px; cursor:pointer; }
   footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
   footer a{ color:#4d4478; }
+.content h2{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:19px; color:var(--paper); margin:28px 0 12px; text-align:left; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ text-align:left; }
+  .faq-item{ margin-bottom:16px; text-align:left; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; color:var(--paper); }
+  .faq-item p{ margin:0; font-size:13.5px; color:#c9c3e3; }
 </style>
 </head>
 <body>
@@ -34,6 +40,12 @@
   <div class="puzzle" id="puzzle"></div>
   <div class="win-msg" id="winMsg"></div>
   <button class="reset-btn" id="resetBtn">Przetasuj</button>
+
+  <section class="content" style="max-width:400px;margin-top:36px;">
+    <h2>Historia i zasady</h2>
+    <p>Puzzle 15 to klasyczna łamigłówka z XIX wieku — piętnaście ponumerowanych kafelków na siatce 4×4 z jednym pustym polem. Przesuwając kafelki sąsiadujące z pustym polem, trzeba ułożyć liczby w kolejności rosnącej. Gra generuje zawsze rozwiązywalną konfigurację.</p>
+    <div class="faq-item"><h3>Czy każde przetasowanie da się rozwiązać?</h3><p>Tak — układ generowany jest przez wykonanie serii poprawnych ruchów od stanu rozwiązanego, więc zawsze istnieje droga powrotna.</p></div>
+  </section>
 
   <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
 
