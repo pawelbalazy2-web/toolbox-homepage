@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anagramy online — gra słowna</title>
+<meta name="description" content="Ułóż słowo z przemieszanych liter. Gra słowna online, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:440px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:28px; text-align:center; }
+  .scrambled{ font-family:'IBM Plex Mono',monospace; font-size:32px; letter-spacing:6px; color:var(--teal); margin-bottom:22px; }
+  input[type="text"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:8px; padding:14px; font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--paper); text-align:center; text-transform:uppercase; outline:none; margin-bottom:14px; }
+  input:focus{ border-color:var(--pink); }
+  .check-btn{ width:100%; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:13px; border-radius:8px; cursor:pointer; }
+  .feedback{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; margin-top:16px; min-height:22px; }
+  .hint-btn, .next-btn{ margin-top:12px; background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 18px; border-radius:8px; cursor:pointer; margin-right:8px; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / słowna</div>
+  <h1>Anagramy</h1>
+  <p class="sub">Ułóż poprawne słowo z przemieszanych liter.</p>
+
+  <div class="card">
+    <div class="scrambled" id="scrambled"></div>
+    <input type="text" id="guessInput" placeholder="Twoja odpowiedź">
+    <button class="check-btn" id="checkBtn">Sprawdź</button>
+    <div class="feedback" id="feedback"></div>
+    <div>
+      <button class="hint-btn" id="hintBtn">Podpowiedź</button>
+      <button class="next-btn" id="nextBtn">Następne słowo</button>
+    </div>
+  </div>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const WORDS = [
+    {word:'KOMPUTER', hint:'Urządzenie elektroniczne do przetwarzania danych'},
+    {word:'BIBLIOTEKA', hint:'Miejsce pełne książek'},
+    {word:'WAKACJE', hint:'Czas wolny od pracy lub szkoły'},
+    {word:'OGRODNIK', hint:'Osoba dbająca o rośliny'},
+    {word:'SLONECZNIK', hint:'Żółty kwiat śledzący słońce'},
+    {word:'PRZYJACIEL', hint:'Bliska, zaufana osoba'},
+    {word:'MUZYKANT', hint:'Osoba grająca na instrumencie'},
+    {word:'PODROZNIK', hint:'Osoba lubiąca zwiedzać świat'}
+  ];
+
+  let current;
+
+  function scramble(word){
+    let arr = word.split('');
+    let scrambled;
+    do{
+      for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+      scrambled = arr.join('');
+    } while(scrambled === word);
+    return scrambled;
+  }
+
+  function newWord(){
+    current = WORDS[Math.floor(Math.random()*WORDS.length)];
+    document.getElementById('scrambled').textContent = scramble(current.word);
+    document.getElementById('guessInput').value = '';
+    document.getElementById('feedback').textContent = '';
+  }
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    const val = document.getElementById('guessInput').value.trim().toUpperCase();
+    const feedback = document.getElementById('feedback');
+    if(val === current.word){
+      feedback.textContent = '🎉 Brawo, poprawnie!';
+      feedback.style.color = 'var(--teal)';
+    } else {
+      feedback.textContent = 'Spróbuj jeszcze raz.';
+      feedback.style.color = 'var(--pink)';
+    }
+  });
+
+  document.getElementById('hintBtn').addEventListener('click', () => {
+    document.getElementById('feedback').textContent = '💡 ' + current.hint;
+    document.getElementById('feedback').style.color = 'var(--muted)';
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', newWord);
+  document.getElementById('guessInput').addEventListener('keypress', e => { if(e.key==='Enter') document.getElementById('checkBtn').click(); });
+
+  newWord();
+</script>
+</body>
+</html>

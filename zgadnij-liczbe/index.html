@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zgadnij liczbę online — gra logiczna</title>
+<meta name="description" content="Zgadnij losową liczbę od 1 do 100 z podpowiedziami więcej/mniej. Ile prób potrzebujesz?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:400px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:28px; text-align:center; }
+  input[type="number"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:8px; padding:14px; font-family:'IBM Plex Mono',monospace; font-size:20px; color:var(--paper); text-align:center; outline:none; margin-bottom:14px; }
+  input:focus{ border-color:var(--pink); }
+  .guess-btn{ width:100%; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:13px; border-radius:8px; cursor:pointer; }
+  .guess-btn:hover{ background:#e8317c; }
+  .feedback{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:17px; margin-top:18px; min-height:24px; color:var(--teal); }
+  .attempts{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); margin-top:12px; }
+  .reset-btn{ margin-top:16px; background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 18px; border-radius:8px; cursor:pointer; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+  .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); text-align:center; }
+  .content p{ color:#c9c3e3; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / logika</div>
+  <h1>Zgadnij liczbę</h1>
+  <p class="sub">Wylosowaliśmy liczbę od 1 do 100. Ile prób potrzebujesz?</p>
+
+  <div class="card">
+    <input type="number" id="guessInput" placeholder="Wpisz swoją liczbę" min="1" max="100">
+    <button class="guess-btn" id="guessBtn">Zgadnij</button>
+    <div class="feedback" id="feedback"></div>
+    <div class="attempts" id="attempts">Próby: 0</div>
+    <button class="reset-btn" id="resetBtn">Nowa gra</button>
+  </div>
+
+  <section class="content">
+    <p>Prosta gra logiczna oparta na metodzie zawężania przedziału — po każdej próbie dostajesz podpowiedź, czy szukana liczba jest większa czy mniejsza od Twojej. Optymalna strategia (szukanie środka przedziału za każdym razem) pozwala odgadnąć liczbę od 1 do 100 w maksymalnie 7 próbach.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  let target, attempts, won;
+  const guessInput = document.getElementById('guessInput');
+  const feedback = document.getElementById('feedback');
+  const attemptsEl = document.getElementById('attempts');
+
+  function newGame(){
+    target = Math.floor(Math.random()*100) + 1;
+    attempts = 0;
+    won = false;
+    feedback.textContent = '';
+    attemptsEl.textContent = 'Próby: 0';
+    guessInput.value = '';
+    guessInput.disabled = false;
+  }
+
+  function guess(){
+    if(won) return;
+    const val = parseInt(guessInput.value, 10);
+    if(!val || val < 1 || val > 100) return;
+    attempts++;
+    attemptsEl.textContent = 'Próby: ' + attempts;
+    if(val === target){
+      feedback.textContent = '🎉 Trafiłeś! Liczba to ' + target + ' (w ' + attempts + ' próbach)';
+      won = true;
+      guessInput.disabled = true;
+    } else if(val < target){
+      feedback.textContent = '📈 Za mało — spróbuj wyżej';
+    } else {
+      feedback.textContent = '📉 Za dużo — spróbuj niżej';
+    }
+  }
+
+  document.getElementById('guessBtn').addEventListener('click', guess);
+  guessInput.addEventListener('keypress', e => { if(e.key === 'Enter') guess(); });
+  document.getElementById('resetBtn').addEventListener('click', newGame);
+  newGame();
+</script>
+</body>
+</html>

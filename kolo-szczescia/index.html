@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koło szczęścia online — losuj z własną listą</title>
+<meta name="description" content="Stwórz własne koło szczęścia z dowolnymi nazwami. Świetne do losowania zwycięzców, decyzji grupowych, gier i zabaw — bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --ink: #1a1633;
+    --surface: #241f42;
+    --line: #372f5e;
+    --paper: #f2eefc;
+    --muted: #a99fd4;
+    --pink: #ff3f8e;
+    --yellow: #ffd93d;
+    --teal: #35d0ba;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: radial-gradient(ellipse 900px 500px at 50% -10%, #2a2454 0%, var(--ink) 60%);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding: 56px 20px 40px;
+  }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  h1{
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: clamp(30px, 4.8vw, 46px);
+    line-height: 1.15;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 0 12px;
+  }
+  .sub{
+    color: var(--muted);
+    text-align:center;
+    max-width: 460px;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 36px;
+  }
+
+  .layout{
+    width: 100%;
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items:start;
+  }
+  @media (max-width: 760px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+
+  .wheel-panel{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .wheel-wrap{
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin-bottom: 22px;
+  }
+  #wheelCanvas{
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.35));
+  }
+  .pointer{
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 24px solid var(--yellow);
+    z-index: 5;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+  .spin-btn{
+    background: var(--pink);
+    color: #fff;
+    border: none;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 15px 40px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform .1s ease, background .15s ease;
+  }
+  .spin-btn:hover{ background: #e8317c; transform: scale(1.03); }
+  .spin-btn:disabled{ opacity: 0.5; cursor: default; transform: none; }
+
+  .winner-box{
+    margin-top: 18px;
+    min-height: 32px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--yellow);
+    text-align:center;
+  }
+
+  .editor-panel{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+  }
+  .editor-panel label{
+    display:block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  textarea{
+    width: 100%;
+    min-height: 220px;
+    background: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--paper);
+    outline: none;
+    resize: vertical;
+    transition: border-color .15s ease;
+  }
+  textarea:focus{ border-color: var(--pink); }
+  .update-btn{
+    margin-top: 12px;
+    width: 100%;
+    background: var(--teal);
+    color: var(--ink);
+    border: none;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .update-btn:hover{ background: #4de3cd; }
+
+  footer{
+    margin-top: 56px;
+    color: #4d4478;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    text-align:center;
+  }
+  footer a{ color: #4d4478; }
+
+  .content{
+    width:100%;
+    max-width: 620px;
+    margin-top: 60px;
+    padding-top: 44px;
+    border-top: 1px solid var(--line);
+  }
+  .content h2{
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 21px;
+    margin: 36px 0 14px;
+  }
+  .content h2:first-child{ margin-top: 0; }
+  .content p{
+    color: #c9c3e3;
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .faq-item{ margin-bottom: 20px; }
+  .faq-item h3{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    margin: 0 0 6px;
+  }
+  .faq-item p{ margin:0; font-size: 14px; }
+</style>
+</head>
+<body>
+
+  <div class="eyebrow">gra / losowanie</div>
+  <h1>Koło szczęścia</h1>
+  <p class="sub">Wpisz własne opcje, zakręć kołem i zobacz, co wylosujesz.</p>
+
+  <div class="layout">
+    <div class="wheel-panel">
+      <div class="wheel-wrap">
+        <div class="pointer"></div>
+        <canvas id="wheelCanvas" width="320" height="320"></canvas>
+      </div>
+      <button class="spin-btn" id="spinBtn">Zakręć kołem</button>
+      <div class="winner-box" id="winnerBox"></div>
+    </div>
+
+    <div class="editor-panel">
+      <label>OPCJE NA KOLE (jedna na linię)</label>
+      <textarea id="optionsInput">Pizza
+Sushi
+Burger
+Sałatka
+Makaron
+Tacos</textarea>
+      <button class="update-btn" id="updateBtn">Zaktualizuj koło</button>
+    </div>
+  </div>
+
+  <section class="content">
+    <h2>Do czego przyda się koło szczęścia</h2>
+    <p>Losowanie z pomocą koła to prosty i wizualnie atrakcyjny sposób na podjęcie decyzji grupowej — gdzie zjeść, kto zaczyna grę, jakie zadanie przypadnie komu, albo zwycięzcę konkursu w mediach społecznościowych. W przeciwieństwie do suchego losowania liczby, kręcące się koło dodaje elementu emocji i zabawy do samego procesu wyboru.</p>
+    <h2>Jak korzystać</h2>
+    <p>Wpisz swoje opcje w polu po prawej, każdą w osobnej linii, kliknij "Zaktualizuj koło", a następnie "Zakręć kołem". Koło automatycznie dostosuje liczbę i kolory segmentów do liczby wpisanych opcji.</p>
+    <div class="faq-item"><h3>Ile opcji mogę wpisać?</h3><p>Koło dobrze radzi sobie z 2 do około 20 opcjami — przy większej liczbie segmenty stają się bardzo wąskie i trudniej czytelne.</p></div>
+    <div class="faq-item"><h3>Czy losowanie jest uczciwe?</h3><p>Tak — każdy segment ma dokładnie proporcjonalną szansę na wylosowanie, niezależnie od kolejności wpisania czy rozmiaru segmentu na ekranie.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const canvas = document.getElementById('wheelCanvas');
+  const ctx = canvas.getContext('2d');
+  const spinBtn = document.getElementById('spinBtn');
+  const winnerBox = document.getElementById('winnerBox');
+  const optionsInput = document.getElementById('optionsInput');
+  const updateBtn = document.getElementById('updateBtn');
+
+  const COLORS = ['#ff3f8e', '#ffd93d', '#35d0ba', '#7c5cff', '#ff8b3d', '#3dd6ff', '#ff6b6b', '#a3e635'];
+
+  let options = [];
+  let currentRotation = 0;
+  let spinning = false;
+
+  function loadOptions(){
+    options = optionsInput.value.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+    if(options.length < 2) options = ['Opcja 1', 'Opcja 2'];
+    drawWheel(currentRotation);
+  }
+
+  function drawWheel(rotation){
+    const cx = canvas.width/2, cy = canvas.height/2, radius = canvas.width/2 - 6;
+    const sliceAngle = (2*Math.PI) / options.length;
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rotation);
+
+    options.forEach((label, i) => {
+      const startAngle = i * sliceAngle;
+      const endAngle = startAngle + sliceAngle;
+
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.arc(0,0, radius, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = COLORS[i % COLORS.length];
+      ctx.fill();
+      ctx.strokeStyle = '#1a1633';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.rotate(startAngle + sliceAngle/2);
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#1a1633';
+      ctx.font = '600 14px Inter, sans-serif';
+      const displayLabel = label.length > 14 ? label.slice(0,13) + '…' : label;
+      ctx.fillText(displayLabel, radius - 14, 5);
+      ctx.restore();
+    });
+
+    ctx.beginPath();
+    ctx.arc(0,0, 22, 0, 2*Math.PI);
+    ctx.fillStyle = '#f2eefc';
+    ctx.fill();
+    ctx.strokeStyle = '#1a1633';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  function spin(){
+    if(spinning || options.length < 2) return;
+    spinning = true;
+    spinBtn.disabled = true;
+    winnerBox.textContent = '';
+
+    const spins = 5 + Math.random()*3;
+    const extraAngle = Math.random() * 2 * Math.PI;
+    const totalRotation = spins * 2 * Math.PI + extraAngle;
+    const duration = 4200;
+    const startTime = performance.now();
+    const startRotation = currentRotation;
+
+    function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+
+    function animate(now){
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(t);
+      currentRotation = startRotation + totalRotation * eased;
+      drawWheel(currentRotation);
+
+      if(t < 1){
+        requestAnimationFrame(animate);
+      } else {
+        spinning = false;
+        spinBtn.disabled = false;
+        const sliceAngle = (2*Math.PI) / options.length;
+        function mod(n, m){ return ((n % m) + m) % m; }
+        const normalized = mod((3*Math.PI/2) - currentRotation, 2*Math.PI);
+        const index = Math.floor(normalized / sliceAngle) % options.length;
+        winnerBox.textContent = '🎉 ' + options[index];
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  spinBtn.addEventListener('click', spin);
+  updateBtn.addEventListener('click', loadOptions);
+
+  loadOptions();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bingo online — generator kart i losowanie liczb</title>
+<meta name="description" content="Wygeneruj kartę bingo i losuj liczby online. Świetne do gier towarzyskich i imprez.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 30px; }
+  .layout{ display:flex; gap:30px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
+  .card{ display:grid; grid-template-columns:repeat(5,52px); grid-template-rows:repeat(5,52px); gap:4px; background:var(--line); padding:6px; border-radius:8px; }
+  .cell{ background:var(--surface); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px; cursor:pointer; border-radius:4px; }
+  .cell.marked{ background:var(--pink); }
+  .cell.free{ background:var(--teal); color:var(--ink); font-size:11px; }
+  .draw-panel{ text-align:center; }
+  .draw-btn{ background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:13px 26px; border-radius:24px; cursor:pointer; margin-bottom:16px; }
+  .drawn-number{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:44px; color:var(--teal); min-height:56px; }
+  .history{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); max-width:220px; margin-top:12px; }
+  .new-card-btn{ margin-top:16px; background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 18px; border-radius:8px; cursor:pointer; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / towarzyska</div>
+  <h1>Bingo</h1>
+  <p class="sub">Wygeneruj kartę i losuj liczby online.</p>
+
+  <div class="layout">
+    <div>
+      <div class="card" id="card"></div>
+      <button class="new-card-btn" id="newCardBtn">Nowa karta</button>
+    </div>
+    <div class="draw-panel">
+      <button class="draw-btn" id="drawBtn">Losuj liczbę</button>
+      <div class="drawn-number" id="drawnNumber">—</div>
+      <div class="history" id="history"></div>
+    </div>
+  </div>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  let cardNumbers = [];
+  let drawnNumbers = [];
+
+  function generateCard(){
+    cardNumbers = [];
+    const ranges = [[1,15],[16,30],[31,45],[46,60],[61,75]];
+    for(let col=0; col<5; col++){
+      const [min,max] = ranges[col];
+      const pool = [];
+      for(let n=min;n<=max;n++) pool.push(n);
+      for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
+      cardNumbers.push(pool.slice(0,5));
+    }
+    renderCard();
+  }
+
+  function renderCard(){
+    const card = document.getElementById('card');
+    card.innerHTML = '';
+    for(let row=0; row<5; row++){
+      for(let col=0; col<5; col++){
+        const cell = document.createElement('div');
+        if(row === 2 && col === 2){
+          cell.className = 'cell free';
+          cell.textContent = 'FREE';
+        } else {
+          const num = cardNumbers[col][row];
+          cell.className = 'cell';
+          cell.textContent = num;
+          cell.addEventListener('click', () => cell.classList.toggle('marked'));
+        }
+        card.appendChild(cell);
+      }
+    }
+  }
+
+  document.getElementById('drawBtn').addEventListener('click', () => {
+    if(drawnNumbers.length >= 75){ return; }
+    let num;
+    do{ num = Math.floor(Math.random()*75)+1; } while(drawnNumbers.includes(num));
+    drawnNumbers.push(num);
+    document.getElementById('drawnNumber').textContent = num;
+    document.getElementById('history').textContent = 'Wylosowane: ' + drawnNumbers.join(', ');
+  });
+
+  document.getElementById('newCardBtn').addEventListener('click', generateCard);
+
+  generateCard();
+</script>
+</body>
+</html>

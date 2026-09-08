@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kółko i krzyżyk online — gra dla dwóch graczy</title>
+<meta name="description" content="Zagraj w klasyczne kółko i krzyżyk online dla dwóch graczy na jednym urządzeniu. Bez rejestracji, za darmo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .status{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:18px; margin-bottom:20px; min-height:26px; }
+  .board{ display:grid; grid-template-columns:repeat(3,90px); grid-template-rows:repeat(3,90px); gap:6px; background:var(--line); padding:6px; border-radius:10px; }
+  .cell{ background:var(--surface); display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:42px; cursor:pointer; border-radius:6px; user-select:none; }
+  .cell.x{ color:var(--pink); } .cell.o{ color:var(--teal); }
+  .reset-btn{ margin-top:24px; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:12px 28px; border-radius:24px; cursor:pointer; }
+  .reset-btn:hover{ background:#e8317c; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+  .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); text-align:center; }
+  .content p{ color:#c9c3e3; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / klasyka</div>
+  <h1>Kółko i krzyżyk</h1>
+  <p class="sub">Gra dla dwóch osób na jednym urządzeniu.</p>
+  <div class="status" id="status">Ruch gracza: X</div>
+  <div class="board" id="board"></div>
+  <button class="reset-btn" id="resetBtn">Nowa gra</button>
+
+  <section class="content">
+    <p>Klasyczna gra znana chyba każdemu — na zmianę stawiacie X i O, wygrywa ten, kto pierwszy ułoży trzy swoje znaki w linii (poziomo, pionowo lub po skosie). Gra działa lokalnie w przeglądarce, dla dwóch osób grających na tym samym urządzeniu.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const boardEl = document.getElementById('board');
+  const statusEl = document.getElementById('status');
+  let board = Array(9).fill(null);
+  let current = 'X';
+  let gameOver = false;
+
+  const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+  function render(){
+    boardEl.innerHTML = '';
+    board.forEach((val, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (val ? ' ' + val.toLowerCase() : '');
+      cell.textContent = val || '';
+      cell.addEventListener('click', () => makeMove(i));
+      boardEl.appendChild(cell);
+    });
+  }
+
+  function checkWinner(){
+    for(const [a,b,c] of WINS){
+      if(board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
+    }
+    if(board.every(c => c !== null)) return 'draw';
+    return null;
+  }
+
+  function makeMove(i){
+    if(gameOver || board[i]) return;
+    board[i] = current;
+    render();
+    const winner = checkWinner();
+    if(winner === 'draw'){
+      statusEl.textContent = 'Remis!';
+      gameOver = true;
+    } else if(winner){
+      statusEl.textContent = 'Wygrywa gracz ' + winner + '! 🎉';
+      gameOver = true;
+    } else {
+      current = current === 'X' ? 'O' : 'X';
+      statusEl.textContent = 'Ruch gracza: ' + current;
+    }
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    board = Array(9).fill(null);
+    current = 'X';
+    gameOver = false;
+    statusEl.textContent = 'Ruch gracza: X';
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>

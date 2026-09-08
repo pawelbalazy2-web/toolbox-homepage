@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator nazw drużyn online</title>
+<meta name="description" content="Wygeneruj losową, chwytliwą nazwę drużyny do gier, quizów czy zawodów sportowych.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:480px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:32px; text-align:center; }
+  .name-display{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:28px; color:var(--teal); min-height:80px; display:flex; align-items:center; justify-content:center; padding:0 10px; }
+  .gen-btn{ background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:14px 32px; border-radius:26px; cursor:pointer; }
+  .gen-btn:hover{ background:#e8317c; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / generator</div>
+  <h1>Generator nazw drużyn</h1>
+  <p class="sub">Losowa, chwytliwa nazwa na quiz, mecz czy grę planszową.</p>
+
+  <div class="card">
+    <div class="name-display" id="nameDisplay">Kliknij, aby wylosować</div>
+    <button class="gen-btn" id="genBtn">Losuj nazwę</button>
+  </div>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const ADJECTIVES = ['Niepokonani','Szaleni','Legendarni','Grzmiący','Płonący','Dzicy','Nieustraszeni','Błyskawiczni','Żelazni','Cisi','Wściekli','Złoci','Mroczni','Zwinni'];
+  const NOUNS = ['Wilki','Sokoły','Tygrysy','Rekiny','Smoki','Wojownicy','Orły','Pantery','Grizzly','Kobry','Feniksy','Rycerze','Byki','Jastrzębie'];
+
+  function generate(){
+    const adj = ADJECTIVES[Math.floor(Math.random()*ADJECTIVES.length)];
+    const noun = NOUNS[Math.floor(Math.random()*NOUNS.length)];
+    document.getElementById('nameDisplay').textContent = adj + ' ' + noun;
+  }
+
+  document.getElementById('genBtn').addEventListener('click', generate);
+</script>
+</body>
+</html>

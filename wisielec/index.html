@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wisielec online — gra słowna</title>
+<meta name="description" content="Zagraj w klasycznego wisielca online. Zgadnij słowo litera po literze, zanim wyczerpiesz limit błędów.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:480px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:28px; text-align:center; }
+  .lives{ font-family:'IBM Plex Mono',monospace; color:var(--pink); font-size:14px; margin-bottom:14px; }
+  .word-display{ font-family:'IBM Plex Mono',monospace; font-size:32px; letter-spacing:8px; margin-bottom:24px; min-height:44px; }
+  .keyboard{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:16px; }
+  .key{ width:34px; height:38px; background:var(--ink); border:1px solid var(--line); border-radius:5px; color:var(--paper); font-family:'IBM Plex Mono',monospace; font-size:14px; cursor:pointer; }
+  .key:hover:not(:disabled){ border-color:var(--pink); }
+  .key:disabled{ opacity:0.3; cursor:default; }
+  .key.correct{ background:var(--teal); color:var(--ink); }
+  .key.wrong{ background:var(--pink); color:#fff; }
+  .msg{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:18px; min-height:26px; margin-top:6px; }
+  .reset-btn{ margin-top:16px; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; padding:11px 24px; border-radius:22px; cursor:pointer; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+  .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); text-align:center; }
+  .content p{ color:#c9c3e3; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / słowna</div>
+  <h1>Wisielec</h1>
+  <p class="sub">Zgadnij słowo, zanim skończą Ci się próby.</p>
+
+  <div class="card">
+    <div class="lives" id="lives">Pozostałe próby: 6</div>
+    <div class="word-display" id="wordDisplay"></div>
+    <div class="keyboard" id="keyboard"></div>
+    <div class="msg" id="msg"></div>
+    <button class="reset-btn" id="resetBtn">Nowe słowo</button>
+  </div>
+
+  <section class="content">
+    <p>Klasyczna gra słowna — pod spodem ukryte jest słowo, a Ty zgadujesz litery jedna po drugiej. Za każdą błędną literę tracisz jedną z sześciu prób. Uda Ci się odgadnąć całe słowo, zanim wyczerpią się próby?</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const WORDS = ['PRZYGODA','KOMPUTER','WAKACJE','OGRODNIK','BIBLIOTEKA','SAMOCHOD','TELEFON','MUZYKA','SLONCE','JEZIORO','GITARA','OKNO','DRZEWO','KAWA','ROWER'];
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+  let word, guessed, wrongCount, maxWrong = 6;
+
+  function newGame(){
+    word = WORDS[Math.floor(Math.random()*WORDS.length)];
+    guessed = new Set();
+    wrongCount = 0;
+    document.getElementById('msg').textContent = '';
+    renderKeyboard();
+    renderWord();
+    renderLives();
+  }
+
+  function renderWord(){
+    document.getElementById('wordDisplay').textContent = word.split('').map(l => guessed.has(l) ? l : '_').join(' ');
+  }
+
+  function renderLives(){
+    document.getElementById('lives').textContent = 'Pozostałe próby: ' + (maxWrong - wrongCount);
+  }
+
+  function renderKeyboard(){
+    const kb = document.getElementById('keyboard');
+    kb.innerHTML = '';
+    ALPHABET.forEach(letter => {
+      const btn = document.createElement('button');
+      btn.className = 'key';
+      btn.textContent = letter;
+      btn.addEventListener('click', () => guess(letter, btn));
+      kb.appendChild(btn);
+    });
+  }
+
+  function guess(letter, btn){
+    if(guessed.has(letter)) return;
+    guessed.add(letter);
+    btn.disabled = true;
+    if(word.includes(letter)){
+      btn.classList.add('correct');
+    } else {
+      btn.classList.add('wrong');
+      wrongCount++;
+      renderLives();
+    }
+    renderWord();
+    checkEnd();
+  }
+
+  function checkEnd(){
+    if(word.split('').every(l => guessed.has(l))){
+      document.getElementById('msg').textContent = '🎉 Wygrałeś!';
+      document.querySelectorAll('.key').forEach(k => k.disabled = true);
+    } else if(wrongCount >= maxWrong){
+      document.getElementById('msg').textContent = 'Koniec gry. Słowo: ' + word;
+      document.querySelectorAll('.key').forEach(k => k.disabled = true);
+    }
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', newGame);
+  newGame();
+</script>
+</body>
+</html>

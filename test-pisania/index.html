@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test szybkości pisania online — sprawdź WPM</title>
+<meta name="description" content="Sprawdź swoją szybkość pisania na klawiaturze. Przepisz tekst i zobacz wynik w słowach na minutę (WPM).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 30px; }
+  .card{ width:100%; max-width:600px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:28px; }
+  .target-text{ font-family:'IBM Plex Mono',monospace; font-size:15px; line-height:1.8; background:var(--ink); border-radius:8px; padding:16px; margin-bottom:14px; }
+  .target-text span.correct{ color:var(--teal); }
+  .target-text span.wrong{ color:var(--pink); text-decoration:underline; }
+  textarea{ width:100%; min-height:100px; background:var(--ink); border:1px solid var(--line); border-radius:8px; padding:14px; font-family:'IBM Plex Mono',monospace; font-size:14.5px; color:var(--paper); outline:none; resize:none; }
+  textarea:focus{ border-color:var(--pink); }
+  .stats-row{ display:flex; justify-content:space-around; margin-top:16px; text-align:center; }
+  .stats-row div span{ display:block; font-family:'Fredoka',sans-serif; font-weight:700; font-size:24px; color:var(--teal); }
+  .stats-row div small{ color:var(--muted); font-size:12px; }
+  .reset-btn{ margin-top:16px; width:100%; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; padding:12px; border-radius:8px; cursor:pointer; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / refleks</div>
+  <h1>Test szybkości pisania</h1>
+  <p class="sub">Przepisz tekst jak najszybciej i jak najdokładniej.</p>
+
+  <div class="card">
+    <div class="target-text" id="targetText"></div>
+    <textarea id="typingArea" placeholder="Zacznij pisać tutaj, żeby uruchomić stoper..."></textarea>
+    <div class="stats-row">
+      <div><span id="wpmStat">0</span><small>WPM</small></div>
+      <div><span id="accuracyStat">100%</span><small>dokładność</small></div>
+      <div><span id="timeStat">0s</span><small>czas</small></div>
+    </div>
+    <button class="reset-btn" id="resetBtn">Nowy tekst</button>
+  </div>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const TEXTS = [
+    "Szybki brązowy lis przeskakuje nad leniwym psem, podczas gdy słońce chowa się za horyzontem.",
+    "Programowanie to sztuka rozwiązywania problemów za pomocą logicznych i precyzyjnych instrukcji.",
+    "W górach panuje cisza, którą przerywa jedynie szum wiatru i śpiew nielicznych ptaków.",
+    "Dobra kawa o poranku potrafi odmienić cały dzień, dodając energii i motywacji do działania.",
+    "Podróże kształcą, otwierają umysł i pozwalają spojrzeć na własne życie z innej perspektywy."
+  ];
+
+  let targetText, startTime, timerInterval, started = false;
+
+  function newRound(){
+    targetText = TEXTS[Math.floor(Math.random()*TEXTS.length)];
+    document.getElementById('typingArea').value = '';
+    started = false;
+    clearInterval(timerInterval);
+    document.getElementById('wpmStat').textContent = '0';
+    document.getElementById('accuracyStat').textContent = '100%';
+    document.getElementById('timeStat').textContent = '0s';
+    renderTarget('');
+  }
+
+  function renderTarget(typed){
+    const target = document.getElementById('targetText');
+    target.innerHTML = targetText.split('').map((ch,i) => {
+      if(i >= typed.length) return ch;
+      return typed[i] === ch ? `<span class="correct">${ch}</span>` : `<span class="wrong">${ch}</span>`;
+    }).join('');
+  }
+
+  document.getElementById('typingArea').addEventListener('input', (e) => {
+    const typed = e.target.value;
+    if(!started){
+      started = true;
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        const elapsed = (Date.now() - startTime) / 1000;
+        document.getElementById('timeStat').textContent = Math.round(elapsed) + 's';
+      }, 200);
+    }
+    renderTarget(typed);
+
+    let correct = 0;
+    for(let i=0;i<typed.length;i++){ if(typed[i] === targetText[i]) correct++; }
+    const accuracy = typed.length ? Math.round((correct/typed.length)*100) : 100;
+    document.getElementById('accuracyStat').textContent = accuracy + '%';
+
+    const elapsedMin = (Date.now() - startTime) / 60000;
+    const words = typed.trim().split(/\s+/).length;
+    const wpm = elapsedMin > 0 ? Math.round(words / elapsedMin) : 0;
+    document.getElementById('wpmStat').textContent = wpm;
+
+    if(typed === targetText){
+      clearInterval(timerInterval);
+    }
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', newRound);
+  newRound();
+</script>
+</body>
+</html>

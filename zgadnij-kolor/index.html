@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zgadnij kolor HEX — gra dla projektantów</title>
+<meta name="description" content="Sprawdź swoje wyczucie kolorów — zgadnij, który kod HEX odpowiada wyświetlonemu kolorowi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 26px; }
+  .score{ font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--muted); margin-bottom:20px; }
+  .color-box{ width:200px; height:200px; border-radius:12px; margin-bottom:22px; box-shadow:0 8px 24px rgba(0,0,0,0.3); }
+  .options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:340px; }
+  .opt-btn{ background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:13px; font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--paper); cursor:pointer; }
+  .opt-btn:hover{ border-color:var(--pink); }
+  .opt-btn.correct{ background:var(--teal); color:var(--ink); border-color:var(--teal); }
+  .opt-btn.wrong{ background:var(--pink); border-color:var(--pink); }
+  .next-btn{ margin-top:18px; background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 18px; border-radius:8px; cursor:pointer; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / design</div>
+  <h1>Zgadnij kolor HEX</h1>
+  <p class="sub">Który kod HEX odpowiada temu kolorowi?</p>
+  <div class="score" id="score">Wynik: 0 / 0</div>
+  <div class="color-box" id="colorBox"></div>
+  <div class="options" id="options"></div>
+  <button class="next-btn" id="nextBtn" style="display:none;">Następna runda</button>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  let correctHex, answered = false;
+  let score = 0, total = 0;
+
+  function randomHex(){
+    return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase();
+  }
+
+  function newRound(){
+    answered = false;
+    correctHex = randomHex();
+    document.getElementById('colorBox').style.background = correctHex;
+    document.getElementById('nextBtn').style.display = 'none';
+
+    const wrongOptions = [randomHex(), randomHex(), randomHex()];
+    const allOptions = [correctHex, ...wrongOptions];
+    for(let i=allOptions.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [allOptions[i],allOptions[j]]=[allOptions[j],allOptions[i]]; }
+
+    const optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML = '';
+    allOptions.forEach(hex => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      btn.textContent = hex;
+      btn.addEventListener('click', () => selectAnswer(hex, btn));
+      optionsDiv.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(hex, btn){
+    if(answered) return;
+    answered = true;
+    total++;
+    const allBtns = document.querySelectorAll('.opt-btn');
+    if(hex === correctHex){
+      btn.classList.add('correct');
+      score++;
+    } else {
+      btn.classList.add('wrong');
+      allBtns.forEach(b => { if(b.textContent === correctHex) b.classList.add('correct'); });
+    }
+    document.getElementById('score').textContent = `Wynik: ${score} / ${total}`;
+    document.getElementById('nextBtn').style.display = 'block';
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', newRound);
+  newRound();
+</script>
+</body>
+</html>

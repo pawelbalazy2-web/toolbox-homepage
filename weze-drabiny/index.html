@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Węże i drabiny online — gra planszowa</title>
+<meta name="description" content="Zagraj w węże i drabiny online dla 2-4 graczy na jednym urządzeniu. Rzucaj kostką i pierwszy dojdź do pola 100.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; --yellow:#ffd93d; --purple:#7c5cff; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(28px,4.8vw,40px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 24px; }
+  .board{ display:grid; grid-template-columns:repeat(10,32px); grid-template-rows:repeat(10,32px); border:1px solid var(--line); }
+  .sq{ display:flex; align-items:center; justify-content:center; font-size:9px; font-family:'IBM Plex Mono',monospace; color:var(--muted); border:0.5px solid var(--line); position:relative; }
+  .sq.snake{ background:rgba(255,63,142,0.15); }
+  .sq.ladder{ background:rgba(53,208,186,0.15); }
+  .pawn{ position:absolute; width:9px; height:9px; border-radius:50%; }
+  .controls{ margin-top:20px; display:flex; align-items:center; gap:16px; }
+  .dice-btn{ background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:13px 26px; border-radius:24px; cursor:pointer; }
+  .dice-result{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:26px; }
+  .turn-info{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:16px; margin-top:16px; }
+  .reset-btn{ margin-top:14px; background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 18px; border-radius:8px; cursor:pointer; }
+  footer{ margin-top:40px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / planszowa</div>
+  <h1>Węże i drabiny</h1>
+  <p class="sub">2 graczy na jednym urządzeniu. Pierwszy do pola 100 wygrywa.</p>
+
+  <div class="board" id="board"></div>
+  <div class="controls">
+    <button class="dice-btn" id="diceBtn">🎲 Rzuć kostką</button>
+    <div class="dice-result" id="diceResult">—</div>
+  </div>
+  <div class="turn-info" id="turnInfo">Ruch: Gracz 1 (różowy)</div>
+  <button class="reset-btn" id="resetBtn">Nowa gra</button>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const SNAKES = {16:6, 47:26, 49:11, 56:53, 62:19, 64:60, 87:24, 93:73, 95:75, 98:78};
+  const LADDERS = {1:38, 4:14, 9:31, 21:42, 28:84, 36:44, 51:67, 71:91, 80:100};
+
+  const COLORS = ['#ff3f8e', '#35d0ba'];
+  let positions = [0, 0];
+  let current = 0;
+  let finished = false;
+
+  function squareNumber(row, col){
+    const rowFromBottom = 9 - row;
+    const isEven = rowFromBottom % 2 === 0;
+    return rowFromBottom*10 + (isEven ? col+1 : 10-col);
+  }
+
+  function renderBoard(){
+    const board = document.getElementById('board');
+    board.innerHTML = '';
+    for(let row=0; row<10; row++){
+      for(let col=0; col<10; col++){
+        const num = squareNumber(row, col);
+        const sq = document.createElement('div');
+        sq.className = 'sq';
+        if(SNAKES[num]) sq.classList.add('snake');
+        if(LADDERS[num]) sq.classList.add('ladder');
+        sq.textContent = num;
+        sq.dataset.num = num;
+        board.appendChild(sq);
+      }
+    }
+    renderPawns();
+  }
+
+  function renderPawns(){
+    document.querySelectorAll('.pawn').forEach(p => p.remove());
+    positions.forEach((pos, i) => {
+      if(pos === 0) return;
+      const sq = document.querySelector(`.sq[data-num="${pos}"]`);
+      if(!sq) return;
+      const pawn = document.createElement('div');
+      pawn.className = 'pawn';
+      pawn.style.background = COLORS[i];
+      pawn.style.left = (4 + i*10) + 'px';
+      pawn.style.bottom = '2px';
+      sq.appendChild(pawn);
+    });
+  }
+
+  document.getElementById('diceBtn').addEventListener('click', () => {
+    if(finished) return;
+    const roll = Math.floor(Math.random()*6) + 1;
+    document.getElementById('diceResult').textContent = roll;
+
+    let newPos = positions[current] + roll;
+    if(newPos > 100) newPos = positions[current];
+    if(SNAKES[newPos]) newPos = SNAKES[newPos];
+    if(LADDERS[newPos]) newPos = LADDERS[newPos];
+    positions[current] = newPos;
+    renderPawns();
+
+    if(newPos === 100){
+      document.getElementById('turnInfo').textContent = `🎉 Wygrywa Gracz ${current+1}!`;
+      finished = true;
+      return;
+    }
+
+    current = current === 0 ? 1 : 0;
+    document.getElementById('turnInfo').textContent = `Ruch: Gracz ${current+1} (${current===0?'różowy':'turkusowy'})`;
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    positions = [0,0]; current = 0; finished = false;
+    document.getElementById('diceResult').textContent = '—';
+    document.getElementById('turnInfo').textContent = 'Ruch: Gracz 1 (różowy)';
+    renderPawns();
+  });
+
+  renderBoard();
+</script>
+</body>
+</html>

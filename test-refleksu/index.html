@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test refleksu online — sprawdź czas reakcji</title>
+<meta name="description" content="Sprawdź swój czas reakcji online. Kliknij, gdy ekran zmieni kolor na zielony — jak najszybciej.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; --yellow:#ffd93d; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .zone{ width:100%; max-width:400px; height:260px; border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px; cursor:pointer; font-family:'Fredoka',sans-serif; font-weight:600; font-size:20px; user-select:none; transition:background .1s ease; }
+  .zone.wait{ background:var(--surface); border:2px solid var(--line); }
+  .zone.ready{ background:var(--pink); }
+  .zone.go{ background:var(--teal); color:var(--ink); }
+  .best{ margin-top:20px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); }
+  .best b{ color:var(--yellow); }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+  .content{ width:100%; max-width:520px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); text-align:center; }
+  .content p{ color:#c9c3e3; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / refleks</div>
+  <h1>Test refleksu</h1>
+  <p class="sub">Kliknij, gdy pole zmieni kolor na zielony — nie wcześniej!</p>
+
+  <div class="zone wait" id="zone">Kliknij, aby zacząć</div>
+  <div class="best">Najlepszy wynik w tej sesji: <b id="bestTime">—</b></div>
+
+  <section class="content">
+    <p>Test mierzy Twój czas reakcji — po kliknięciu pole zmieni kolor na czerwony (czekaj), a po losowym opóźnieniu zmieni się na zielony. Wtedy kliknij jak najszybciej. Jeśli klikniesz za wcześnie, próba zostanie zresetowana. Przeciętny czas reakcji człowieka to około 200-300 milisekund.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const zone = document.getElementById('zone');
+  const bestTimeEl = document.getElementById('bestTime');
+  let state = 'idle';
+  let timeoutId, startTime;
+  let best = null;
+
+  function reset(text, cls){
+    zone.className = 'zone ' + cls;
+    zone.textContent = text;
+  }
+
+  zone.addEventListener('click', () => {
+    if(state === 'idle'){
+      state = 'waiting';
+      reset('Czekaj na zielony...', 'ready');
+      const delay = 1500 + Math.random()*2500;
+      timeoutId = setTimeout(() => {
+        state = 'go';
+        startTime = performance.now();
+        reset('KLIKNIJ TERAZ!', 'go');
+      }, delay);
+    } else if(state === 'waiting'){
+      clearTimeout(timeoutId);
+      state = 'idle';
+      reset('Za wcześnie! Kliknij, aby spróbować ponownie', 'wait');
+    } else if(state === 'go'){
+      const reaction = Math.round(performance.now() - startTime);
+      if(best === null || reaction < best){
+        best = reaction;
+        bestTimeEl.textContent = best + ' ms';
+      }
+      state = 'idle';
+      reset('Twój czas: ' + reaction + ' ms — kliknij, aby spróbować ponownie', 'wait');
+    }
+  });
+</script>
+</body>
+</html>

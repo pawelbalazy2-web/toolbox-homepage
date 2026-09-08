@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Żartobliwy test osobowości online</title>
+<meta name="description" content="Krótki, żartobliwy test osobowości dla rozrywki. Kilka pytań i zabawny wynik na koniec.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(28px,4.8vw,42px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:520px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:28px; }
+  .progress{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-bottom:14px; }
+  .question{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:18px; margin-bottom:18px; }
+  .option{ display:block; width:100%; text-align:left; background:var(--ink); border:1px solid var(--line); border-radius:8px; padding:13px 16px; margin-bottom:10px; color:var(--paper); font-family:'Inter',sans-serif; font-size:14.5px; cursor:pointer; }
+  .option:hover{ border-color:var(--pink); }
+  .result-title{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:26px; color:var(--teal); text-align:center; margin-bottom:12px; }
+  .result-desc{ text-align:center; font-size:14.5px; color:var(--muted); line-height:1.6; }
+  .restart-btn{ margin-top:18px; width:100%; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14.5px; padding:13px; border-radius:8px; cursor:pointer; }
+  .disclaimer{ margin-top:16px; font-size:11.5px; color:var(--muted); text-align:center; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / zabawa</div>
+  <h1>Jakim typem podróżnika jesteś?</h1>
+  <p class="sub">Żartobliwy test dla rozrywki — kilka pytań, zabawny wynik.</p>
+
+  <div class="card" id="quizCard"></div>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const QUESTIONS = [
+    {q:"Pakujesz walizkę i...", opts:[["Biorę wszystko na wszelki wypadek",'A'],["Pakuję się minutę przed wyjściem",'B'],["Mam checklistę w Excelu",'C'],["Nie pakuję się, kupię na miejscu",'D']]},
+    {q:"Idealny wieczór na wakacjach to...", opts:[["Impreza do rana",'D'],["Spokojna kolacja z widokiem",'A'],["Planowanie jutrzejszej trasy",'C'],["Cokolwiek, co się wydarzy",'B']]},
+    {q:"Twoja reakcja na opóźniony lot?", opts:[["Traktuję to jako przygodę",'B'],["Od razu szukam planu B",'C'],["Trochę się stresuję, ale ok",'A'],["Idę poznać innych pasażerów",'D']]},
+    {q:"Wybierasz nocleg...", opts:[["Luksusowy hotel",'A'],["Cokolwiek tanie i blisko centrum",'B'],["Sprawdzam 20 opinii najpierw",'C'],["Hostel, żeby poznać ludzi",'D']]}
+  ];
+
+  const RESULTS = {
+    A: {title:'Komfortowy Podróżnik', desc:'Cenisz wygodę i dobry standard — wakacje to dla Ciebie czas relaksu, nie przetrwania.'},
+    B: {title:'Spontaniczny Wędrowiec', desc:'Plany są przereklamowane — najlepsze wspomnienia rodzą się z przypadku.'},
+    C: {title:'Mistrz Planowania', desc:'Twoja podróż ma harmonogram co do minuty, i wcale nie jest w tym nic złego!'},
+    D: {title:'Duszo Towarzystwa', desc:'Dla Ciebie podróż to przede wszystkim ludzie, których poznasz po drodze.'}
+  };
+
+  let current = 0, scores = {A:0,B:0,C:0,D:0};
+
+  function render(){
+    const card = document.getElementById('quizCard');
+    if(current >= QUESTIONS.length){
+      const winner = Object.keys(scores).reduce((a,b) => scores[a] >= scores[b] ? a : b);
+      const result = RESULTS[winner];
+      card.innerHTML = `
+        <div class="result-title">${result.title}</div>
+        <div class="result-desc">${result.desc}</div>
+        <button class="restart-btn" id="restartBtn">Zagraj ponownie</button>
+        <div class="disclaimer">To żartobliwy test dla rozrywki, nie naukowa analiza osobowości.</div>
+      `;
+      document.getElementById('restartBtn').addEventListener('click', () => { current=0; scores={A:0,B:0,C:0,D:0}; render(); });
+      return;
+    }
+    const q = QUESTIONS[current];
+    card.innerHTML = `<div class="progress">Pytanie ${current+1} z ${QUESTIONS.length}</div><div class="question">${q.q}</div><div id="options"></div>`;
+    const optionsDiv = document.getElementById('options');
+    q.opts.forEach(([text, type]) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.textContent = text;
+      btn.addEventListener('click', () => { scores[type]++; current++; render(); });
+      optionsDiv.appendChild(btn);
+    });
+  }
+
+  render();
+</script>
+</body>
+</html>

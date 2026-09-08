@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gra w sekwencje online — zapamiętaj wzór</title>
+<meta name="description" content="Zapamiętaj i powtórz rosnącą sekwencję kolorów. Ile rund uda Ci się zapamiętać?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:#ff3f8e; margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 24px; }
+  .level{ font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--muted); margin-bottom:20px; }
+  .pad{ display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:8px; width:260px; height:260px; }
+  .pad-btn{ border-radius:12px; border:none; cursor:pointer; opacity:0.55; transition:opacity .1s ease; }
+  .pad-btn.active{ opacity:1; box-shadow:0 0 24px currentColor; }
+  #btn0{ background:#ff3f8e; color:#ff3f8e; border-radius:12px 4px 4px 4px; }
+  #btn1{ background:#ffd93d; color:#ffd93d; border-radius:4px 12px 4px 4px; }
+  #btn2{ background:#35d0ba; color:#35d0ba; border-radius:4px 4px 4px 12px; }
+  #btn3{ background:#7c5cff; color:#7c5cff; border-radius:4px 4px 12px 4px; }
+  .msg{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:18px; margin-top:20px; min-height:24px; }
+  .start-btn{ margin-top:10px; background:#ff3f8e; color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:12px 26px; border-radius:24px; cursor:pointer; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / pamięć</div>
+  <h1>Gra w sekwencje</h1>
+  <p class="sub">Zapamiętaj kolejność podświetlanych pól i powtórz ją.</p>
+  <div class="level" id="level">Poziom: 0</div>
+  <div class="pad">
+    <button class="pad-btn" id="btn0" data-i="0"></button>
+    <button class="pad-btn" id="btn1" data-i="1"></button>
+    <button class="pad-btn" id="btn2" data-i="2"></button>
+    <button class="pad-btn" id="btn3" data-i="3"></button>
+  </div>
+  <div class="msg" id="msg"></div>
+  <button class="start-btn" id="startBtn">Start</button>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const buttons = [0,1,2,3].map(i => document.getElementById('btn'+i));
+  let sequence = [], playerStep = 0, accepting = false;
+
+  function flash(i, duration=400){
+    return new Promise(resolve => {
+      buttons[i].classList.add('active');
+      setTimeout(() => { buttons[i].classList.remove('active'); resolve(); }, duration);
+    });
+  }
+
+  async function playSequence(){
+    accepting = false;
+    document.getElementById('msg').textContent = 'Obserwuj...';
+    await new Promise(r => setTimeout(r, 500));
+    for(const step of sequence){
+      await flash(step);
+      await new Promise(r => setTimeout(r, 200));
+    }
+    playerStep = 0;
+    accepting = true;
+    document.getElementById('msg').textContent = 'Twoja kolej!';
+  }
+
+  function nextRound(){
+    sequence.push(Math.floor(Math.random()*4));
+    document.getElementById('level').textContent = 'Poziom: ' + sequence.length;
+    playSequence();
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(!accepting) return;
+      const i = parseInt(btn.dataset.i, 10);
+      flash(i, 200);
+      if(i === sequence[playerStep]){
+        playerStep++;
+        if(playerStep === sequence.length){
+          accepting = false;
+          document.getElementById('msg').textContent = 'Świetnie! Kolejny poziom...';
+          setTimeout(nextRound, 800);
+        }
+      } else {
+        accepting = false;
+        document.getElementById('msg').textContent = `Koniec gry — dotarłeś do poziomu ${sequence.length}`;
+        sequence = [];
+        document.getElementById('level').textContent = 'Poziom: 0';
+      }
+    });
+  });
+
+  document.getElementById('startBtn').addEventListener('click', () => {
+    sequence = [];
+    nextRound();
+  });
+</script>
+</body>
+</html>

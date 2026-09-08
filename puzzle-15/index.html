@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle przesuwane 15 online</title>
+<meta name="description" content="Klasyczne puzzle przesuwane 15 (15-puzzle). Ułóż liczby od 1 do 15 w kolejności, przesuwając kafelki.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 22px; }
+  .stats{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); margin-bottom:16px; }
+  .puzzle{ display:grid; grid-template-columns:repeat(4,72px); grid-template-rows:repeat(4,72px); gap:6px; background:var(--line); padding:6px; border-radius:10px; }
+  .tile{ background:var(--surface); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; cursor:pointer; }
+  .tile:hover{ background:#2d2650; }
+  .tile.empty{ background:transparent; cursor:default; }
+  .win-msg{ font-family:'Fredoka',sans-serif; font-weight:700; font-size:18px; color:var(--teal); margin-top:18px; min-height:24px; }
+  .reset-btn{ margin-top:12px; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:14px; padding:11px 24px; border-radius:22px; cursor:pointer; }
+  footer{ margin-top:56px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / puzzle</div>
+  <h1>Puzzle 15</h1>
+  <p class="sub">Ułóż liczby od 1 do 15 w kolejności.</p>
+  <div class="stats" id="stats">Ruchy: 0</div>
+  <div class="puzzle" id="puzzle"></div>
+  <div class="win-msg" id="winMsg"></div>
+  <button class="reset-btn" id="resetBtn">Przetasuj</button>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  let tiles = [];
+  let moves = 0;
+
+  function shuffle(){
+    tiles = Array.from({length:15}, (_,i) => i+1);
+    tiles.push(0);
+    // dokonaj wielu losowych, poprawnych ruchów zamiast losowej permutacji, żeby gwarantować rozwiązywalność
+    for(let i=0;i<300;i++){
+      const emptyIdx = tiles.indexOf(0);
+      const neighbors = getNeighbors(emptyIdx);
+      const swapWith = neighbors[Math.floor(Math.random()*neighbors.length)];
+      [tiles[emptyIdx], tiles[swapWith]] = [tiles[swapWith], tiles[emptyIdx]];
+    }
+    moves = 0;
+    document.getElementById('stats').textContent = 'Ruchy: 0';
+    document.getElementById('winMsg').textContent = '';
+    render();
+  }
+
+  function getNeighbors(idx){
+    const row = Math.floor(idx/4), col = idx%4;
+    const result = [];
+    if(row>0) result.push(idx-4);
+    if(row<3) result.push(idx+4);
+    if(col>0) result.push(idx-1);
+    if(col<3) result.push(idx+1);
+    return result;
+  }
+
+  function render(){
+    const puzzle = document.getElementById('puzzle');
+    puzzle.innerHTML = '';
+    tiles.forEach((val, i) => {
+      const tile = document.createElement('div');
+      tile.className = 'tile' + (val === 0 ? ' empty' : '');
+      tile.textContent = val === 0 ? '' : val;
+      tile.addEventListener('click', () => tryMove(i));
+      puzzle.appendChild(tile);
+    });
+  }
+
+  function tryMove(idx){
+    const emptyIdx = tiles.indexOf(0);
+    if(getNeighbors(idx).includes(emptyIdx)){
+      [tiles[idx], tiles[emptyIdx]] = [tiles[emptyIdx], tiles[idx]];
+      moves++;
+      document.getElementById('stats').textContent = 'Ruchy: ' + moves;
+      render();
+      checkWin();
+    }
+  }
+
+  function checkWin(){
+    const solved = tiles.slice(0,15).every((v,i) => v === i+1) && tiles[15] === 0;
+    if(solved) document.getElementById('winMsg').textContent = '🎉 Ułożone w ' + moves + ' ruchach!';
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', shuffle);
+  shuffle();
+</script>
+</body>
+</html>
