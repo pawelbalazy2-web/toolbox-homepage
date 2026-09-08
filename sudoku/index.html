@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudoku online — zagraj za darmo</title>
+<meta name="description" content="Zagraj w sudoku online. Nowa łamigłówka za każdym razem, sprawdzanie poprawności rozwiązania.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(28px,4.8vw,40px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 20px; }
+  .grid{ display:grid; grid-template-columns:repeat(9,32px); grid-template-rows:repeat(9,32px); gap:1px; background:var(--line); border:2px solid var(--paper); }
+  .cell{ background:var(--surface); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:15px; }
+  .cell input{ width:100%; height:100%; background:transparent; border:none; color:var(--teal); font-family:'IBM Plex Mono',monospace; font-size:15px; text-align:center; outline:none; }
+  .cell.fixed{ color:var(--paper); font-weight:600; }
+  .cell:nth-child(3n){ border-right:2px solid var(--paper); }
+  .cell:nth-child(9n){ border-right:none; }
+  .row-border-bottom{ border-bottom:2px solid var(--paper); }
+  .msg{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:17px; margin-top:18px; min-height:24px; }
+  .btn-row{ display:flex; gap:10px; margin-top:6px; }
+  .btn-row button{ background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; padding:11px 20px; border-radius:22px; cursor:pointer; }
+  footer{ margin-top:48px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / logika</div>
+  <h1>Sudoku</h1>
+  <p class="sub">Wypełnij siatkę tak, by w każdym wierszu, kolumnie i bloku 3×3 były cyfry 1-9.</p>
+
+  <div class="grid" id="grid"></div>
+  <div class="msg" id="msg"></div>
+  <div class="btn-row">
+    <button id="checkBtn">Sprawdź</button>
+    <button id="newBtn">Nowa gra</button>
+  </div>
+
+  <section class="content" style="max-width:460px;">
+    <h2>Zasady sudoku</h2>
+    <p>Sudoku to łamigłówka logiczna na siatce 9×9, podzielonej na dziewięć bloków 3×3. Zadanie polega na wypełnieniu wszystkich pustych pól cyframi od 1 do 9 tak, aby każda cyfra pojawiła się dokładnie raz w każdym wierszu, każdej kolumnie i każdym bloku 3×3.</p>
+    <div class="faq-item"><h3>Czy każda łamigłówka ma dokładnie jedno rozwiązanie?</h3><p>Tak — plansza generowana jest na bazie poprawnego, kompletnego rozwiązania, z którego usuwane są losowe cyfry.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  // Gotowe, poprawne rozwiązanie bazowe
+  const SOLUTION = [
+    [5,3,4,6,7,8,9,1,2],
+    [6,7,2,1,9,5,3,4,8],
+    [1,9,8,3,4,2,5,6,7],
+    [8,5,9,7,6,1,4,2,3],
+    [4,2,6,8,5,3,7,9,1],
+    [7,1,3,9,2,4,8,5,6],
+    [9,6,1,5,3,7,2,8,4],
+    [2,8,7,4,1,9,6,3,5],
+    [3,4,5,2,8,6,1,7,9]
+  ];
+
+  let puzzle = [];
+
+  function shuffleDeck(){
+    // proste przetasowanie: zamiana par cyfr, żeby siatka była inna za każdym razem
+    const map = {};
+    const digits = [1,2,3,4,5,6,7,8,9];
+    const shuffled = [...digits];
+    for(let i=shuffled.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]]; }
+    digits.forEach((d,i) => map[d] = shuffled[i]);
+    return SOLUTION.map(row => row.map(v => map[v]));
+  }
+
+  function newGame(){
+    const solved = shuffleDeck();
+    puzzle = solved.map(row => [...row]);
+    // usuń losowo ok. 45 komórek
+    let removed = 0;
+    while(removed < 45){
+      const r = Math.floor(Math.random()*9), c = Math.floor(Math.random()*9);
+      if(puzzle[r][c] !== 0){ puzzle[r][c] = 0; removed++; }
+    }
+    render(solved);
+    document.getElementById('msg').textContent = '';
+  }
+
+  function render(solved){
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    for(let r=0;r<9;r++){
+      for(let c=0;c<9;c++){
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        if((r+1)%3===0 && r!==8) cell.classList.add('row-border-bottom');
+        if(puzzle[r][c] !== 0){
+          cell.classList.add('fixed');
+          cell.textContent = puzzle[r][c];
+        } else {
+          const input = document.createElement('input');
+          input.maxLength = 1;
+          input.dataset.r = r; input.dataset.c = c;
+          input.dataset.correct = solved[r][c];
+          input.addEventListener('input', e => { e.target.value = e.target.value.replace(/[^1-9]/g,''); });
+          cell.appendChild(input);
+        }
+        grid.appendChild(cell);
+      }
+    }
+  }
+
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    const inputs = document.querySelectorAll('.cell input');
+    let allCorrect = true, allFilled = true;
+    inputs.forEach(inp => {
+      if(!inp.value) allFilled = false;
+      if(inp.value && parseInt(inp.value,10) !== parseInt(inp.dataset.correct,10)) allCorrect = false;
+    });
+    const msg = document.getElementById('msg');
+    if(!allFilled) msg.textContent = 'Uzupełnij wszystkie puste pola.';
+    else if(allCorrect) msg.textContent = '🎉 Świetnie, rozwiązane poprawnie!';
+    else msg.textContent = 'Są błędy — spróbuj jeszcze raz.';
+  });
+
+  document.getElementById('newBtn').addEventListener('click', newGame);
+  newGame();
+</script>
+</body>
+</html>
