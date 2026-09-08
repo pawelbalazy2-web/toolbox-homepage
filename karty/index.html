@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Losowanie karty do gry online</title>
+<meta name="description" content="Wylosuj kartę z talii 52 kart. Przydatne do gier karcianych i losowań.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 32px; }
+  .card-display{ width:140px; height:196px; background:#fff; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; font-size:48px; margin-bottom:24px; box-shadow:0 8px 24px rgba(0,0,0,0.3); }
+  .card-display.red{ color:#e5534b; }
+  .card-display.black{ color:#1a1633; }
+  .draw-btn{ background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:15px; padding:14px 32px; border-radius:26px; cursor:pointer; }
+  .remaining{ margin-top:18px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); }
+  .reset-btn{ margin-top:10px; background:transparent; border:1px solid var(--line); color:var(--muted); font-family:'Inter',sans-serif; font-size:13px; padding:9px 18px; border-radius:8px; cursor:pointer; }
+  footer{ margin-top:48px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / karty</div>
+  <h1>Losowanie karty</h1>
+  <p class="sub">Wylosuj kartę z talii 52 kart.</p>
+
+  <div class="card-display" id="cardDisplay">🂠</div>
+  <button class="draw-btn" id="drawBtn">Losuj kartę</button>
+  <div class="remaining" id="remaining">Pozostało kart w talii: 52</div>
+  <button class="reset-btn" id="resetBtn">Nowa talia</button>
+
+  <section class="content" style="max-width:400px;">
+    <h2>Do czego przyda się losowanie karty</h2>
+    <p>Przydatne przy nauce gier karcianych, losowaniu kolejności graczy, albo po prostu jako cyfrowa talia, gdy nie masz pod ręką prawdziwych kart. Każde losowanie odbywa się z aktualnie dostępnej puli — wylosowana karta znika z talii, dokładnie jak przy prawdziwym rozdawaniu.</p>
+    <div class="faq-item"><h3>Czy karty mogą się powtórzyć w tej samej talii?</h3><p>Nie — każda karta może zostać wylosowana tylko raz, dopóki nie klikniesz "Nowa talia".</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const SUITS = [{s:'♠',color:'black'},{s:'♥',color:'red'},{s:'♦',color:'red'},{s:'♣',color:'black'}];
+  const RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+  let deck = [];
+
+  function buildDeck(){
+    deck = [];
+    SUITS.forEach(suit => RANKS.forEach(rank => deck.push({rank, suit:suit.s, color:suit.color})));
+    document.getElementById('remaining').textContent = 'Pozostało kart w talii: ' + deck.length;
+    document.getElementById('cardDisplay').textContent = '🂠';
+    document.getElementById('cardDisplay').className = 'card-display';
+  }
+
+  document.getElementById('drawBtn').addEventListener('click', () => {
+    if(deck.length === 0) return;
+    const idx = Math.floor(Math.random()*deck.length);
+    const card = deck.splice(idx,1)[0];
+    const display = document.getElementById('cardDisplay');
+    display.textContent = card.rank + card.suit;
+    display.className = 'card-display ' + card.color;
+    document.getElementById('remaining').textContent = 'Pozostało kart w talii: ' + deck.length;
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', buildDeck);
+  buildDeck();
+</script>
+</body>
+</html>
