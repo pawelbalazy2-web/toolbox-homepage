@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Czy to rok przestępny? — sprawdź online</title>
+<meta name="description" content="Sprawdź, czy dany rok jest rokiem przestępnym (366 dni). Darmowe narzędzie online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1530; --surface:#241d42; --line:#3a3163; --paper:#ece7f7; --muted:#9a8fc2; --accent:#8b5cf6; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:64px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent); margin-bottom:14px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,4.8vw,44px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:460px; font-size:15px; margin:0 0 32px; }
+  .card{ width:100%; max-width:400px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:28px; text-align:center; }
+  input[type="number"]{ width:100%; background:var(--ink); border:1px solid var(--line); border-radius:6px; padding:16px; font-family:'IBM Plex Mono',monospace; font-size:24px; color:var(--paper); outline:none; text-align:center; margin-bottom:20px; }
+  input:focus{ border-color:var(--accent); }
+  .result{ font-family:'Sora',sans-serif; font-weight:800; font-size:22px; color:var(--accent); }
+  .days{ font-size:13px; color:var(--muted); margin-top:6px; }
+  footer{ margin-top:48px; color:#4a3d70; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4a3d70; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">narzędzie / kalendarz</div>
+  <h1>Czy to rok przestępny?</h1>
+  <p class="sub">Wpisz rok i sprawdź, czy ma 366 dni.</p>
+
+  <div class="card">
+    <input type="number" id="yearInput" value="2026">
+    <div class="result" id="result"></div>
+    <div class="days" id="days"></div>
+  </div>
+
+  <section class="content">
+    <h2>Zasada roku przestępnego</h2>
+    <p>Rok jest przestępny, jeśli dzieli się przez 4, chyba że dzieli się też przez 100 — wtedy musi dzielić się dodatkowo przez 400. Dlatego rok 2000 był przestępny, a rok 1900 już nie, mimo że oba dzielą się przez 4 i 100. Dodatkowy dzień (29 lutego) koryguje niewielkie rozbieżności między kalendarzem a rzeczywistym czasem obiegu Ziemi wokół Słońca.</p>
+    <div class="faq-item"><h3>Dlaczego potrzebny jest rok przestępny?</h3><p>Rok kalendarzowy (365 dni) jest nieco krótszy niż rzeczywisty rok astronomiczny (ok. 365,24 dnia) — dodatkowy dzień co cztery lata koryguje tę różnicę.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const yearInput = document.getElementById('yearInput');
+  function check(){
+    const y = parseInt(yearInput.value, 10);
+    if(!y){ return; }
+    const isLeap = (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
+    document.getElementById('result').textContent = isLeap ? '✓ Tak, to rok przestępny' : '✗ Nie, to zwykły rok';
+    document.getElementById('days').textContent = isLeap ? '366 dni (luty ma 29 dni)' : '365 dni (luty ma 28 dni)';
+  }
+  yearInput.addEventListener('input', check);
+  check();
+</script>
+</body>
+</html>
