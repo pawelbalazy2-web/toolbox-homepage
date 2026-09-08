@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wzory pism i podań online — generator dokumentów</title>
+<meta name="description" content="Darmowe wzory pism: wypowiedzenie umowy o pracę, podanie o urlop, pełnomocnictwo, reklamacja i więcej. Wypełnij formularz i pobierz gotowe pismo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --bg: #f2f4f8;
+    --surface: #ffffff;
+    --ink: #1a1f2e;
+    --line: #dde1ea;
+    --muted: #6b7280;
+    --accent: #2952d8;
+    --accent-dim: #1e3fb0;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  .top-bar{
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 20px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap: 12px;
+  }
+  .top-bar h1{ font-family: 'Sora', sans-serif; font-weight: 800; font-size: 20px; margin: 0; }
+  .eyebrow{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); display:block; margin-bottom: 2px; }
+  .action-btns{ display:flex; gap: 8px; }
+  .download-btn{ background: var(--accent); color: #fff; border: none; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px; padding: 12px 22px; border-radius: 6px; cursor: pointer; }
+  .download-btn:hover{ background: var(--accent-dim); }
+  .copy-btn{ background: var(--surface); color: var(--ink); border: 1px solid var(--line); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; padding: 12px 20px; border-radius: 6px; cursor: pointer; }
+  .copy-btn:hover{ border-color: var(--accent); }
+
+  .layout{ display:grid; grid-template-columns: 340px 1fr; gap: 24px; padding: 24px; max-width: 1300px; margin: 0 auto; }
+  @media (max-width: 860px){ .layout{ grid-template-columns: 1fr; } }
+
+  .form-panel{ background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+  .template-select{ margin-bottom: 20px; }
+  .template-select label{ display:block; font-size: 11.5px; color: var(--muted); margin-bottom: 8px; font-family: 'IBM Plex Mono', monospace; }
+  select#templateSelect{
+    width:100%; background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+    padding: 12px 14px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--ink); cursor: pointer; outline: none;
+  }
+  .field{ margin-bottom: 12px; }
+  .field label{ display:block; font-size: 11.5px; color: var(--muted); margin-bottom: 5px; font-family: 'IBM Plex Mono', monospace; }
+  input[type="text"], input[type="date"], textarea{
+    width:100%; background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+    padding: 10px 12px; font-family: 'Inter', sans-serif; font-size: 13.5px; color: var(--ink); outline: none;
+  }
+  input:focus, textarea:focus{ border-color: var(--accent); }
+  textarea{ resize: vertical; min-height: 60px; }
+
+  .preview-wrap{ background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+  #docPreview{
+    background: #fff; padding: 50px; font-family: 'Inter', sans-serif; font-size: 14px;
+    line-height: 1.8; color: #1a1a1a; min-height: 500px; white-space: pre-wrap;
+  }
+
+  @media print{
+    .top-bar, .form-panel, .content, footer{ display:none !important; }
+    .layout{ display:block; padding:0; max-width:100%; }
+    .preview-wrap{ border:none; padding:0; }
+    #docPreview{ padding: 0; }
+    body{ background: #fff; }
+  }
+
+  .content{ max-width: 900px; margin: 48px auto 0; padding: 0 24px 48px; }
+  .content h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ color:#4b5160; font-size:14.5px; line-height:1.7; margin:0 0 12px; }
+  .disclaimer{ background:#fff7e6; border:1px solid #f0d896; border-radius:8px; padding:14px 18px; font-size:13px; color:#7a5c17; margin-top:20px; }
+  footer{ text-align:center; padding: 24px; color:#9aa0ac; font-size:12px; font-family:'IBM Plex Mono',monospace; }
+  footer a{ color:#9aa0ac; }
+</style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div>
+      <span class="eyebrow">narzędzie / dokumenty</span>
+      <h1>Wzory pism i podań</h1>
+    </div>
+    <div class="action-btns">
+      <button class="copy-btn" id="copyBtn">Kopiuj tekst</button>
+      <button class="download-btn" id="downloadBtn">Pobierz jako PDF</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="form-panel">
+      <div class="template-select">
+        <label>WYBIERZ TYP PISMA</label>
+        <select id="templateSelect"></select>
+      </div>
+      <div id="fieldsContainer"></div>
+    </div>
+
+    <div class="preview-wrap">
+      <div id="docPreview"></div>
+    </div>
+  </div>
+
+  <section class="content">
+    <h2>Jak korzystać z generatora</h2>
+    <p>Wybierz typ pisma z listy, wypełnij formularz swoimi danymi — treść dokumentu po prawej aktualizuje się na bieżąco. Gdy pismo jest gotowe, skopiuj tekst albo pobierz jako PDF (przez okno drukowania przeglądarki, wybierz "Zapisz jako PDF").</p>
+    <div class="disclaimer">Te wzory mają charakter ogólny i pomocniczy — nie stanowią porady prawnej. W sprawach o dużej wadze (spory sądowe, skomplikowane umowy) warto skonsultować się z prawnikiem, ponieważ przepisy i wymogi formalne mogą się różnić w zależności od sytuacji.</div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const TEMPLATES = [
+    {
+      id: 'wypowiedzenie-pracy',
+      name: 'Wypowiedzenie umowy o pracę',
+      fields: [
+        {id:'imie', label:'IMIĘ I NAZWISKO', default:'Jan Kowalski'},
+        {id:'adres', label:'TWÓJ ADRES', default:'ul. Przykładowa 1, 00-001 Warszawa'},
+        {id:'firma', label:'NAZWA PRACODAWCY', default:'ABC Sp. z o.o.'},
+        {id:'adresFirmy', label:'ADRES PRACODAWCY', default:'ul. Firmowa 5, 00-002 Warszawa'},
+        {id:'stanowisko', label:'STANOWISKO', default:'Specjalista ds. Sprzedaży'},
+        {id:'dataUmowy', label:'DATA ZAWARCIA UMOWY', type:'date', default:'2021-03-01'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n${v.imie}\n${v.adres}\n\n${v.firma}\n${v.adresFirmy}\n\n\nWYPOWIEDZENIE UMOWY O PRACĘ\n\nNiniejszym wypowiadam umowę o pracę zawartą w dniu ${formatDate(v.dataUmowy)} na stanowisku ${v.stanowisko}, z zachowaniem okresu wypowiedzenia wynikającego z przepisów Kodeksu pracy.\n\n\n........................................\n(podpis)`
+    },
+    {
+      id: 'podanie-urlop',
+      name: 'Podanie o urlop wypoczynkowy',
+      fields: [
+        {id:'imie', label:'IMIĘ I NAZWISKO', default:'Jan Kowalski'},
+        {id:'stanowisko', label:'STANOWISKO', default:'Specjalista ds. Sprzedaży'},
+        {id:'dataOd', label:'URLOP OD', type:'date', default:''},
+        {id:'dataDo', label:'URLOP DO', type:'date', default:''},
+        {id:'liczbaDni', label:'LICZBA DNI', default:'5'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n${v.imie}\n${v.stanowisko}\n\n\nWNIOSEK O UDZIELENIE URLOPU WYPOCZYNKOWEGO\n\nZwracam się z uprzejmą prośbą o udzielenie mi urlopu wypoczynkowego w wymiarze ${v.liczbaDni} dni, w terminie od ${formatDate(v.dataOd)} do ${formatDate(v.dataDo)}.\n\n\n........................................\n(podpis)`
+    },
+    {
+      id: 'urlop-okolicznosciowy',
+      name: 'Wniosek o urlop okolicznościowy',
+      fields: [
+        {id:'imie', label:'IMIĘ I NAZWISKO', default:'Jan Kowalski'},
+        {id:'stanowisko', label:'STANOWISKO', default:'Specjalista ds. Sprzedaży'},
+        {id:'powod', label:'POWÓD (np. ślub, narodziny dziecka)', default:'zawarcie związku małżeńskiego'},
+        {id:'data', label:'DATA URLOPU', type:'date', default:''},
+        {id:'liczbaDni', label:'LICZBA DNI', default:'2'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n${v.imie}\n${v.stanowisko}\n\n\nWNIOSEK O UDZIELENIE URLOPU OKOLICZNOŚCIOWEGO\n\nZwracam się z uprzejmą prośbą o udzielenie mi urlopu okolicznościowego w wymiarze ${v.liczbaDni} dni, w związku z: ${v.powod}, w dniu ${formatDate(v.data)}.\n\n\n........................................\n(podpis)`
+    },
+    {
+      id: 'pelnomocnictwo',
+      name: 'Pełnomocnictwo ogólne',
+      fields: [
+        {id:'mocodawca', label:'MOCODAWCA (imię, nazwisko)', default:'Jan Kowalski'},
+        {id:'peselMocodawcy', label:'PESEL MOCODAWCY', default:''},
+        {id:'adresMocodawcy', label:'ADRES MOCODAWCY', default:'ul. Przykładowa 1, 00-001 Warszawa'},
+        {id:'pelnomocnik', label:'PEŁNOMOCNIK (imię, nazwisko)', default:'Anna Nowak'},
+        {id:'peselPelnomocnika', label:'PESEL PEŁNOMOCNIKA', default:''},
+        {id:'adresPelnomocnika', label:'ADRES PEŁNOMOCNIKA', default:'ul. Inna 2, 00-003 Warszawa'},
+        {id:'zakres', label:'ZAKRES PEŁNOMOCNICTWA', default:'reprezentowania mnie przed wszelkimi urzędami i instytucjami w sprawie...'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n\nPEŁNOMOCNICTWO\n\nJa, niżej podpisany/a ${v.mocodawca}, PESEL: ${v.peselMocodawcy}, zamieszkały/a ${v.adresMocodawcy}, udzielam pełnomocnictwa Panu/Pani ${v.pelnomocnik}, PESEL: ${v.peselPelnomocnika}, zamieszkałemu/ej ${v.adresPelnomocnika}, do ${v.zakres}.\n\n\n........................................\n(podpis mocodawcy)`
+    },
+    {
+      id: 'reklamacja',
+      name: 'Reklamacja towaru lub usługi',
+      fields: [
+        {id:'imie', label:'TWOJE IMIĘ I NAZWISKO', default:'Jan Kowalski'},
+        {id:'adres', label:'TWÓJ ADRES', default:'ul. Przykładowa 1, 00-001 Warszawa'},
+        {id:'sprzedawca', label:'NAZWA SPRZEDAWCY', default:'Sklep XYZ Sp. z o.o.'},
+        {id:'produkt', label:'NAZWA PRODUKTU/USŁUGI', default:'Laptop model ABC123'},
+        {id:'dataZakupu', label:'DATA ZAKUPU', type:'date', default:''},
+        {id:'wada', label:'OPIS WADY', default:'Urządzenie nie włącza się od trzeciego dnia użytkowania.'},
+        {id:'zadanie', label:'ŻĄDANIE (np. naprawa, wymiana, zwrot pieniędzy)', default:'wymianę towaru na nowy, wolny od wad'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n${v.imie}\n${v.adres}\n\n${v.sprzedawca}\n\n\nREKLAMACJA\n\nW dniu ${formatDate(v.dataZakupu)} zakupiłem/am ${v.produkt}. W trakcie użytkowania stwierdziłem/am następującą wadę: ${v.wada}\n\nNa podstawie przepisów o rękojmi wnoszę o: ${v.zadanie}.\n\nProszę o rozpatrzenie reklamacji w ustawowym terminie 14 dni.\n\n\n........................................\n(podpis)`
+    },
+    {
+      id: 'wypowiedzenie-najmu',
+      name: 'Wypowiedzenie umowy najmu',
+      fields: [
+        {id:'wypowiadajacy', label:'IMIĘ I NAZWISKO (wypowiadający)', default:'Jan Kowalski'},
+        {id:'drugaStrona', label:'DRUGA STRONA UMOWY', default:'Anna Nowak'},
+        {id:'adresNieruchomosci', label:'ADRES NIERUCHOMOŚCI', default:'ul. Mieszkalna 10/5, 00-004 Warszawa'},
+        {id:'dataUmowy', label:'DATA ZAWARCIA UMOWY', type:'date', default:''},
+        {id:'okresWypowiedzenia', label:'OKRES WYPOWIEDZENIA', default:'jednego miesiąca'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n${v.wypowiadajacy}\n\nDo: ${v.drugaStrona}\n\n\nWYPOWIEDZENIE UMOWY NAJMU\n\nNiniejszym wypowiadam umowę najmu nieruchomości położonej pod adresem: ${v.adresNieruchomosci}, zawartą w dniu ${formatDate(v.dataUmowy)}, z zachowaniem okresu wypowiedzenia wynoszącego ${v.okresWypowiedzenia}.\n\n\n........................................\n(podpis)`
+    },
+    {
+      id: 'odwolanie',
+      name: 'Odwołanie od decyzji urzędu',
+      fields: [
+        {id:'imie', label:'TWOJE IMIĘ I NAZWISKO', default:'Jan Kowalski'},
+        {id:'adres', label:'TWÓJ ADRES', default:'ul. Przykładowa 1, 00-001 Warszawa'},
+        {id:'organ', label:'NAZWA ORGANU/URZĘDU', default:'Zakład Ubezpieczeń Społecznych, Oddział w Warszawie'},
+        {id:'numerDecyzji', label:'NUMER DECYZJI', default:''},
+        {id:'dataDecyzji', label:'DATA DECYZJI', type:'date', default:''},
+        {id:'uzasadnienie', label:'UZASADNIENIE ODWOŁANIA', default:'Wnoszę o ponowne rozpatrzenie sprawy, ponieważ...'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n${v.imie}\n${v.adres}\n\n${v.organ}\n\n\nODWOŁANIE OD DECYZJI\n\nDziałając na podstawie przepisów, wnoszę odwołanie od decyzji nr ${v.numerDecyzji} z dnia ${formatDate(v.dataDecyzji)}.\n\nUzasadnienie:\n${v.uzasadnienie}\n\n\n........................................\n(podpis)`
+    },
+    {
+      id: 'list-motywacyjny',
+      name: 'List motywacyjny',
+      fields: [
+        {id:'imie', label:'TWOJE IMIĘ I NAZWISKO', default:'Jan Kowalski'},
+        {id:'stanowisko', label:'STANOWISKO, O KTÓRE SIĘ UBIEGASZ', default:'Specjalista ds. Marketingu'},
+        {id:'firma', label:'NAZWA FIRMY', default:'ABC Sp. z o.o.'},
+        {id:'doswiadczenie', label:'KRÓTKO O DOŚWIADCZENIU', default:'5-letnie doświadczenie w marketingu cyfrowym, w tym prowadzenie kampanii zwiększających sprzedaż o 30%'},
+        {id:'motywacja', label:'DLACZEGO CHCESZ TU PRACOWAĆ', default:'Państwa firma od lat jest liderem branży, a ja chciałbym/chciałabym rozwijać się w tak dynamicznym środowisku'},
+        {id:'miejscowosc', label:'MIEJSCOWOŚĆ I DATA PISMA', default:'Warszawa, ' + new Date().toLocaleDateString('pl-PL')}
+      ],
+      generate: v => `${v.miejscowosc}\n\n${v.imie}\n\n\nLIST MOTYWACYJNY\n\nSzanowni Państwo,\n\nz dużym zainteresowaniem aplikuję na stanowisko ${v.stanowisko} w ${v.firma}. Posiadam ${v.doswiadczenie}, co pozwala mi sądzić, że będę wartościowym członkiem Państwa zespołu.\n\n${v.motywacja}.\n\nBędę wdzięczny/a za możliwość spotkania i szczegółowego omówienia mojej kandydatury.\n\nZ poważaniem,\n${v.imie}`
+    }
+  ];
+
+  function formatDate(dateStr){
+    if(!dateStr) return '.......................';
+    const d = new Date(dateStr);
+    if(isNaN(d)) return dateStr;
+    return d.toLocaleDateString('pl-PL');
+  }
+
+  const templateSelect = document.getElementById('templateSelect');
+  const fieldsContainer = document.getElementById('fieldsContainer');
+  const docPreview = document.getElementById('docPreview');
+
+  TEMPLATES.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.id;
+    opt.textContent = t.name;
+    templateSelect.appendChild(opt);
+  });
+
+  function renderFields(template){
+    fieldsContainer.innerHTML = '';
+    template.fields.forEach(f => {
+      const div = document.createElement('div');
+      div.className = 'field';
+      const inputType = f.type === 'date' ? 'date' : 'text';
+      div.innerHTML = `<label>${f.label}</label><input type="${inputType}" id="f_${f.id}" value="${f.default}">`;
+      fieldsContainer.appendChild(div);
+    });
+    fieldsContainer.querySelectorAll('input').forEach(inp => inp.addEventListener('input', updatePreview));
+  }
+
+  function updatePreview(){
+    const template = TEMPLATES.find(t => t.id === templateSelect.value);
+    const values = {};
+    template.fields.forEach(f => { values[f.id] = document.getElementById('f_' + f.id).value; });
+    docPreview.textContent = template.generate(values);
+  }
+
+  templateSelect.addEventListener('change', () => {
+    const template = TEMPLATES.find(t => t.id === templateSelect.value);
+    renderFields(template);
+    updatePreview();
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(docPreview.textContent);
+      const btn = document.getElementById('copyBtn');
+      const orig = btn.textContent;
+      btn.textContent = 'Skopiowano ✓';
+      setTimeout(() => { btn.textContent = orig; }, 1200);
+    }catch(e){}
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', () => window.print());
+
+  renderFields(TEMPLATES[0]);
+  updatePreview();
+</script>
+
+</body>
+</html>
