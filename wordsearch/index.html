@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wordsearch online — szukaj słów w siatce liter</title>
+<meta name="description" content="Znajdź ukryte słowa w siatce liter. Gra logiczna online, bez rejestracji.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{ --ink:#1a1633; --surface:#241f42; --line:#372f5e; --paper:#f2eefc; --muted:#a99fd4; --pink:#ff3f8e; --teal:#35d0ba; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:56px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--pink); margin-bottom:14px; }
+  h1{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:clamp(28px,4.8vw,40px); text-align:center; max-width:600px; margin:0 0 12px; }
+  .sub{ color:var(--muted); text-align:center; max-width:420px; font-size:15px; margin:0 0 22px; }
+  .layout{ display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:flex-start; }
+  .grid{ display:grid; grid-template-columns:repeat(10,30px); grid-template-rows:repeat(10,30px); gap:1px; background:var(--line); user-select:none; }
+  .cell{ background:var(--surface); display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:14px; cursor:pointer; }
+  .cell.selected{ background:var(--pink); color:#fff; }
+  .cell.found{ background:var(--teal); color:var(--ink); }
+  .word-list{ min-width:160px; }
+  .word-list h3{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin:0 0 10px; }
+  .word-item{ font-family:'IBM Plex Mono',monospace; font-size:14px; padding:6px 0; color:var(--paper); }
+  .word-item.found{ color:var(--teal); text-decoration:line-through; }
+  .msg{ font-family:'Fredoka',sans-serif; font-weight:600; font-size:17px; margin-top:18px; min-height:24px; }
+  .reset-btn{ margin-top:10px; background:var(--pink); color:#fff; border:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:13.5px; padding:11px 20px; border-radius:22px; cursor:pointer; }
+  footer{ margin-top:48px; color:#4d4478; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4d4478; }
+.content{ width:100%; max-width:600px; margin-top:56px; padding-top:40px; border-top:1px solid var(--line); }
+  .content h2{ font-family:'Sora',sans-serif,'Fredoka',sans-serif,'Archivo',sans-serif; font-weight:700; font-size:20px; margin:28px 0 12px; }
+  .content h2:first-child{ margin-top:0; }
+  .content p{ font-size:14.5px; line-height:1.7; margin:0 0 12px; opacity:0.85; }
+  .faq-item{ margin-bottom:16px; }
+  .faq-item h3{ font-family:'Inter',sans-serif; font-weight:600; font-size:14px; margin:0 0 6px; }
+  .faq-item p{ margin:0; font-size:13.5px; opacity:0.85; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">gra / słowna</div>
+  <h1>Wordsearch</h1>
+  <p class="sub">Zaznacz przeciągając ukryte słowa w siatce.</p>
+
+  <div class="layout">
+    <div class="grid" id="grid"></div>
+    <div class="word-list">
+      <h3>SZUKAJ:</h3>
+      <div id="wordList"></div>
+    </div>
+  </div>
+  <div class="msg" id="msg"></div>
+  <button class="reset-btn" id="resetBtn">Nowa gra</button>
+
+  <section class="content" style="max-width:500px;">
+    <h2>Jak grać</h2>
+    <p>Sześć słów ukrytych jest w siatce liter — w poziomie, pionie lub po skosie, w dowolnym kierunku. Kliknij i przeciągnij przez litery, żeby zaznaczyć słowo. Jeśli zaznaczenie pasuje do jednego z szukanych słów (czytane w dowolną stronę), zostanie oznaczone jako znalezione.</p>
+    <div class="faq-item"><h3>Czy słowa mogą się nakładać?</h3><p>Tak, słowa mogą dzielić wspólne litery w miejscach przecięcia — dokładnie jak w klasycznych papierowych wordsearchach.</p></div>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const SIZE = 10;
+  const WORD_POOL = ['KOT','PIES','DOM','SLONCE','WODA','LAS','GORA','MORZE','KWIAT','KSIAZKA','MUZYKA','OGIEN'];
+  const DIRECTIONS = [[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  let grid, words, foundWords, selecting = false, selectedCells = [];
+
+  function newGame(){
+    grid = Array.from({length:SIZE}, () => Array(SIZE).fill(null));
+    words = shuffleArr([...WORD_POOL]).slice(0,6);
+    foundWords = new Set();
+    placedCells = {};
+
+    words.forEach(word => placeWord(word));
+    fillRandom();
+    render();
+    renderWordList();
+    document.getElementById('msg').textContent = '';
+  }
+
+  function shuffleArr(arr){
+    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+    return arr;
+  }
+
+  function placeWord(word){
+    for(let attempt=0; attempt<200; attempt++){
+      const dir = DIRECTIONS[Math.floor(Math.random()*DIRECTIONS.length)];
+      const startR = Math.floor(Math.random()*SIZE);
+      const startC = Math.floor(Math.random()*SIZE);
+      const endR = startR + dir[0]*(word.length-1);
+      const endC = startC + dir[1]*(word.length-1);
+      if(endR < 0 || endR >= SIZE || endC < 0 || endC >= SIZE) continue;
+
+      let fits = true;
+      for(let i=0;i<word.length;i++){
+        const r = startR + dir[0]*i, c = startC + dir[1]*i;
+        if(grid[r][c] !== null && grid[r][c] !== word[i]){ fits = false; break; }
+      }
+      if(!fits) continue;
+
+      for(let i=0;i<word.length;i++){
+        const r = startR + dir[0]*i, c = startC + dir[1]*i;
+        grid[r][c] = word[i];
+      }
+      return;
+    }
+  }
+
+  function fillRandom(){
+    for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++){
+      if(grid[r][c] === null) grid[r][c] = ALPHABET[Math.floor(Math.random()*ALPHABET.length)];
+    }
+  }
+
+  function render(){
+    const gridEl = document.getElementById('grid');
+    gridEl.innerHTML = '';
+    for(let r=0;r<SIZE;r++){
+      for(let c=0;c<SIZE;c++){
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = grid[r][c];
+        cell.dataset.r = r; cell.dataset.c = c;
+        cell.addEventListener('mousedown', () => startSelect(r,c));
+        cell.addEventListener('mouseenter', () => continueSelect(r,c));
+        cell.addEventListener('mouseup', endSelect);
+        cell.addEventListener('touchstart', e => { e.preventDefault(); startSelect(r,c); });
+        gridEl.appendChild(cell);
+      }
+    }
+    document.addEventListener('mouseup', endSelect);
+  }
+
+  function renderWordList(){
+    document.getElementById('wordList').innerHTML = words.map(w =>
+      `<div class="word-item ${foundWords.has(w)?'found':''}" data-word="${w}">${w}</div>`
+    ).join('');
+  }
+
+  function startSelect(r,c){ selecting = true; selectedCells = [[r,c]]; updateSelection(); }
+  function continueSelect(r,c){
+    if(!selecting) return;
+    const start = selectedCells[0];
+    const dr = Math.sign(r - start[0]), dc = Math.sign(c - start[1]);
+    const path = [];
+    let cr = start[0], cc = start[1];
+    path.push([cr,cc]);
+    while(cr !== r || cc !== c){
+      cr += dr || 0; cc += dc || 0;
+      path.push([cr,cc]);
+      if(path.length > SIZE) break;
+    }
+    selectedCells = path;
+    updateSelection();
+  }
+  function endSelect(){
+    if(!selecting) return;
+    selecting = false;
+    checkWord();
+  }
+
+  function updateSelection(){
+    document.querySelectorAll('.cell').forEach(cell => {
+      const r = +cell.dataset.r, c = +cell.dataset.c;
+      const isSelected = selectedCells.some(([sr,sc]) => sr===r && sc===c);
+      cell.classList.toggle('selected', isSelected && !cell.classList.contains('found'));
+    });
+  }
+
+  function checkWord(){
+    const letters = selectedCells.map(([r,c]) => grid[r][c]).join('');
+    const reversed = letters.split('').reverse().join('');
+    const match = words.find(w => (w === letters || w === reversed) && !foundWords.has(w));
+    if(match){
+      foundWords.add(match);
+      selectedCells.forEach(([r,c]) => {
+        const cell = document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`);
+        cell.classList.remove('selected');
+        cell.classList.add('found');
+      });
+      renderWordList();
+      if(foundWords.size === words.length){
+        document.getElementById('msg').textContent = '🎉 Znaleziono wszystkie słowa!';
+      }
+    } else {
+      document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+    }
+    selectedCells = [];
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', newGame);
+  newGame();
+</script>
+</body>
+</html>
