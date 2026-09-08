@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horoskop dzienny online — sprawdź swój znak zodiaku</title>
+<meta name="description" content="Codzienny horoskop dla wszystkich znaków zodiaku. Sprawdź, co gwiazdy mówią o miłości, pracy i dniu — dla rozrywki.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
+<style>
+  :root{
+    --ink: #1b1030;
+    --surface: #251740;
+    --line: #392a5c;
+    --paper: #ede8fa;
+    --muted: #9c8fc4;
+    --accent: #8ec5fc;
+    --accent-dim: #5f9bd6;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1.5px 1.5px at 10% 15%, rgba(142,197,252,0.3) 50%, transparent 50%),
+      radial-gradient(1px 1px at 85% 25%, rgba(142,197,252,0.25) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 50% 8%, rgba(142,197,252,0.2) 50%, transparent 50%),
+      radial-gradient(1px 1px at 25% 60%, rgba(142,197,252,0.2) 50%, transparent 50%),
+      radial-gradient(1.5px 1.5px at 92% 70%, rgba(142,197,252,0.25) 50%, transparent 50%),
+      var(--ink);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding: 64px 20px 40px;
+  }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  h1{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(34px, 5.5vw, 50px);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 0 8px;
+  }
+  .today-date{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    text-transform: capitalize;
+  }
+
+  .sign-grid{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    max-width: 640px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  @media (max-width: 560px){ .sign-grid{ grid-template-columns: repeat(4, 1fr); } }
+  .sign-btn{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 6px;
+    text-align:center;
+    cursor: pointer;
+    color: var(--paper);
+  }
+  .sign-btn:hover{ border-color: var(--accent); }
+  .sign-btn.active{ background: var(--accent); border-color: var(--accent); color: var(--ink); }
+  .sign-symbol{ font-size: 22px; display:block; margin-bottom: 4px; }
+  .sign-name{ font-size: 10.5px; font-family: 'IBM Plex Mono', monospace; }
+
+  .result-card{
+    width: 100%;
+    max-width: 560px;
+    background: var(--surface);
+    border: 1px solid var(--accent-dim);
+    border-radius: 10px;
+    padding: 28px;
+    display:none;
+  }
+  .result-card.visible{ display:block; }
+  .result-sign{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .result-dates{ font-size: 12.5px; color: var(--muted); margin-bottom: 20px; }
+  .horoscope-section{ margin-bottom: 18px; }
+  .horoscope-section h3{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--accent);
+    margin: 0 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .horoscope-section p{ margin: 0; font-size: 14.5px; line-height: 1.65; color: #d8d2ef; }
+  .lucky-row{
+    display:flex;
+    gap: 24px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+  .lucky-item{ font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--muted); }
+  .lucky-item b{ display:block; color: var(--accent); font-size: 16px; margin-top: 4px; }
+
+  footer{
+    margin-top: 48px;
+    color: #453c6e;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    text-align:center;
+  }
+  footer a{ color: #453c6e; }
+
+  .content{
+    width:100%;
+    max-width: 600px;
+    margin-top: 60px;
+    padding-top: 44px;
+    border-top: 1px solid var(--line);
+  }
+  .content h2{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 32px 0 12px;
+  }
+  .content h2:first-child{ margin-top: 0; }
+  .content p{ color: #c3bce0; font-size: 15px; line-height: 1.75; margin: 0 0 14px; }
+  .disclaimer{ margin-top: 24px; font-size: 12px; color: var(--muted); text-align:center; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+  <div class="eyebrow">horoskop / rozrywka</div>
+  <h1>Horoskop dzienny</h1>
+  <div class="today-date" id="todayDate"></div>
+
+  <div class="sign-grid" id="signGrid"></div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-sign" id="resultSign"></div>
+    <div class="result-dates" id="resultDates"></div>
+    <div class="horoscope-section"><h3>Ogólnie</h3><p id="hOgolnie"></p></div>
+    <div class="horoscope-section"><h3>Miłość</h3><p id="hMilosc"></p></div>
+    <div class="horoscope-section"><h3>Praca</h3><p id="hPraca"></p></div>
+    <div class="lucky-row">
+      <div class="lucky-item">SZCZĘŚLIWA LICZBA<b id="luckyNumber"></b></div>
+      <div class="lucky-item">KOLOR DNIA<b id="luckyColor"></b></div>
+    </div>
+  </div>
+
+  <section class="content">
+    <h2>Skąd biorą się horoskopy dzienne</h2>
+    <p>Horoskopy oparte są na tradycji astrologicznej, w której pozycja Słońca w momencie narodzin wyznacza znak zodiaku, a codzienne przepowiednie odnoszą się do symbolicznych ruchów planet. Ten horoskop generowany jest na podstawie dzisiejszej daty — każdy odwiedzający zobaczy tę samą treść danego dnia, a jutro pojawi się nowa.</p>
+    <h2>Czy horoskopy mają naukowe podstawy</h2>
+    <p>Nie — astrologia nie jest nauką w rozumieniu metody naukowej i nie ma potwierdzonego wpływu gwiazd na codzienne wydarzenia w życiu człowieka. Horoskopy działają często dzięki tzw. efektowi Barnuma — ogólne stwierdzenia brzmią trafnie, bo każdy może odnieść je do siebie. Traktuj to jako lekką, codzienną rozrywkę, nie jako wskazówkę do podejmowania ważnych decyzji.</p>
+    <p class="disclaimer">Treści mają charakter czysto rozrywkowy i nie powinny być podstawą decyzji finansowych, zdrowotnych czy życiowych.</p>
+  </section>
+
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a></footer>
+
+<script>
+  const SIGNS = [
+    {id:'baran', name:'Baran', symbol:'♈', dates:'21 marca – 19 kwietnia'},
+    {id:'byk', name:'Byk', symbol:'♉', dates:'20 kwietnia – 20 maja'},
+    {id:'blizniueta', name:'Bliźnięta', symbol:'♊', dates:'21 maja – 20 czerwca'},
+    {id:'rak', name:'Rak', symbol:'♋', dates:'21 czerwca – 22 lipca'},
+    {id:'lew', name:'Lew', symbol:'♌', dates:'23 lipca – 22 sierpnia'},
+    {id:'panna', name:'Panna', symbol:'♍', dates:'23 sierpnia – 22 września'},
+    {id:'waga', name:'Waga', symbol:'♎', dates:'23 września – 22 października'},
+    {id:'skorpion', name:'Skorpion', symbol:'♏', dates:'23 października – 21 listopada'},
+    {id:'strzelec', name:'Strzelec', symbol:'♐', dates:'22 listopada – 21 grudnia'},
+    {id:'koziorozec', name:'Koziorożec', symbol:'♑', dates:'22 grudnia – 19 stycznia'},
+    {id:'wodnik', name:'Wodnik', symbol:'♒', dates:'20 stycznia – 18 lutego'},
+    {id:'ryby', name:'Ryby', symbol:'♓', dates:'19 lutego – 20 marca'}
+  ];
+
+  const OGOLNIE = [
+    "Dziś sprzyja Ci intuicja — zaufaj pierwszemu wrażeniu przy podejmowaniu decyzji.",
+    "To dobry dzień na uporządkowanie spraw, które od dawna odkładałeś na później.",
+    "Możesz poczuć nagły przypływ energii — wykorzystaj go na coś, co wymaga determinacji.",
+    "Warto dziś zwolnić tempo i poświęcić chwilę na odpoczynek, zanim wrócisz do obowiązków.",
+    "Nieoczekiwana rozmowa może rzucić nowe światło na sprawę, która ostatnio Cię zajmowała.",
+    "Dziś łatwiej niż zwykle dostrzeżesz rozwiązanie problemu, który wydawał się skomplikowany.",
+    "Gwiazdy sprzyjają dziś kreatywności — dobry moment na nowy pomysł lub projekt.",
+    "Możesz dziś poczuć potrzebę zmiany rutyny — nawet drobna zmiana planu dnia dobrze Ci zrobi.",
+    "To dzień sprzyjający refleksji nad tym, co naprawdę jest dla Ciebie ważne.",
+    "Dziś warto zaufać sobie bardziej niż opiniom innych, nawet jeśli brzmią przekonująco.",
+    "Drobna niespodzianka może umilić Ci dzisiejszy dzień, jeśli zostawisz sobie na nią przestrzeń.",
+    "To dobry dzień na uporządkowanie priorytetów na najbliższy tydzień.",
+    "Możesz dziś poczuć się bardziej wrażliwy niż zwykle — daj sobie na to przyzwolenie.",
+    "Dziś sprzyja Ci cierpliwość — sprawy, które się przeciągają, w końcu ruszą do przodu.",
+    "To dzień, w którym warto dokończyć coś, co zaczęte zostało dawno temu.",
+    "Gwiazdy sugerują dziś ostrożność w słowach — coś powiedzianego bez namysłu może zostać źle odebrane.",
+    "Dziś dobry moment na docenienie małych sukcesów, zamiast skupiania się tylko na tym, co jeszcze przed Tobą.",
+    "Możesz dziś odczuwać silniejszą potrzebę kontaktu z bliskimi — nie ignoruj tego impulsu.",
+    "To dzień sprzyjający uczeniu się czegoś nowego, nawet jeśli na początku wydaje się to trudne.",
+    "Dziś warto zaufać procesowi, nawet jeśli efekty nie są jeszcze widoczne."
+  ];
+
+  const MILOSC = [
+    "W relacjach dziś liczy się szczerość — powiedz wprost, co czujesz, zamiast czekać, aż druga osoba się domyśli.",
+    "Single mogą dziś spotkać kogoś interesującego w zupełnie nieoczekiwanym miejscu.",
+    "W związku warto dziś okazać więcej cierpliwości — drobne napięcia miną, jeśli dasz im czas.",
+    "To dobry dzień na szczerą rozmowę o tym, co od dawna chciałeś/aś powiedzieć partnerowi.",
+    "Możesz dziś poczuć silniejszą potrzebę bliskości — nie bój się o nią poprosić.",
+    "Uważaj dziś na zazdrość lub nadinterpretację — nie każdy gest ma drugie dno.",
+    "Dziś dobry moment na małe gesty czułości, które nie wymagają wielkich słów.",
+    "W miłości sprzyja Ci dziś spontaniczność — zaplanowana niespodzianka może wypaść lepiej niż się spodziewasz.",
+    "Jeśli od dawna wahasz się przed rozmową o uczuciach, dziś gwiazdy sprzyjają odwadze.",
+    "Single — dziś warto wyjść ze swojej strefy komfortu towarzyskiego, nawet jeśli nie masz na to ochoty.",
+    "W związku możesz dziś odkryć coś nowego o partnerze, mimo że znacie się od dawna.",
+    "Dziś lepiej unikać ważnych rozmów o przyszłości — emocje mogą przesłonić racjonalne argumenty.",
+    "To dzień sprzyjający pojednaniu, jeśli ostatnio doszło do nieporozumienia.",
+    "Możesz dziś poczuć się bardziej niezależny/a emocjonalnie — to dobry moment na przemyślenie własnych potrzeb.",
+    "W relacjach sprzyja dziś słuchanie, nie tylko mówienie — druga strona może mieć coś ważnego do powiedzenia."
+  ];
+
+  const PRACA = [
+    "W pracy dziś sprzyja Ci koncentracja — wykorzystaj ten czas na zadanie wymagające skupienia.",
+    "Możliwa jest dziś nieoczekiwana pochwała lub uznanie za coś, nad czym pracowałeś/aś po cichu.",
+    "To dobry dzień na zaproponowanie nowego pomysłu — szefowie mogą być dziś bardziej otwarci niż zwykle.",
+    "Uważaj dziś na drobne błędy wynikające z pośpiechu — lepiej zwolnić tempo niż poprawiać potem skutki.",
+    "Współpraca z zespołem dziś przyniesie lepsze efekty niż działanie w pojedynkę.",
+    "To dzień sprzyjający negocjacjom — Twoje argumenty będą dziś szczególnie przekonujące.",
+    "Możesz dziś poczuć zmęczenie rutyną zawodową — warto pomyśleć o małej zmianie w codziennych obowiązkach.",
+    "Dziś dobry moment na uporządkowanie zaległej dokumentacji lub spraw administracyjnych.",
+    "Nieoczekiwana wiadomość zawodowa może zmienić Twoje plany na najbliższy tydzień.",
+    "To dzień sprzyjający nauce nowej umiejętności przydatnej w Twojej pracy.",
+    "Możesz dziś poczuć większą pewność siebie w kontaktach zawodowych — wykorzystaj to przy trudnej rozmowie.",
+    "Dziś lepiej unikać podejmowania dużych decyzji finansowych związanych z pracą bez dokładnego przemyślenia.",
+    "To dobry dzień na budowanie relacji zawodowych — mała rozmowa przy kawie może zaowocować w przyszłości.",
+    "Możesz dziś odczuwać większą motywację niż zwykle — dobry moment na zabranie się za odkładane zadanie."
+  ];
+
+  const COLORS = ['Głęboki granat', 'Złoty', 'Szmaragdowa zieleń', 'Bordowy', 'Srebrny', 'Lawendowy', 'Turkusowy', 'Bursztynowy', 'Fioletowy', 'Koralowy'];
+
+  function seededRandom(seed){
+    let x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+
+  function stringToSeed(str){
+    let hash = 0;
+    for(let i=0;i<str.length;i++){ hash = (hash << 5) - hash + str.charCodeAt(i); hash |= 0; }
+    return Math.abs(hash);
+  }
+
+  function pickForToday(list, signId, category){
+    const dateKey = new Date().toISOString().split('T')[0];
+    const seed = stringToSeed(dateKey + signId + category);
+    const idx = Math.floor(seededRandom(seed) * list.length);
+    return list[idx];
+  }
+
+  function pickNumber(signId){
+    const dateKey = new Date().toISOString().split('T')[0];
+    const seed = stringToSeed(dateKey + signId + 'number');
+    return Math.floor(seededRandom(seed) * 49) + 1;
+  }
+
+  function pickColor(signId){
+    const dateKey = new Date().toISOString().split('T')[0];
+    const seed = stringToSeed(dateKey + signId + 'color');
+    const idx = Math.floor(seededRandom(seed) * COLORS.length);
+    return COLORS[idx];
+  }
+
+  const signGrid = document.getElementById('signGrid');
+  SIGNS.forEach(sign => {
+    const btn = document.createElement('button');
+    btn.className = 'sign-btn';
+    btn.innerHTML = `<span class="sign-symbol">${sign.symbol}</span><span class="sign-name">${sign.name}</span>`;
+    btn.addEventListener('click', () => selectSign(sign, btn));
+    signGrid.appendChild(btn);
+  });
+
+  function selectSign(sign, btn){
+    document.querySelectorAll('.sign-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.getElementById('resultSign').textContent = sign.symbol + ' ' + sign.name;
+    document.getElementById('resultDates').textContent = sign.dates;
+    document.getElementById('hOgolnie').textContent = pickForToday(OGOLNIE, sign.id, 'ogolnie');
+    document.getElementById('hMilosc').textContent = pickForToday(MILOSC, sign.id, 'milosc');
+    document.getElementById('hPraca').textContent = pickForToday(PRACA, sign.id, 'praca');
+    document.getElementById('luckyNumber').textContent = pickNumber(sign.id);
+    document.getElementById('luckyColor').textContent = pickColor(sign.id);
+    document.getElementById('resultCard').classList.add('visible');
+  }
+
+  document.getElementById('todayDate').textContent = new Date().toLocaleDateString('pl-PL', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+</script>
+
+</body>
+</html>
