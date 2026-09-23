@@ -4,114 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>toolbox-pl — proste narzędzia online, za darmo</title>
-<meta name="description" content="Zbiór darmowych narzędzi online: generator haseł, konwerter jednostek, licznik znaków, kalkulator dat, generator QR, konwerter kolorów i więcej. Bez rejestracji.">
+<meta name="description" content="Zbiór darmowych narzędzi online: generator haseł, konwerter jednostek, licznik znaków, kalkulator dat, generator QR, sennik, kreator CV i więcej. Bez rejestracji.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9406337676828505" crossorigin="anonymous"></script>
 <style>
-  :root{
-    --ink: #14171c;
-    --surface: #1c2028;
-    --line: #2b303a;
-    --paper: #eef0f3;
-    --muted: #8890a0;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding: 72px 20px 40px;
-  }
-  .eyebrow{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    letter-spacing: 0.03em;
-    color: var(--muted);
-    margin-bottom: 16px;
-  }
-  h1{
-    font-family: 'Sora', sans-serif;
-    font-weight: 800;
-    font-size: clamp(34px, 5.5vw, 54px);
-    line-height: 1.1;
-    text-align: center;
-    max-width: 680px;
-    margin: 0 0 14px;
-    color: var(--paper);
-  }
-  .sub{
-    color: var(--muted);
-    text-align:center;
-    max-width: 480px;
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 0 0 56px;
-  }
-
-  .grid{
-    width: 100%;
-    max-width: 920px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 14px;
-  }
-
-  .tool-card{
-    display: block;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--accent, #888);
-    border-radius: 6px;
-    padding: 22px;
-    text-decoration: none;
-    color: var(--paper);
-    transition: transform .15s ease, border-color .15s ease;
-  }
-  .tool-card:hover{
-    transform: translateY(-2px);
-    border-color: var(--accent, #888);
-  }
-  .tool-eyebrow{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--accent, #888);
-    margin-bottom: 10px;
-  }
-  .tool-name{
-    font-family: 'Sora', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    margin-bottom: 8px;
-    color: var(--paper);
-  }
-  .tool-desc{
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  footer{
-    margin-top: 64px;
-    color: #4a4f5a;
-    font-size: 12px;
-    font-family: 'IBM Plex Mono', monospace;
-    text-align:center;
-  }
-  footer a{ color: #4a4f5a; }
+  :root{ --ink:#14171c; --surface:#1c2028; --line:#2b303a; --paper:#eef0f3; --muted:#8890a0; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ background:var(--ink); color:var(--paper); font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; padding:72px 20px 40px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.03em; color:var(--muted); margin-bottom:16px; }
+  h1{ font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(34px,5.5vw,54px); line-height:1.1; text-align:center; max-width:680px; margin:0 0 14px; }
+  .sub{ color:var(--muted); text-align:center; max-width:480px; font-size:16px; line-height:1.6; margin:0 0 56px; }
+  .grid{ width:100%; max-width:920px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+  .tool-card{ display:block; background:var(--surface); border:1px solid var(--line); border-top:3px solid var(--accent,#888); border-radius:6px; padding:22px; text-decoration:none; color:var(--paper); transition:transform .15s ease,border-color .15s ease; }
+  .tool-card:hover{ transform:translateY(-2px); border-color:var(--accent,#888); }
+  .tool-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--accent,#888); margin-bottom:10px; }
+  .tool-name{ font-family:'Sora',sans-serif; font-weight:700; font-size:17px; margin-bottom:8px; }
+  .tool-desc{ font-size:13.5px; color:var(--muted); line-height:1.55; }
+  .section-title{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--muted); margin:48px 0 20px; width:100%; max-width:920px; text-align:left; }
+  footer{ margin-top:64px; color:#4a4f5a; font-size:12px; font-family:'IBM Plex Mono',monospace; text-align:center; }
+  footer a{ color:#4a4f5a; }
 </style>
 </head>
 <body>
 
   <div class="eyebrow">toolbox-pl / zbiór narzędzi</div>
   <h1>Proste narzędzia, zero rejestracji</h1>
-  <p class="sub">Dziesięć darmowych narzędzi webowych. Każde działa w całości w Twojej przeglądarce — bez kont, bez zbierania danych, bez zbędnych kroków.</p>
+  <p class="sub">Darmowe narzędzia webowe. Każde działa w całości w Twojej przeglądarce — bez kont, bez zbierania danych, bez zbędnych kroków.</p>
 
   <div class="grid">
 
@@ -187,305 +107,16 @@
       <div class="tool-desc">Oblicz szacowane dzienne zapotrzebowanie na kalorie (BMR i TDEE).</div>
     </a>
 
-    <a class="tool-card" style="--accent:#8b5cf6" href="/sila-hasla/">
-      <div class="tool-eyebrow">BEZPIECZEŃSTWO</div>
-      <div class="tool-name">Sprawdź siłę hasła</div>
-      <div class="tool-desc">Analiza długości i różnorodności znaków w Twoim haśle.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#64748b" href="/lorem-ipsum/">
-      <div class="tool-eyebrow">DESIGN</div>
-      <div class="tool-name">Generator Lorem Ipsum</div>
-      <div class="tool-desc">Tekst zastępczy do makiet i projektów graficznych.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#06b6d4" href="/base64/">
-      <div class="tool-eyebrow">DEV</div>
-      <div class="tool-name">Konwerter Base64</div>
-      <div class="tool-desc">Zakoduj lub zdekoduj tekst w formacie Base64.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#eab308" href="/json/">
-      <div class="tool-eyebrow">DEV</div>
-      <div class="tool-name">Formatter JSON</div>
-      <div class="tool-desc">Sformatuj, upiękl i zwaliduj swój kod JSON.</div>
-    </a>
-
     <a class="tool-card" style="--accent:#3b5fe0" href="/kredyt/">
       <div class="tool-eyebrow">FINANSE</div>
       <div class="tool-name">Kalkulator raty kredytu</div>
       <div class="tool-desc">Oblicz miesięczną ratę na podstawie kwoty i oprocentowania.</div>
     </a>
 
-    <a class="tool-card" style="--accent:#c99a2e" href="/rzymskie/">
-      <div class="tool-eyebrow">KONWERSJA</div>
-      <div class="tool-name">Liczby rzymskie</div>
-      <div class="tool-desc">Przelicz liczby arabskie na rzymskie i odwrotnie.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#e2a33f" href="/wiek-psa/">
-      <div class="tool-eyebrow">ZWIERZĘTA</div>
-      <div class="tool-name">Wiek psa/kota po ludzku</div>
-      <div class="tool-desc">Sprawdź wiek Twojego pupila w przeliczeniu na lata ludzkie.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#db2777" href="/rozmiary/">
-      <div class="tool-eyebrow">MODA</div>
-      <div class="tool-name">Rozmiary ubrań</div>
-      <div class="tool-desc">Przelicz rozmiar między systemem PL, EU, US i UK.</div>
-    </a>
-
-  </div>
-
-  <div class="eyebrow" style="margin-top:64px;">gry</div>
-  <h1 style="font-size:clamp(26px,4vw,36px); margin-bottom:36px;">Proste gry do zabicia czasu</h1>
-
-  <div class="grid">
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/kolo-szczescia/">
-      <div class="tool-eyebrow">LOSOWANIE</div>
-      <div class="tool-name">Koło szczęścia</div>
-      <div class="tool-desc">Wpisz własne opcje i zakręć kołem.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/kolko-krzyzyk/">
-      <div class="tool-eyebrow">KLASYKA</div>
-      <div class="tool-name">Kółko i krzyżyk</div>
-      <div class="tool-desc">Gra dla dwóch graczy na jednym urządzeniu.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/wisielec/">
-      <div class="tool-eyebrow">SŁOWNA</div>
-      <div class="tool-name">Wisielec</div>
-      <div class="tool-desc">Zgadnij słowo, zanim skończą się próby.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/memory/">
-      <div class="tool-eyebrow">PAMIĘĆ</div>
-      <div class="tool-name">Memory</div>
-      <div class="tool-desc">Znajdź wszystkie pary w jak najmniejszej liczbie ruchów.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/kamien-papier-nozyce/">
-      <div class="tool-eyebrow">KLASYKA</div>
-      <div class="tool-name">Kamień, papier, nożyce</div>
-      <div class="tool-desc">Zagraj przeciwko komputerowi.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/test-refleksu/">
-      <div class="tool-eyebrow">REFLEKS</div>
-      <div class="tool-name">Test refleksu</div>
-      <div class="tool-desc">Sprawdź swój czas reakcji.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/zgadnij-liczbe/">
-      <div class="tool-eyebrow">LOGIKA</div>
-      <div class="tool-name">Zgadnij liczbę</div>
-      <div class="tool-desc">Znajdź liczbę od 1 do 100 w jak najmniejszej liczbie prób.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/quiz/">
-      <div class="tool-eyebrow">QUIZ</div>
-      <div class="tool-name">Quiz wiedzy ogólnej</div>
-      <div class="tool-desc">10 pytań z różnych dziedzin.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/weze-drabiny/">
-      <div class="tool-eyebrow">PLANSZÓWKA</div>
-      <div class="tool-name">Węże i drabiny</div>
-      <div class="tool-desc">Klasyczna gra planszowa dla dwóch graczy.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/kosci-rpg/">
-      <div class="tool-eyebrow">RPG</div>
-      <div class="tool-name">Symulator kości RPG</div>
-      <div class="tool-desc">d4, d6, d8, d10, d12, d20 do gier fabularnych.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/puzzle-15/">
-      <div class="tool-eyebrow">PUZZLE</div>
-      <div class="tool-name">Puzzle 15</div>
-      <div class="tool-desc">Ułóż liczby od 1 do 15 w kolejności.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/bingo/">
-      <div class="tool-eyebrow">TOWARZYSKA</div>
-      <div class="tool-name">Bingo</div>
-      <div class="tool-desc">Wygeneruj kartę i losuj liczby.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/labirynt/">
-      <div class="tool-eyebrow">LABIRYNT</div>
-      <div class="tool-name">Labirynt</div>
-      <div class="tool-desc">Losowo generowany, przejdź do celu.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/anagramy/">
-      <div class="tool-eyebrow">SŁOWNA</div>
-      <div class="tool-name">Anagramy</div>
-      <div class="tool-desc">Ułóż słowo z przemieszanych liter.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/test-osobowosci/">
-      <div class="tool-eyebrow">ZABAWA</div>
-      <div class="tool-name">Test osobowości</div>
-      <div class="tool-desc">Żartobliwy test — jakim typem podróżnika jesteś?</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/nazwy-druzyn/">
-      <div class="tool-eyebrow">GENERATOR</div>
-      <div class="tool-name">Nazwy drużyn</div>
-      <div class="tool-desc">Losowa, chwytliwa nazwa na quiz czy mecz.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/test-pisania/">
-      <div class="tool-eyebrow">REFLEKS</div>
-      <div class="tool-name">Test szybkości pisania</div>
-      <div class="tool-desc">Sprawdź swoją szybkość pisania (WPM).</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/zgadnij-kolor/">
-      <div class="tool-eyebrow">DESIGN</div>
-      <div class="tool-name">Zgadnij kolor HEX</div>
-      <div class="tool-desc">Sprawdź swoje wyczucie kolorów.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/rzut-moneta/">
-      <div class="tool-eyebrow">LOSOWANIE</div>
-      <div class="tool-name">Orzeł czy reszka</div>
-      <div class="tool-desc">Wirtualny rzut monetą ze statystykami.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/sekwencje/">
-      <div class="tool-eyebrow">PAMIĘĆ</div>
-      <div class="tool-name">Gra w sekwencje</div>
-      <div class="tool-desc">Zapamiętaj i powtórz rosnący wzór kolorów.</div>
-    </a>
-
     <a class="tool-card" style="--accent:#35d0ba" href="/szukaj-slow/">
       <div class="tool-eyebrow">SŁOWA</div>
       <div class="tool-name">Wyszukiwarka słów</div>
       <div class="tool-desc">Wpisz litery, znajdź wszystkie możliwe słowa do scrabble/literaki.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#2ecc71" href="/waluty/">
-      <div class="tool-eyebrow">FINANSE</div>
-      <div class="tool-name">Konwerter walut</div>
-      <div class="tool-desc">Przelicz kwoty z własnym kursem wymiany.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#f0883e" href="/rabat/">
-      <div class="tool-eyebrow">ZAKUPY</div>
-      <div class="tool-name">Kalkulator rabatu</div>
-      <div class="tool-desc">Oblicz cenę po zniżce i kwotę oszczędności.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#8b5cf6" href="/dni-robocze/">
-      <div class="tool-eyebrow">PRACA</div>
-      <div class="tool-name">Dni robocze</div>
-      <div class="tool-desc">Oblicz liczbę dni roboczych między datami.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#8b5cf6" href="/rok-przestepny/">
-      <div class="tool-eyebrow">KALENDARZ</div>
-      <div class="tool-name">Rok przestępny?</div>
-      <div class="tool-desc">Sprawdź, czy dany rok ma 366 dni.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#8b5cf6" href="/strefy-czasowe/">
-      <div class="tool-eyebrow">CZAS</div>
-      <div class="tool-name">Strefy czasowe</div>
-      <div class="tool-desc">Aktualna godzina w miastach na świecie.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#3b5fe0" href="/odsetki/">
-      <div class="tool-eyebrow">FINANSE</div>
-      <div class="tool-name">Procent składany</div>
-      <div class="tool-desc">Zobacz jak rosną oszczędności w czasie.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#6366f1" href="/gradienty-css/">
-      <div class="tool-eyebrow">DESIGN</div>
-      <div class="tool-name">Generator gradientów CSS</div>
-      <div class="tool-desc">Twórz gradienty wizualnie, skopiuj kod.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#6366f1" href="/cienie-css/">
-      <div class="tool-eyebrow">DESIGN</div>
-      <div class="tool-name">Generator cieni CSS</div>
-      <div class="tool-desc">Ustaw box-shadow wizualnie, skopiuj kod.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#06b6d4" href="/morse/">
-      <div class="tool-eyebrow">KONWERSJA</div>
-      <div class="tool-name">Alfabet Morse'a</div>
-      <div class="tool-desc">Przetłumacz tekst na Morse'a i odwrotnie.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#06b6d4" href="/palindrom/">
-      <div class="tool-eyebrow">TEKST</div>
-      <div class="tool-name">Sprawdź palindrom</div>
-      <div class="tool-desc">Czy tekst brzmi tak samo od przodu i od tyłu?</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#06b6d4" href="/akronimy/">
-      <div class="tool-eyebrow">TEKST</div>
-      <div class="tool-name">Generator akronimów</div>
-      <div class="tool-desc">Wygeneruj akronim z pierwszych liter frazy.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#6366f1" href="/kompresor-obrazow/">
-      <div class="tool-eyebrow">OBRAZY</div>
-      <div class="tool-name">Kompresor obrazów</div>
-      <div class="tool-desc">Zmniejsz rozmiar zdjęcia lokalnie w przeglądarce.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ef6c4d" href="/kalorie-aktywnosc/">
-      <div class="tool-eyebrow">ZDROWIE</div>
-      <div class="tool-name">Kalorie spalone</div>
-      <div class="tool-desc">Oszacuj spalone kalorie podczas aktywności.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#2ba8a0" href="/whr/">
-      <div class="tool-eyebrow">ZDROWIE</div>
-      <div class="tool-name">Wskaźnik WHR</div>
-      <div class="tool-desc">Stosunek obwodu talii do bioder.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#2ecc71" href="/urlop/">
-      <div class="tool-eyebrow">PRACA</div>
-      <div class="tool-name">Pozostały urlop</div>
-      <div class="tool-desc">Sprawdź ile dni urlopu Ci zostało.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#e63946" href="/wifi-qr/">
-      <div class="tool-eyebrow">SIEĆ</div>
-      <div class="tool-name">QR do Wi-Fi</div>
-      <div class="tool-desc">Wygeneruj kod QR do swojej sieci.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/nick-gracza/">
-      <div class="tool-eyebrow">GENERATOR</div>
-      <div class="tool-name">Nick gracza</div>
-      <div class="tool-desc">Losowy pseudonim do gier online.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/karty/">
-      <div class="tool-eyebrow">KARTY</div>
-      <div class="tool-name">Losowanie karty</div>
-      <div class="tool-desc">Wylosuj kartę z talii 52 kart.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/sudoku/">
-      <div class="tool-eyebrow">LOGIKA</div>
-      <div class="tool-name">Sudoku</div>
-      <div class="tool-desc">Klasyczna łamigłówka liczbowa.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff3f8e" href="/wordsearch/">
-      <div class="tool-eyebrow">SŁOWNA</div>
-      <div class="tool-name">Wordsearch</div>
-      <div class="tool-desc">Znajdź ukryte słowa w siatce liter.</div>
     </a>
 
     <a class="tool-card" style="--accent:#d4a574" href="/sennik/">
@@ -506,16 +137,15 @@
       <div class="tool-desc">Wypowiedzenia, wnioski, pełnomocnictwa i więcej.</div>
     </a>
 
+  </div>
+
+  <div class="section-title">ROZRYWKA</div>
+  <div class="grid">
+
     <a class="tool-card" style="--accent:#8ec5fc" href="/horoskop/">
       <div class="tool-eyebrow">HOROSKOP</div>
       <div class="tool-name">Horoskop dzienny</div>
       <div class="tool-desc">Sprawdź co gwiazdy mówią dziś o Twoim znaku.</div>
-    </a>
-
-    <a class="tool-card" style="--accent:#ff4d7d" href="/milosc/">
-      <div class="tool-eyebrow">MIŁOŚĆ</div>
-      <div class="tool-name">Kalkulator miłości</div>
-      <div class="tool-desc">Sprawdź zgodność dwóch imion.</div>
     </a>
 
     <a class="tool-card" style="--accent:#d4a574" href="/tarot/">
@@ -536,27 +166,42 @@
       <div class="tool-desc">Sprawdź kompatybilność dwóch znaków zodiaku.</div>
     </a>
 
-    <a class="tool-card" style="--accent:#e63946" href="/generator-memow/">
-      <div class="tool-eyebrow">ROZRYWKA</div>
-      <div class="tool-name">Generator memów</div>
-      <div class="tool-desc">Dodaj tekst do własnego obrazka.</div>
+    <a class="tool-card" style="--accent:#ff4d7d" href="/milosc/">
+      <div class="tool-eyebrow">MIŁOŚĆ</div>
+      <div class="tool-name">Kalkulator miłości</div>
+      <div class="tool-desc">Sprawdź zgodność dwóch imion.</div>
     </a>
 
-    <a class="tool-card" style="--accent:#db2777" href="/termin-porodu/">
-      <div class="tool-eyebrow">RODZICIELSTWO</div>
-      <div class="tool-name">Termin porodu</div>
-      <div class="tool-desc">Oblicz przybliżony termin na podstawie ostatniej miesiączki.</div>
+    <a class="tool-card" style="--accent:#ff3f8e" href="/kolo-szczescia/">
+      <div class="tool-eyebrow">LOSOWANIE</div>
+      <div class="tool-name">Koło szczęścia</div>
+      <div class="tool-desc">Wpisz własne opcje i zakręć kołem.</div>
     </a>
 
-    <a class="tool-card" style="--accent:#d4a574" href="/znaczenie-imion/">
-      <div class="tool-eyebrow">IMIONA</div>
-      <div class="tool-name">Znaczenie imion</div>
-      <div class="tool-desc">Sprawdź pochodzenie i znaczenie ponad 60 imion.</div>
+    <a class="tool-card" style="--accent:#ff3f8e" href="/quiz/">
+      <div class="tool-eyebrow">QUIZ</div>
+      <div class="tool-name">Quiz wiedzy ogólnej</div>
+      <div class="tool-desc">10 pytań z różnych dziedzin.</div>
+    </a>
+
+    <a class="tool-card" style="--accent:#ff3f8e" href="/memory/">
+      <div class="tool-eyebrow">PAMIĘĆ</div>
+      <div class="tool-name">Memory</div>
+      <div class="tool-desc">Znajdź wszystkie pary w jak najmniejszej liczbie ruchów.</div>
     </a>
 
   </div>
 
-  <footer>toolbox-pl &nbsp;·&nbsp; <a href="polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="regulamin.html">regulamin</a> &nbsp;·&nbsp; <a href="mailto:pawelbalazy2@gmail.com">kontakt</a></footer>
+  <footer>toolbox-pl &nbsp;·&nbsp; <a href="/polityka-prywatnosci.html">polityka prywatności</a> &nbsp;·&nbsp; <a href="/regulamin.html">regulamin</a> &nbsp;·&nbsp; <a href="mailto:pawelbalazy2@gmail.com">kontakt</a></footer>
+
+  <section style="width:100%; max-width:680px; margin-top:72px; padding-top:48px; border-top:1px solid var(--line); padding-left:20px; padding-right:20px; box-sizing:border-box;">
+    <h2 style="font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:0 0 14px;">Czym jest toolbox-pl</h2>
+    <p style="color:#c2c6ce; font-size:15px; line-height:1.75; margin:0 0 16px;">toolbox-pl to zbiór prostych, jednofunkcyjnych narzędzi internetowych, zbudowanych z jednego założenia: żeby zrobić dokładnie to, czego potrzebujesz, bez rejestracji, bez zbędnych kroków i bez czekania na wczytywanie się stron pełnych zbędnych elementów. Każde narzędzie — od generatora haseł po sennik — powstało jako odpowiedź na konkretny, codzienny problem: szybkie przeliczenie jednostek, sprawdzenie znaczenia symbolu sennego, czy przygotowanie CV bez instalowania dodatkowego oprogramowania.</p>
+    <h2 style="font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:32px 0 14px;">Dlaczego wszystko działa lokalnie w przeglądarce</h2>
+    <p style="color:#c2c6ce; font-size:15px; line-height:1.75; margin:0 0 16px;">Zamiast wysyłać dane na serwer i czekać na odpowiedź, każde narzędzie na tej stronie przetwarza wszystko bezpośrednio w Twojej przeglądarce, korzystając z języka JavaScript wbudowanego w każdą nowoczesną przeglądarkę internetową. Oznacza to, że działają błyskawicznie, nie wymagają połączenia z serwerem po pierwszym załadowaniu, a wpisywane przez Ciebie dane — hasła, daty, teksty — nigdy nie opuszczają Twojego urządzenia.</p>
+    <h2 style="font-family:'Sora',sans-serif; font-weight:700; font-size:22px; margin:32px 0 14px;">Dla kogo jest ta strona</h2>
+    <p style="color:#c2c6ce; font-size:15px; line-height:1.75; margin:0 0 16px;">Z tych narzędzi korzystają na co dzień programiści (formatery, konwertery), osoby szukające pracy (kreator CV, wzory pism), rodzice planujący budżet domowy (kalkulatory finansowe), oraz każdy, kto po prostu chce szybko coś sprawdzić lub obliczyć bez zakładania konta. Strona rozwija się stopniowo — nowe narzędzia dodawane są w odpowiedzi na to, czego realnie szukają odwiedzający.</p>
+  </section>
 
 </body>
 </html>
