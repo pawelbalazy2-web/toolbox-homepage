@@ -1,0 +1,55 @@
+User-agent: *
+Allow: /
+
+Disallow: /kolko-krzyzyk/
+Disallow: /wisielec/
+Disallow: /kamien-papier-nozyce/
+Disallow: /test-refleksu/
+Disallow: /zgadnij-liczbe/
+Disallow: /weze-drabiny/
+Disallow: /kosci-rpg/
+Disallow: /puzzle-15/
+Disallow: /bingo/
+Disallow: /labirynt/
+Disallow: /anagramy/
+Disallow: /test-osobowosci/
+Disallow: /nazwy-druzyn/
+Disallow: /test-pisania/
+Disallow: /zgadnij-kolor/
+Disallow: /rzut-moneta/
+Disallow: /sekwencje/
+
+Disallow: /sila-hasla/
+Disallow: /lorem-ipsum/
+Disallow: /base64/
+Disallow: /json/
+Disallow: /rzymskie/
+Disallow: /wiek-psa/
+Disallow: /rozmiary/
+
+Disallow: /waluty/
+Disallow: /rabat/
+Disallow: /dni-robocze/
+Disallow: /rok-przestepny/
+Disallow: /strefy-czasowe/
+Disallow: /odsetki/
+Disallow: /gradienty-css/
+Disallow: /cienie-css/
+Disallow: /morse/
+Disallow: /palindrom/
+Disallow: /akronimy/
+Disallow: /kompresor-obrazow/
+Disallow: /kalorie-aktywnosc/
+Disallow: /whr/
+Disallow: /urlop/
+Disallow: /wifi-qr/
+Disallow: /nick-gracza/
+Disallow: /karty/
+Disallow: /sudoku/
+Disallow: /wordsearch/
+
+Disallow: /generator-memow/
+Disallow: /termin-porodu/
+Disallow: /znaczenie-imion/
+
+Sitemap: https://toolbox-pl.pl/sitemap.xml
