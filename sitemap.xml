@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://toolbox-pl.pl/</loc><priority>1.0</priority></url>
+
+  <url><loc>https://toolbox-pl.pl/bmi/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolbox-pl.pl/kalorie/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolbox-pl.pl/kredyt/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolbox-pl.pl/szukaj-slow/</loc><priority>0.9</priority></url>
+  <url><loc>https://toolbox-pl.pl/sennik/</loc><priority>0.9</priority></url>
+  <url><loc>https://toolbox-pl.pl/kreator-cv/</loc><priority>0.9</priority></url>
+  <url><loc>https://toolbox-pl.pl/wzory-pism/</loc><priority>0.9</priority></url>
+  <url><loc>https://toolbox-pl.pl/horoskop/</loc><priority>0.8</priority></url>
+  <url><loc>https://toolbox-pl.pl/tarot/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolbox-pl.pl/numerologia/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolbox-pl.pl/zgodnosc-zodiak/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolbox-pl.pl/milosc/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolbox-pl.pl/kolo-szczescia/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolbox-pl.pl/quiz/</loc><priority>0.7</priority></url>
+  <url><loc>https://toolbox-pl.pl/memory/</loc><priority>0.7</priority></url>
+
+  <url><loc>https://toolbox-pl.pl/polityka-prywatnosci.html</loc><priority>0.3</priority></url>
+  <url><loc>https://toolbox-pl.pl/regulamin.html</loc><priority>0.3</priority></url>
+
+  <url><loc>https://haslo.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://konwerter.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://licznik.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://daty.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://qr.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://kolory.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://procenty.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://stoper.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://losowanie.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+  <url><loc>https://napiwek.toolbox-pl.pl/</loc><priority>0.9</priority></url>
+</urlset>
